@@ -9,10 +9,11 @@
     </head>
     <body>
         <h1>Pipelines</h1>
+        <h:link value="Create" outcome="create"/> <br/>
         <table>
         <ui:repeat value="#{pipelineListBean.pipelines}" var="pipeline">
             <tr>
-                <td><h:outputText value="#{pipeline}"/></td>
+                <td><h:outputText value="#{pipeline.name}"/></td>
             </tr>
         </ui:repeat>
         </table>

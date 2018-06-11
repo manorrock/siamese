@@ -3,20 +3,29 @@
  */
 package com.manorrock.siamese.webapp;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.faces.annotation.FacesConfig;
 import static javax.faces.annotation.FacesConfig.Version.JSF_2_3;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
 
 /**
- * The JSF bean for showing a list of pipelines.
+ * The bean used to show a list of pipelines.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@RequestScoped
+@Named("pipelineListBean")
+@Stateless
 @FacesConfig(version = JSF_2_3)
 public class PipelineListBean {
+    
+    /**
+     * Stores the application bean.
+     */
+    @EJB
+    private ApplicationBean application;
     
     /**
      * Get the pipelines.
@@ -24,6 +33,7 @@ public class PipelineListBean {
      * @return the pipelines.
      */
     public List<Pipeline> getPipelines() {
-        return new ArrayList<>();
+        EntityManager em = application.getEntityManager();
+        return em.createQuery("SELECT object(p) FROM Pipeline AS p", Pipeline.class).getResultList();
     }
 }
