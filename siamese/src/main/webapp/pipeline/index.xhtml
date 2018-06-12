@@ -3,7 +3,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>Pipelines</title>
     </head>
@@ -11,11 +12,15 @@
         <h1>Pipelines</h1>
         <h:link value="Create" outcome="create"/> <br/>
         <table>
-        <ui:repeat value="#{pipelineListBean.pipelines}" var="pipeline">
-            <tr>
-                <td><h:outputText value="#{pipeline.name}"/></td>
-            </tr>
-        </ui:repeat>
+            <ui:repeat value="#{pipelineListBean.pipelines}" var="pipeline">
+                <tr>
+                    <td>
+                        <h:link value="#{pipeline.name}" outcome="view">
+                            <f:param name="pipelineId" value="#{pipeline.id}"/>
+                        </h:link>
+                    </td>
+                </tr>
+            </ui:repeat>
         </table>
     </body>
 </html>
