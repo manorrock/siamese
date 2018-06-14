@@ -19,6 +19,11 @@
                             <f:param name="pipelineId" value="#{pipeline.id}"/>
                         </h:link>
                     </td>
+                    <td>
+                        <h:link value="Delete" outcome="delete">
+                            <f:param name="pipelineId" value="#{pipeline.id}"/>
+                        </h:link>
+                    </td>
                 </tr>
             </ui:repeat>
         </table>
