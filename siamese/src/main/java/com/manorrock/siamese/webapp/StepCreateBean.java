@@ -20,7 +20,7 @@ public class StepCreateBean implements Serializable {
      * Stores the description.
      */
     private String description;
-    
+
     /**
      * Get the description.
      *
@@ -29,7 +29,7 @@ public class StepCreateBean implements Serializable {
     public String getDescription() {
         return description;
     }
-
+    
     /**
      * Set the description.
      *

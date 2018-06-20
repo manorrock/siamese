@@ -32,18 +32,9 @@ public class Agent implements Serializable {
     private BigInteger id;
 
     /**
-     * Stores the description.
+     * Stores the name.
      */
-    private String description;
-
-    /**
-     * Get the description.
-     *
-     * @return the description.
-     */
-    public String getDescription() {
-        return description;
-    }
+    private String name;
 
     /**
      * Get the id.
@@ -55,12 +46,12 @@ public class Agent implements Serializable {
     }
 
     /**
-     * Set the description.
+     * Get the name.
      *
-     * @param description the description.
+     * @return the name.
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -70,5 +61,14 @@ public class Agent implements Serializable {
      */
     public void setId(BigInteger id) {
         this.id = id;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

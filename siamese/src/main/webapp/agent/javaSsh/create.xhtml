@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Create a Java SSH agent</title>
+    </head>
+    <body>
+        <h1>Create a Java SSH agent</h1>
+        <h:form>
+            Name: <h:inputText value="#{javaSshAgentCreateBean.name}"/>
+            Hostname: <h:inputText value="#{javaSshAgentCreateBean.hostname}"/>
+            Username: <h:inputText value="#{javaSshAgentCreateBean.username}"/>
+            Password: <h:inputText value="#{javaSshAgentCreateBean.password}"/>
+            Java Home: <h:inputText value="#{javaSshAgentCreateBean.javaHome}"/>
+            <h:commandButton action="#{javaSshAgentCreateBean.create}" value="Create"/>
+            <h:commandButton action="#{javaSshAgentCreateBean.cancel}" value="Cancel"/>
+        </h:form>
+    </body>
+</html>
