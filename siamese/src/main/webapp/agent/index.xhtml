@@ -19,6 +19,11 @@
                             <f:param name="agentId" value="#{agent.id}"/>
                         </h:link>
                     </td>
+                    <td>
+                        <h:link value="Delete" outcome="delete">
+                            <f:param name="agentId" value="#{agent.id}"/>
+                        </h:link>
+                    </td>
                 </tr>
             </ui:repeat>
         </table>
