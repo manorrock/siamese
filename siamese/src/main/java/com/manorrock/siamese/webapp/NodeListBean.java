@@ -3,9 +3,10 @@
  */
 package com.manorrock.siamese.webapp;
 
+import java.math.BigInteger;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -18,17 +19,17 @@ import javax.inject.Named;
 public class NodeListBean {
 
     /**
-     * Stores the application bean.
+     * Stores the persistence EJB.
      */
-    @EJB
-    private NodeEjb ejb;
+    @Inject
+    private PersistenceEjb<Node, BigInteger> ejb;
 
     /**
-     * Get the pipelines.
+     * Get the nodes.
      *
-     * @return the pipelines.
+     * @return the nodes.
      */
     public List<Node> getNodes() {
-        return ejb.getNodes();
+        return ejb.getResultList(Node.class);
     }
 }
