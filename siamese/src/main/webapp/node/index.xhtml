@@ -23,6 +23,10 @@
                         <h:outputText value="#{node.description}"/>
                     </td>
                     <td>
+                        <h:link value="View" outcome="ssh/view" rendered="#{node.class.name.endsWith('SshNode')}">
+                            <f:param name="nodeId" value="#{node.id}"/>
+                        </h:link>
+                        &#160;
                         <h:link value="Delete" outcome="delete">
                             <f:param name="nodeId" value="#{node.id}"/>
                         </h:link>
