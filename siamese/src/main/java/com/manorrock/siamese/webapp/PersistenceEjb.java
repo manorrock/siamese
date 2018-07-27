@@ -4,7 +4,6 @@
 package com.manorrock.siamese.webapp;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -38,6 +37,15 @@ public class PersistenceEjb<T, K> implements Serializable {
     public T find(Class<T> clazz, K primaryKey) {
         EntityManager em = application.getEntityManager();
         return em.find(clazz, primaryKey);
+    }
+    
+    /**
+     * Get the entity manager.
+     * 
+     * @return the entity manager.
+     */
+    public EntityManager getEntityManager() {
+        return application.getEntityManager();
     }
 
     /**
