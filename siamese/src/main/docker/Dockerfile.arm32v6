@@ -1,0 +1,2 @@
+FROM manorrock/payara:arm32v6-micro
+COPY target/siamese.war /usr/local/payara/deployments/ROOT.war
