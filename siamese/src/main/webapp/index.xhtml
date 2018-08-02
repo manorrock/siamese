@@ -8,14 +8,13 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <title>Manorrock Siamese</title>
+        <h:outputStylesheet library="default" name="style.css"/>
     </h:head>
     <h:body>
         <h:panelGroup rendered='#{empty facesContext.externalContext.userPrincipal}'>
+            <h1>Welcome to Manorrock Siamese!</h1>
+            <h2>Please login</h2>
             <p>
-                Welcome to Manorrock Siamese!
-            </p>
-            <p>
-                <h1>Please login</h1>
                 <h:messages/>
                 <form jsf:id="form">
                     <p>
@@ -33,8 +32,11 @@
             </p>
         </h:panelGroup>
         <h:panelGroup rendered='#{not empty facesContext.externalContext.userPrincipal}'>
-            <h:link value="Nodes" outcome="/node/index"/> <br/>
-            <h:link value="Pipelines" outcome="/pipeline/index"/> <br/>
+            <h1>Welcome to Manorrock Siamese</h1>
+            <p>
+                <h:link value="Nodes" outcome="/node/index"/> <br/>
+                <h:link value="Pipelines" outcome="/pipeline/index"/> <br/>
+            </p>
         </h:panelGroup>
     </h:body>
 </html>
