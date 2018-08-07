@@ -3,6 +3,7 @@
  */
 package com.manorrock.siamese.webapp;
 
+import com.manorrock.siamese.node.SshNode;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.enterprise.context.RequestScoped;
