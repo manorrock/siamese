@@ -15,7 +15,9 @@
             <h:commandButton action="#{pipelineEditBean.save}" value="Save">
                 <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
             </h:commandButton>
-            <h:commandButton action="#{pipelineCreateBean.cancel}" value="Cancel"/>
+            <h:commandButton action="#{pipelineCreateBean.cancel}" value="Cancel">
+                <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
+            </h:commandButton>
         </h:form>
         <ui:include src="/step/list.xhtml"/>
     </body>
