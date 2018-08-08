@@ -3,6 +3,7 @@
  */
 package com.manorrock.siamese.webapp;
 
+import com.manorrock.siamese.step.JShellStep;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;

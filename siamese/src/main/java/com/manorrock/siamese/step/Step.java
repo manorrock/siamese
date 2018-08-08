@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2002-2018 Manorrock.com. All Rights Reserved.
  */
-package com.manorrock.siamese.webapp;
+package com.manorrock.siamese.step;
 
+import com.manorrock.siamese.webapp.Pipeline;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;

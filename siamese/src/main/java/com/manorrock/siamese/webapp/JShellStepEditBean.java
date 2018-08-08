@@ -3,6 +3,7 @@
  */
 package com.manorrock.siamese.webapp;
 
+import com.manorrock.siamese.step.JShellStep;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.annotation.PostConstruct;
