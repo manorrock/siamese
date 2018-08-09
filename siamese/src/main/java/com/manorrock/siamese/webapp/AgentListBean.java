@@ -3,6 +3,7 @@
  */
 package com.manorrock.siamese.webapp;
 
+import com.manorrock.siamese.agent.Agent;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

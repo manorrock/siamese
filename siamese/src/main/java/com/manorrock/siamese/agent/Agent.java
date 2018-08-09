@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2002-2018 Manorrock.com. All Rights Reserved.
  */
-package com.manorrock.siamese.webapp;
+package com.manorrock.siamese.agent;
 
 import java.io.Serializable;
 import java.math.BigInteger;
