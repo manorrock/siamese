@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+        <title>Create a Docker node</title>
+    </head>
+    <body>
+        <h1>Create a Docker node</h1>
+        <h:form>
+            Description: <h:inputText value="#{dockerNodeCreateBean.description}"/> <br/>
+            Hostname: <h:inputText value="#{dockerNodeCreateBean.hostname}"/> <br/>
+            Username: <h:inputText value="#{dockerNodeCreateBean.username}"/> <br/>
+            Password: <h:inputText value="#{dockerNodeCreateBean.password}"/> <br/>
+            <h:commandButton action="#{dockerNodeCreateBean.create}" value="Create"/>
+            <h:commandButton action="#{dockerNodeCreateBean.cancel}" value="Cancel"/>
+        </h:form>
+    </body>
+</html>

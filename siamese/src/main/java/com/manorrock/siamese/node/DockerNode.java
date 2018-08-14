@@ -24,94 +24,91 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.webapp;
+package com.manorrock.siamese.node;
 
-import java.io.Serializable;
-import javax.ejb.Stateless;
-import javax.faces.model.SelectItem;
-import javax.inject.Named;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
- * The bean used to create a node.
+ * A Docker node.
  *
- * @author Manfred Riem (mriem@manorrock.com)
+ * @author Nanfred Riem (mriem@manorrock.com)
  */
-@Stateless
-@Named(value = "nodeCreateBean")
-public class NodeCreateBean implements Serializable {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@Table(name = "docker_node")
+public class DockerNode extends Node {
 
     /**
-     * Stores the node type.
+     * Stores the hostname.
      */
-    private String nodeType;
+    private String hostname;
 
     /**
-     * Stores the agent types.
+     * Stores the password.
      */
-    private final SelectItem[] nodeTypes;
+    private String password;
 
     /**
-     * Constructor.
+     * Stores the username.
      */
-    public NodeCreateBean() {
-        nodeTypes = new SelectItem[2];
-        nodeTypes[0] = new SelectItem("DockerNode", "Docker Node");
-        nodeTypes[1] = new SelectItem("SshNode", "SSH Node");
+    private String username;
+
+    /**
+     * Get the hostname.
+     * 
+     * @return the hostname.
+     */
+    public String getHostname() {
+        return hostname;
     }
 
     /**
-     * Get the agent type.
-     *
-     * @return the agent type.
+     * Get the password.
+     * 
+     * @return the password.
      */
-    public String getNodeType() {
-        return nodeType;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * Get the agent types.
-     *
-     * @return the agent types.
+     * Get the username.
+     * 
+     * @return the username.
      */
-    public SelectItem[] getNodeTypes() {
-        return nodeTypes;
+    public String getUsername() {
+        return username;
     }
 
     /**
-     * Set the agent type.
-     *
-     * @param nodeType the agent type.
+     * Set the hostname.
+     * 
+     * @param hostname the hostname.
      */
-    public void setNodeType(String nodeType) {
-        this.nodeType = nodeType;
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     /**
-     * Create the node.
-     *
-     * @return "index"
+     * Set the password.
+     * 
+     * @param password the password.
      */
-    public String create() {
-        String result;
-        switch (nodeType) {
-            case "DockerNode":
-                result = "docker/create";
-                break;
-            case "SshNode":
-                result = "ssh/create";
-                break;
-            default:
-                result = "index";
-        }
-        return result;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
-     * Cancel creating the node.
-     *
-     * @return "index"
+     * Set the username.
+     * 
+     * @param username the username.
      */
-    public String cancel() {
-        return "index";
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
