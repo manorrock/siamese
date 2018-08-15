@@ -54,9 +54,10 @@ public class NodeCreateBean implements Serializable {
      * Constructor.
      */
     public NodeCreateBean() {
-        nodeTypes = new SelectItem[2];
-        nodeTypes[0] = new SelectItem("DockerNode", "Docker Node");
-        nodeTypes[1] = new SelectItem("SshNode", "SSH Node");
+        nodeTypes = new SelectItem[3];
+        nodeTypes[0] = new SelectItem("KubernetesNode", "Kubernetes Node");
+        nodeTypes[1] = new SelectItem("DockerNode", "Docker Node");
+        nodeTypes[2] = new SelectItem("SshNode", "SSH Node");
     }
 
     /**
@@ -94,6 +95,9 @@ public class NodeCreateBean implements Serializable {
     public String create() {
         String result;
         switch (nodeType) {
+            case "KubernetesNode":
+                result = "kubernetes/create";
+                break;
             case "DockerNode":
                 result = "docker/create";
                 break;
