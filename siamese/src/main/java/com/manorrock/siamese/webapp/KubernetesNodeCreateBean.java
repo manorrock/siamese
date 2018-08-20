@@ -26,7 +26,6 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.node.DockerNode;
 import com.manorrock.siamese.node.KubernetesNode;
 import java.io.Serializable;
 import java.math.BigInteger;
