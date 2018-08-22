@@ -58,6 +58,12 @@ public class Agent implements Serializable {
      * Stores the name.
      */
     private String name;
+    
+    /**
+     * Stores the node id.
+     */
+    @Column(name = "node_id", nullable = true)
+    private BigInteger nodeId;
 
     /**
      * Get the id.
@@ -78,6 +84,15 @@ public class Agent implements Serializable {
     }
 
     /**
+     * Get the node id.
+     * 
+     * @return the node id.
+     */
+    public BigInteger getNodeId() {
+        return nodeId;
+    }
+
+    /**
      * Set the id.
      *
      * @param id the id.
@@ -93,5 +108,14 @@ public class Agent implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Set the node id.
+     * 
+     * @param nodeId the node id.
+     */
+    public void setNodeId(BigInteger nodeId) {
+        this.nodeId = nodeId;
     }
 }

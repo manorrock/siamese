@@ -27,11 +27,15 @@
 package com.manorrock.siamese.webapp;
 
 import com.manorrock.siamese.agent.Agent;
+import java.math.BigInteger;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  * The bean used to show a list of agents.
@@ -49,12 +53,37 @@ public class AgentListBean {
     private ApplicationBean application;
 
     /**
+     * Stores the node id (if any).
+     */
+    private BigInteger nodeId;
+
+    /**
+     * Initialize the bean.
+     */
+    @PostConstruct
+    public void initialize() {
+        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey("nodeId")) {
+            nodeId = new BigInteger(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("nodeId"));
+        }
+    }
+
+    /**
      * Get the pipelines.
      *
      * @return the pipelines.
      */
     public List<Agent> getAgents() {
-        EntityManager em = application.getEntityManager();
-        return em.createQuery("SELECT object(a) FROM Agent AS a", Agent.class).getResultList();
+        List<Agent> result;
+        if (nodeId == null) {
+            EntityManager em = application.getEntityManager();
+            result = em.createQuery("SELECT object(a) FROM Agent AS a", Agent.class).getResultList();
+        } else {
+
+            EntityManager em = application.getEntityManager();
+            Query query = em.createQuery("SELECT object(a) FROM Agent AS a WHERE a.nodeId = :nodeId");
+            query.setParameter("nodeId", nodeId);
+            result = query.getResultList();
+        }
+        return result;
     }
 }
