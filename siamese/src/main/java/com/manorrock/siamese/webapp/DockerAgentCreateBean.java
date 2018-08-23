@@ -26,36 +26,69 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.Agent;
+import com.manorrock.siamese.agent.DockerAgent;
+import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
- * The bean used to show a list of agents.
+ * The bean used to create a Docker agent.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("agentListBean")
-@Stateless
-public class AgentListBean {
+@Named(value = "dockerAgentCreateBean")
+@RequestScoped
+public class DockerAgentCreateBean implements Serializable {
 
     /**
-     * Stores the application bean.
+     * Stores the EJB.
      */
-    @EJB
-    private ApplicationBean application;
+    @Inject
+    private PersistenceEjb<DockerAgent, BigInteger> ejb;
 
     /**
-     * Stores the node id (if any).
+     * Stores the name.
+     */
+    private String name;
+
+    /**
+     * Stores the node id.
      */
     private BigInteger nodeId;
+
+    /**
+     * Create the Docker agent.
+     *
+     * @return "/agent/index"
+     */
+    public String create() {
+        String result = "/agent/index";
+        DockerAgent agent = new DockerAgent();
+        agent.setName(name);
+        agent.setNodeId(nodeId);
+        ejb.persist(agent);
+        if (nodeId != null) {
+            result = "/agent/index?nodeId=" + nodeId;
+        }
+        return result;
+    }
+
+    /**
+     * Cancel creating the Docker agent.
+     *
+     * @return "/agent/index"
+     */
+    public String cancel() {
+        String result = "/agent/index";
+        if (nodeId != null) {
+            result = "/agent/index?nodeId=" + nodeId;
+        }
+        return result;
+    }
 
     /**
      * Initialize the bean.
@@ -68,25 +101,14 @@ public class AgentListBean {
     }
 
     /**
-     * Get the pipelines.
+     * Get the name.
      *
-     * @return the pipelines.
+     * @return the name.
      */
-    public List<Agent> getAgents() {
-        List<Agent> result;
-        if (nodeId == null) {
-            EntityManager em = application.getEntityManager();
-            result = em.createQuery("SELECT object(a) FROM Agent AS a", Agent.class).getResultList();
-        } else {
-
-            EntityManager em = application.getEntityManager();
-            Query query = em.createQuery("SELECT object(a) FROM Agent AS a WHERE a.nodeId = :nodeId");
-            query.setParameter("nodeId", nodeId);
-            result = query.getResultList();
-        }
-        return result;
+    public String getName() {
+        return name;
     }
-    
+
     /**
      * Get the node id.
      * 
@@ -94,5 +116,14 @@ public class AgentListBean {
      */
     public BigInteger getNodeId() {
         return nodeId;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

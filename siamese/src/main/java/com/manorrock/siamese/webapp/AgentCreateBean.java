@@ -27,7 +27,10 @@
 package com.manorrock.siamese.webapp;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
@@ -51,11 +54,65 @@ public class AgentCreateBean implements Serializable {
     private final SelectItem[] agentTypes;
 
     /**
+     * Stores the node id.
+     */
+    private BigInteger nodeId;
+
+    /**
      * Constructor.
      */
     public AgentCreateBean() {
-        agentTypes = new SelectItem[1];
-        agentTypes[0] = new SelectItem("JavaSshAgent", "Java SSH agent");
+        agentTypes = new SelectItem[2];
+        agentTypes[0] = new SelectItem("DockerAgent", "Docker agent");
+        agentTypes[1] = new SelectItem("JavaSshAgent", "Java SSH agent");
+    }
+
+    /**
+     * Create the pipeline.
+     *
+     * @return "index"
+     */
+    public String create() {
+        String result;
+        switch (agentType) {
+            case "DockerAgent":
+                if (nodeId == null) {
+                    result = "docker/create";
+                } else {
+                    result = "docker/create?nodeId=" + nodeId;
+                }
+                break;
+            case "JavaSshAgent":
+                if (nodeId == null) {
+
+                    result = "javaSsh/create";
+                } else {
+                    result = "javaSsh/create?nodeId=" + nodeId;
+                }
+                break;
+            default:
+                result = "index";
+        }
+        return result;
+    }
+
+    /**
+     * Cancel creating the Docker host.
+     *
+     * @return "index"
+     */
+    public String cancel() {
+        return "index";
+    }
+
+    /**
+     * Initialize the bean.
+     */
+    @PostConstruct
+    public void initialize() {
+        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey("nodeId")) {
+            nodeId = new BigInteger(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("nodeId"));
+        }
     }
 
     /**
@@ -75,6 +132,15 @@ public class AgentCreateBean implements Serializable {
     public SelectItem[] getAgentTypes() {
         return agentTypes;
     }
+    
+    /**
+     * Get the node id.
+     * 
+     * @return the node id.
+     */
+    public BigInteger getNodeId() {
+        return nodeId;
+    }
 
     /**
      * Set the agent type.
@@ -83,31 +149,5 @@ public class AgentCreateBean implements Serializable {
      */
     public void setAgentType(String agentType) {
         this.agentType = agentType;
-    }
-
-    /**
-     * Create the pipeline.
-     *
-     * @return "index"
-     */
-    public String create() {
-        String result;
-        switch (agentType) {
-            case "JavaSshAgent":
-                result = "javaSsh/create";
-                break;
-            default:
-                result = "index";
-        }
-        return result;
-    }
-
-    /**
-     * Cancel creating the Docker host.
-     *
-     * @return "index"
-     */
-    public String cancel() {
-        return "index";
     }
 }

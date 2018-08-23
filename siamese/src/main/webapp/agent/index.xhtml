@@ -10,7 +10,10 @@
     </head>
     <body>
         <h1>Agents</h1>
-        <h:link value="Create" outcome="create"/> <br/>
+        <h:link value="Create" outcome="create">
+            <f:param name="nodeId" value="#{agentListBean.nodeId}"/>
+        </h:link>
+        <br/>
         <table>
             <ui:repeat value="#{agentListBean.agents}" var="agent">
                 <tr>

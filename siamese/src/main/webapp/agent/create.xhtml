@@ -14,8 +14,12 @@
             Type: <h:selectOneMenu value="#{agentCreateBean.agentType}">
                 <f:selectItems value="#{agentCreateBean.agentTypes}"/>
             </h:selectOneMenu>
-            <h:commandButton action="#{agentCreateBean.create}" value="Create"/>
-            <h:commandButton action="#{agentCreateBean.cancel}" value="Cancel"/>
+            <h:commandButton action="#{agentCreateBean.create}" value="Create">
+                <f:param name="nodeId" value="#{agentCreateBean.nodeId}"/>
+            </h:commandButton>
+            <h:commandButton action="#{agentCreateBean.cancel}" value="Cancel">
+                <f:param name="nodeId" value="#{agentCreateBean.nodeId}"/>
+            </h:commandButton>
         </h:form>
     </body>
 </html>
