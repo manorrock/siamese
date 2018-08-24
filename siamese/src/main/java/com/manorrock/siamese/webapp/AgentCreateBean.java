@@ -29,7 +29,7 @@ package com.manorrock.siamese.webapp;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
@@ -39,8 +39,8 @@ import javax.inject.Named;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Stateless
 @Named(value = "agentCreateBean")
+@RequestScoped
 public class AgentCreateBean implements Serializable {
 
     /**
