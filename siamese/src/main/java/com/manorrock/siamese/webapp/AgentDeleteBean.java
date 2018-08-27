@@ -30,19 +30,18 @@ import com.manorrock.siamese.agent.Agent;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 /**
  * The bean used to delete an agent.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Stateless
-@Named(value = "agentDeleteBean")
+@Named
+@RequestScoped
 public class AgentDeleteBean implements Serializable {
 
     /**
@@ -56,10 +55,10 @@ public class AgentDeleteBean implements Serializable {
     private BigInteger agentId;
 
     /**
-     * Stores the application bean.
+     * Stores the persistence EJB.
      */
-    @EJB
-    private ApplicationBean application;
+    @Inject
+    private PersistenceEjb<Agent, BigInteger> ejb;
 
     /**
      * Cancel deleting the agent.
@@ -76,9 +75,7 @@ public class AgentDeleteBean implements Serializable {
      * @return "index"
      */
     public String delete() {
-        EntityManager em = application.getEntityManager();
-        agent = em.merge(agent);
-        em.remove(agent);
+        ejb.remove(agent);
         return "index";
     }
 
@@ -89,7 +86,7 @@ public class AgentDeleteBean implements Serializable {
     public void initialize() {
         if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey("agentId")) {
             agentId = new BigInteger(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("agentId"));
-            agent = application.getEntityManager().find(Agent.class, agentId);
+            agent = ejb.find(Agent.class, agentId);
         }
     }
 
