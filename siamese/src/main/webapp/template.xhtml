@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="default" name="style.css"/>
+        <title>Manorrock Siamese</title>
+    </h:head>
+    <h:body>
+        <div id="top">
+            <ui:insert name="top">
+                Manorrock Siamese
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <h:panelGroup rendered="#{not empty facesContext.externalContext.userPrincipal}">
+                        <h:link outcome="/index">Home</h:link> <br/>
+                        <h:link outcome="/node/index">Nodes</h:link> <br/>
+                        <h:link outcome="/pipeline/index">Pipelines</h:link> <br/>
+                    </h:panelGroup>
+                </ui:insert>
+            </div>
+            <div>
+                <div id="right">
+                    <ui:insert name="right">
+                    </ui:insert>
+                </div>
+                <div id="content" class="right_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">
+                Copyright (c) 2002-2018 Manorrock.com. All Rights Reserved.
+            </ui:insert>
+        </div>
+    </h:body>
+</html>

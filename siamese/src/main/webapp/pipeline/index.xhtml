@@ -7,30 +7,33 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Pipelines</title>
-        <h:outputStylesheet library="default" name="style.css"/>
     </h:head>
     <body>
-        <h1>Pipelines</h1>
-        <h:link value="Create" outcome="create"/> <br/>
-        <table>
-            <ui:repeat value="#{pipelineListBean.pipelines}" var="pipeline">
-                <tr>
-                    <td>
-                        <h:link value="#{pipeline.name}" outcome="view">
-                            <f:param name="pipelineId" value="#{pipeline.id}"/>
-                        </h:link>
-                    </td><td>
-                        <h:link value="Edit" outcome="edit">
-                            <f:param name="pipelineId" value="#{pipeline.id}"/>
-                        </h:link>
-                    </td>
-                    <td>
-                        <h:link value="Delete" outcome="delete">
-                            <f:param name="pipelineId" value="#{pipeline.id}"/>
-                        </h:link>
-                    </td>
-                </tr>
-            </ui:repeat>
-        </table>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h1>Pipelines</h1>
+                <h:link value="Create" outcome="create"/> <br/>
+                <table>
+                    <ui:repeat value="#{pipelineListBean.pipelines}" var="pipeline">
+                        <tr>
+                            <td>
+                                <h:link value="#{pipeline.name}" outcome="view">
+                                    <f:param name="pipelineId" value="#{pipeline.id}"/>
+                                </h:link>
+                            </td><td>
+                                <h:link value="Edit" outcome="edit">
+                                    <f:param name="pipelineId" value="#{pipeline.id}"/>
+                                </h:link>
+                            </td>
+                            <td>
+                                <h:link value="Delete" outcome="delete">
+                                    <f:param name="pipelineId" value="#{pipeline.id}"/>
+                                </h:link>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>

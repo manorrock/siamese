@@ -9,35 +9,38 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Nodes</title>
-        <h:outputStylesheet library="default" name="style.css"/>
     </h:head>
     <body>
-        <h1>Nodes</h1>
-        <h:link value="Create" outcome="create"/> <br/>
-        <table>
-            <tr>
-                <th>Name</th>
-            </tr>
-            <ui:repeat value="#{nodeListBean.nodes}" var="node">
-                <tr>
-                    <td>
-                        <h:outputText value="#{node.description}"/>
-                    </td>
-                    <td>
-                        <h:link value="View" outcome="ssh/view" rendered="#{node.class.name.endsWith('SshNode')}">
-                            <f:param name="nodeId" value="#{node.id}"/>
-                        </h:link>
-                        &#160;
-                        <h:link value="Delete" outcome="delete">
-                            <f:param name="nodeId" value="#{node.id}"/>
-                        </h:link>
-                        &#160;
-                        <h:link value="Agents" outcome="/agent/index">
-                            <f:param name="nodeId" value="#{node.id}"/>
-                        </h:link>
-                    </td>
-                </tr>
-            </ui:repeat>
-        </table>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h1>Nodes</h1>
+                <h:link value="Create" outcome="create"/> <br/>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    <ui:repeat value="#{nodeListBean.nodes}" var="node">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{node.description}"/>
+                            </td>
+                            <td>
+                                <h:link value="View" outcome="ssh/view" rendered="#{node.class.name.endsWith('SshNode')}">
+                                    <f:param name="nodeId" value="#{node.id}"/>
+                                </h:link>
+                                &#160;
+                                <h:link value="Delete" outcome="delete">
+                                    <f:param name="nodeId" value="#{node.id}"/>
+                                </h:link>
+                                &#160;
+                                <h:link value="Agents" outcome="/agent/index">
+                                    <f:param name="nodeId" value="#{node.id}"/>
+                                </h:link>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>
