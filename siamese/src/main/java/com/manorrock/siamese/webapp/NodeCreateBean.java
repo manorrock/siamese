@@ -27,7 +27,7 @@
 package com.manorrock.siamese.webapp;
 
 import java.io.Serializable;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
@@ -36,8 +36,8 @@ import javax.inject.Named;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Stateless
-@Named(value = "nodeCreateBean")
+@Named
+@RequestScoped
 public class NodeCreateBean implements Serializable {
 
     /**
