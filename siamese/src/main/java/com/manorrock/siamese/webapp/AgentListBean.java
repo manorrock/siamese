@@ -26,7 +26,7 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.Agent;
+import com.manorrock.siamese.capability.Capability;
 import java.math.BigInteger;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -72,11 +72,11 @@ public class AgentListBean {
      *
      * @return the pipelines.
      */
-    public List<Agent> getAgents() {
-        List<Agent> result;
+    public List<Capability> getAgents() {
+        List<Capability> result;
         if (nodeId == null) {
             EntityManager em = application.getEntityManager();
-            result = em.createQuery("SELECT object(a) FROM Agent AS a", Agent.class).getResultList();
+            result = em.createQuery("SELECT object(a) FROM Agent AS a", Capability.class).getResultList();
         } else {
 
             EntityManager em = application.getEntityManager();

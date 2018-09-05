@@ -26,7 +26,7 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.JavaSshAgent;
+import com.manorrock.siamese.capability.JavaSshAgent;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

@@ -26,7 +26,7 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.JavaSshAgent;
+import com.manorrock.siamese.capability.JavaSshAgent;
 import com.manorrock.siamese.step.JShellStep;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;

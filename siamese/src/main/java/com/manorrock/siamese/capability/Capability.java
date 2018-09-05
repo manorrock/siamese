@@ -24,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.agent;
+package com.manorrock.siamese.capability;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -43,7 +43,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "agent")
-public class Agent implements Serializable {
+public class Capability implements Serializable {
 
     /**
      * Stores the id.

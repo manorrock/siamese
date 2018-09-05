@@ -26,7 +26,7 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.Agent;
+import com.manorrock.siamese.capability.Capability;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.annotation.PostConstruct;
@@ -47,7 +47,7 @@ public class AgentDeleteBean implements Serializable {
     /**
      * Stores the agent.
      */
-    private Agent agent;
+    private Capability agent;
 
     /**
      * Stores the agent id.
@@ -58,7 +58,7 @@ public class AgentDeleteBean implements Serializable {
      * Stores the persistence EJB.
      */
     @Inject
-    private PersistenceEjb<Agent, BigInteger> ejb;
+    private PersistenceEjb<Capability, BigInteger> ejb;
 
     /**
      * Cancel deleting the agent.
@@ -86,7 +86,7 @@ public class AgentDeleteBean implements Serializable {
     public void initialize() {
         if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey("agentId")) {
             agentId = new BigInteger(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("agentId"));
-            agent = ejb.find(Agent.class, agentId);
+            agent = ejb.find(Capability.class, agentId);
         }
     }
 
@@ -95,7 +95,7 @@ public class AgentDeleteBean implements Serializable {
      *
      * @return the pipeline.
      */
-    public Agent getAgent() {
+    public Capability getAgent() {
         return agent;
     }
 }

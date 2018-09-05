@@ -26,7 +26,7 @@
  */
 package com.manorrock.siamese.webapp;
 
-import com.manorrock.siamese.agent.DockerAgent;
+import com.manorrock.siamese.capability.DockerCapability;
 import java.io.Serializable;
 import java.math.BigInteger;
 import javax.annotation.PostConstruct;
@@ -48,7 +48,7 @@ public class DockerAgentCreateBean implements Serializable {
      * Stores the EJB.
      */
     @Inject
-    private PersistenceEjb<DockerAgent, BigInteger> ejb;
+    private PersistenceEjb<DockerCapability, BigInteger> ejb;
 
     /**
      * Stores the name.
@@ -67,7 +67,7 @@ public class DockerAgentCreateBean implements Serializable {
      */
     public String create() {
         String result = "/agent/index";
-        DockerAgent agent = new DockerAgent();
+        DockerCapability agent = new DockerCapability();
         agent.setName(name);
         agent.setNodeId(nodeId);
         ejb.persist(agent);
