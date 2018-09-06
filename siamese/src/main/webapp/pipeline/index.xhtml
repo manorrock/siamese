@@ -20,13 +20,19 @@
                                 <h:link value="#{pipeline.name}" outcome="view">
                                     <f:param name="pipelineId" value="#{pipeline.id}"/>
                                 </h:link>
-                            </td><td>
+                            </td>
+                            <td>
                                 <h:link value="Edit" outcome="edit">
                                     <f:param name="pipelineId" value="#{pipeline.id}"/>
                                 </h:link>
                             </td>
                             <td>
                                 <h:link value="Delete" outcome="delete">
+                                    <f:param name="pipelineId" value="#{pipeline.id}"/>
+                                </h:link>
+                            </td>
+                            <td>
+                                <h:link value="Execute" outcome="execute">
                                     <f:param name="pipelineId" value="#{pipeline.id}"/>
                                 </h:link>
                             </td>
