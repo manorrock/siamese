@@ -127,8 +127,8 @@
     </developers>
     <modules>
         <module>siamese</module>
-        <module>siamese-java-node</module>
         <module>siamese-go</module>
+        <module>siamese-java</module>
     </modules>
     <profiles>
         <profile>
