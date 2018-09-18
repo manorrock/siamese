@@ -3,19 +3,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <head>
         <title>Create a Java node</title>
     </head>
     <body>
-        <h1>Create a Java node</h1>
-        <h:form>
-            Description: <h:inputText value="#{javaNodeCreateBean.description}"/> <br/>
-            Hostname: <h:inputText value="#{javaNodeCreateBean.hostname}"/> <br/>
-            Username: <h:inputText value="#{javaNodeCreateBean.username}"/> <br/>
-            Password: <h:inputText value="#{javaNodeCreateBean.password}"/> <br/>
-            <h:commandButton action="#{javaNodeCreateBean.create}" value="Create"/>
-            <h:commandButton action="#{javaNodeCreateBean.cancel}" value="Cancel"/>
-        </h:form>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h1>Create a Java node</h1>
+                <h:form>
+                    Description: <h:inputText value="#{javaNodeCreateBean.description}"/> <br/>
+                    Hostname: <h:inputText value="#{javaNodeCreateBean.hostname}"/> <br/>
+                    Username: <h:inputText value="#{javaNodeCreateBean.username}"/> <br/>
+                    Password: <h:inputText value="#{javaNodeCreateBean.password}"/> <br/>
+                    <h:commandButton action="#{javaNodeCreateBean.create}" value="Create"/>
+                    <h:commandButton action="#{javaNodeCreateBean.cancel}" value="Cancel"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>
