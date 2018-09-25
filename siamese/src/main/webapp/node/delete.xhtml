@@ -4,18 +4,23 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <head>
         <title>Delete a node</title>
     </head>
     <body>
-        <h1>Delete a node</h1>
-        <h:form>
-            Description: <h:outputText value="#{nodeDeleteBean.node.description}"/> <br/>
-            <h:commandButton action="#{nodeDeleteBean.delete}" value="Delete">
-                <f:param name="nodeId" value="#{nodeDeleteBean.node.id}"/>
-            </h:commandButton>
-            <h:commandButton action="#{nodeDeleteBean.cancel}" value="Cancel"/>
-        </h:form>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h1>Delete a node</h1>
+                <h:form>
+                    Description: <h:outputText value="#{nodeDeleteBean.node.description}"/> <br/>
+                    <h:commandButton action="#{nodeDeleteBean.delete}" value="Delete">
+                        <f:param name="nodeId" value="#{nodeDeleteBean.node.id}"/>
+                    </h:commandButton>
+                    <h:commandButton action="#{nodeDeleteBean.cancel}" value="Cancel"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>
