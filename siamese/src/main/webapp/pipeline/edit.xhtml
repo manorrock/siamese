@@ -9,16 +9,20 @@
         <title>Edit a pipeline</title>
     </head>
     <body>
-        <h1>Edit a pipeline</h1>
-        <h:form>
-            Name: <h:inputText value="#{pipelineEditBean.pipeline.name}"/> <br/>
-            <h:commandButton action="#{pipelineEditBean.save}" value="Save">
-                <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
-            </h:commandButton>
-            <h:commandButton action="#{pipelineCreateBean.cancel}" value="Cancel">
-                <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
-            </h:commandButton>
-        </h:form>
-        <ui:include src="/step/list.xhtml"/>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h1>Edit a pipeline</h1>
+                <h:form>
+                    Name: <h:inputText value="#{pipelineEditBean.pipeline.name}"/> <br/>
+                    <h:commandButton action="#{pipelineEditBean.save}" value="Save">
+                        <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
+                    </h:commandButton>
+                    <h:commandButton action="#{pipelineCreateBean.cancel}" value="Cancel">
+                        <f:param name="pipelineId" value="#{pipelineEditBean.pipeline.id}"/>
+                    </h:commandButton>
+                </h:form>
+                <ui:include src="/step/list.xhtml"/>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>
