@@ -32,4 +32,25 @@ package com.siamese.executor;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public interface Executor {
+    
+    /**
+     * Get the timeout (in seconds).
+     * 
+     * @return the timeout.
+     */
+    public int getTimeout();
+    
+    /**
+     * Execute.
+     * 
+     * @param arguments the arguments.
+     */
+    public void execute(String[] arguments);
+    
+    /**
+     * Set the execution timeout (in seconds).
+     * 
+     * @param timeout the timeout.
+     */
+    public void setTimeout(int timeout);
 }
