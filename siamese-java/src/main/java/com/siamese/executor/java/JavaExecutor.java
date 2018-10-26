@@ -24,12 +24,14 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.siamese.executor;
+package com.siamese.executor.java;
+
+import com.siamese.executor.Executor;
 
 /**
- * The base API for every executor.
+ * The API for a Java executor.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface Executor {
+public interface JavaExecutor extends Executor {
 }
