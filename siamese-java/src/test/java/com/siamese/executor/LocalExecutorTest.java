@@ -24,59 +24,25 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.siamese.executor.java;
+package com.siamese.executor;
 
-import com.siamese.executor.BaseExecutor;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
- * The local Java executor.
- *
+ * The JUnit tests for the LocalExecutor.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class LocalJavaExecutor extends BaseExecutor implements JavaExecutor {
-
+public class LocalExecutorTest {
+    
     /**
-     * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
+     * Test of execute method, of class LocalExecutor.
      */
-    @Override
-    public String execute(String[] arguments) {
-        String output = null;
-        Process process;
-        try {
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            process = processBuilder.
-                    command(arguments).
-                    redirectErrorStream(true).
-                    start();
-            try {
-                process.waitFor(timeout, TimeUnit.SECONDS);
-            } catch (InterruptedException ie) {
-            }
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                output = reader.lines().collect(Collectors.joining("\n"));
-            }
-        } catch (IOException ioe) {
-            throw new RuntimeException("An I/O error occurred", ioe);
-        }
-        return output;
-    }
-
-    /**
-     * Maim method.
-     * 
-     * @param arguments the arguments.
-     */
-    public static void main(String[] arguments) {
-        LocalJavaExecutor executor = new LocalJavaExecutor();
-        System.out.println(executor.execute(arguments));
+    @Test
+    public void testExecute() {
+        LocalExecutor executor = new LocalExecutor();
+        String result = executor.execute(new String[] {"java", "-version"});
+        assertTrue(result.contains("Runtime Environment"));
     }
 }

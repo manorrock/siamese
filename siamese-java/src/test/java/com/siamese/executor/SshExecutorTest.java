@@ -24,49 +24,30 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.siamese.executor.java;
+package com.siamese.executor;
+
+import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
- * The SSH Java executor.
- *
+ * The JUnit tests for the SshExecutor.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class SshJavaExecutor implements JavaExecutor {
+public class SshExecutorTest {
     
     /**
-     * Stores the timeout (in seconds).
+     * Test execute method.
      */
-    private int timeout;
-
-    /**
-     * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
-     */
-    @Override
-    public String execute(String[] arguments) {
-        // TODO add SSH channel.
-        return null;
-    }
-
-    /**
-     * Get the timeout.
-     * 
-     * @return the timeout.
-     */
-    @Override
-    public int getTimeout() {
-        return timeout;
-    }
-
-    /**
-     * Set the timeout.
-     * 
-     * @param timeout the timeout.
-     */
-    @Override
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
+    @Ignore
+    @Test
+    public void testExecute() {
+        SshExecutor executor = new SshExecutor();
+        executor.setHostname("YOUR_HOSTNAME");
+        executor.setUsername("YOUR_USERNAME");
+        executor.setPassword("YOUR_PASSWORD");
+        String result = executor.execute(new String[] {"echo", "'123'"});
+        assertTrue(result.contains("123"));
     }
 }

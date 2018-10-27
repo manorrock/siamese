@@ -24,25 +24,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.siamese.executor.java;
+package com.siamese.executor;
 
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
- * The JUnit tests for the LocalJavaExecutor.
- * 
+ * The local executor.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class LocalJavaExecutorTest {
-    
+public class LocalExecutor extends BaseExecutor {
+
     /**
-     * Test of execute method, of class LocalJavaExecutor.
+     * Execute.
+     *
+     * @param arguments the arguments.
+     * @return the output.
      */
-    @Test
-    public void testExecute() {
-        LocalJavaExecutor executor = new LocalJavaExecutor();
-        String result = executor.execute(new String[] {"java", "-version"});
-        assertTrue(result.contains("Runtime Environment"));
+    @Override
+    public String execute(String[] arguments) {
+        String output = null;
+        Process process;
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            process = processBuilder.
+                    command(arguments).
+                    redirectErrorStream(true).
+                    start();
+            try {
+                process.waitFor(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException ie) {
+            }
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                output = reader.lines().collect(Collectors.joining("\n"));
+            }
+        } catch (IOException ioe) {
+            throw new RuntimeException("An I/O error occurred", ioe);
+        }
+        return output;
+    }
+
+    /**
+     * Maim method.
+     * 
+     * @param arguments the arguments.
+     */
+    public static void main(String[] arguments) {
+        LocalExecutor executor = new LocalExecutor();
+        System.out.println(executor.execute(arguments));
     }
 }
