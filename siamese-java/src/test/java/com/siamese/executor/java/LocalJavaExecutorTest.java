@@ -24,33 +24,25 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.siamese.executor;
+package com.siamese.executor.java;
+
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
- * The base API for every executor.
+ * The JUnit tests for the LocalJavaExecutor.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface Executor {
+public class LocalJavaExecutorTest {
     
     /**
-     * Get the timeout (in seconds).
-     * 
-     * @return the timeout.
+     * Test of execute method, of class LocalJavaExecutor.
      */
-    public int getTimeout();
-    
-    /**
-     * Execute.
-     * 
-     * @param arguments the arguments.
-     */
-    public String execute(String[] arguments);
-    
-    /**
-     * Set the execution timeout (in seconds).
-     * 
-     * @param timeout the timeout.
-     */
-    public void setTimeout(int timeout);
+    @Test
+    public void testExecute() {
+        LocalJavaExecutor executor = new LocalJavaExecutor();
+        String result = executor.execute(new String[] {"java", "-version"});
+        assertTrue(result.contains("Runtime Environment"));
+    }
 }

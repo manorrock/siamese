@@ -27,30 +27,34 @@
 package com.siamese.executor;
 
 /**
- * The base API for every executor.
+ * The base executor.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface Executor {
+public abstract class BaseExecutor implements Executor {
     
     /**
-     * Get the timeout (in seconds).
-     * 
+     * Stores the timeout (in seconds).
+     */
+    protected int timeout;
+
+    /**
+     * Get the timeout.
+     *
      * @return the timeout.
      */
-    public int getTimeout();
-    
+    @Override
+    public int getTimeout() {
+        return timeout;
+    }
+
     /**
-     * Execute.
-     * 
-     * @param arguments the arguments.
-     */
-    public String execute(String[] arguments);
-    
-    /**
-     * Set the execution timeout (in seconds).
-     * 
+     * Set the timeout.
+     *
      * @param timeout the timeout.
      */
-    public void setTimeout(int timeout);
+    @Override
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 }

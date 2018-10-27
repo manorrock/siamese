@@ -42,10 +42,12 @@ public class SshJavaExecutor implements JavaExecutor {
      * Execute.
      *
      * @param arguments the arguments.
+     * @return the output.
      */
     @Override
-    public void execute(String[] arguments) {
+    public String execute(String[] arguments) {
         // TODO add SSH channel.
+        return null;
     }
 
     /**

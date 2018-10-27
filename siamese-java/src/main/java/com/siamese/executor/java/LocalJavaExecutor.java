@@ -26,56 +26,57 @@
  */
 package com.siamese.executor.java;
 
+import com.siamese.executor.BaseExecutor;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * The local Java executor.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class LocalJavaExecutor implements JavaExecutor {
-    
-    /**
-     * Stores the timeout (in seconds).
-     */
-    private int timeout;
+public class LocalJavaExecutor extends BaseExecutor implements JavaExecutor {
 
     /**
      * Execute.
      *
      * @param arguments the arguments.
+     * @return the output.
      */
     @Override
-    public void execute(String[] arguments) {
+    public String execute(String[] arguments) {
+        String output = null;
+        Process process;
         try {
             ProcessBuilder processBuilder = new ProcessBuilder();
-            Process process = processBuilder.command(arguments).start();
-            process.waitFor(timeout, TimeUnit.SECONDS);
+            process = processBuilder.
+                    command(arguments).
+                    redirectErrorStream(true).
+                    start();
+            try {
+                process.waitFor(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException ie) {
+            }
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                output = reader.lines().collect(Collectors.joining("\n"));
+            }
         } catch (IOException ioe) {
             throw new RuntimeException("An I/O error occurred", ioe);
-        } catch (InterruptedException ie) {
-            throw new RuntimeException("Execution timed out", ie);
         }
+        return output;
     }
 
     /**
-     * Get the timeout.
+     * Maim method.
      * 
-     * @return the timeout.
+     * @param arguments the arguments.
      */
-    @Override
-    public int getTimeout() {
-        return timeout;
-    }
-
-    /**
-     * Set the timeout.
-     * 
-     * @param timeout the timeout.
-     */
-    @Override
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
+    public static void main(String[] arguments) {
+        LocalJavaExecutor executor = new LocalJavaExecutor();
+        System.out.println(executor.execute(arguments));
     }
 }
