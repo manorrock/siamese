@@ -26,12 +26,14 @@
  */
 package com.siamese.executor.java;
 
+import com.siamese.executor.Executor;
+
 /**
  * The Docker Java executor.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DockerJavaExecutor implements JavaExecutor {
+public class DockerJavaExecutor implements Executor {
     
     /**
      * Stores the timeout (in seconds).

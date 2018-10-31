@@ -26,12 +26,14 @@
  */
 package com.siamese.executor.java;
 
+import com.siamese.executor.Executor;
+
 /**
  * The Kubernetes Java executor.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class KubernetesJavaExecutor implements JavaExecutor {
+public class KubernetesJavaExecutor implements Executor {
     
     /**
      * Stores the timeout (in seconds).
