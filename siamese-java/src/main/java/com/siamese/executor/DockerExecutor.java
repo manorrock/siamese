@@ -26,12 +26,29 @@
  */
 package com.siamese.executor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 /**
  * The Docker Java executor.
+ * 
+ * <p>
+ *  Note this executor assumes you have the docker binary in your PATH.
+ * </p>
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class DockerExecutor implements Executor {
+    
+    /**
+     * Stores the image.
+     */
+    private String image;
     
     /**
      * Stores the timeout (in seconds).
@@ -46,8 +63,36 @@ public class DockerExecutor implements Executor {
      */
     @Override
     public String execute(String[] arguments) {
-        return null;
-        // TODO add Docker execution.
+        if (image == null || image.trim().equals("")) {
+            image = "manorrock/debian";
+        }
+        String output = null;
+        Process process;
+        ArrayList<String> dockerArguments = new ArrayList<>();
+        dockerArguments.add("docker");
+        dockerArguments.add("run");
+        dockerArguments.add("--rm");
+        dockerArguments.add("-i");
+        dockerArguments.add(image);
+        dockerArguments.addAll(Arrays.asList(arguments));
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            process = processBuilder.
+                    command(dockerArguments).
+                    redirectErrorStream(true).
+                    start();
+            try {
+                process.waitFor(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException ie) {
+            }
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                output = reader.lines().collect(Collectors.joining("\n"));
+            }
+        } catch (IOException ioe) {
+            throw new RuntimeException("An I/O error occurred", ioe);
+        }
+        return output;
     }
 
     /**
@@ -60,6 +105,15 @@ public class DockerExecutor implements Executor {
         return timeout;
     }
 
+    /**
+     * Set the image.
+     * 
+     * @param image the image. 
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     /**
      * Set the timeout.
      * 
