@@ -26,32 +26,20 @@
  */
 package com.siamese.executor;
 
+import org.junit.Test;
+
 /**
- * The base API for every executor.
- * 
+ * The JUnit tests for the Main class.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface Executor {
-    
+public class MainTest {
+
     /**
-     * Get the timeout (in seconds).
-     * 
-     * @return the timeout.
+     * Test main method.
      */
-    public int getTimeout();
-    
-    /**
-     * Execute.
-     * 
-     * @param arguments the arguments.
-     * @return the result.
-     */
-    public String execute(String[] arguments);
-    
-    /**
-     * Set the execution timeout (in seconds).
-     * 
-     * @param timeout the timeout.
-     */
-    public void setTimeout(int timeout);
+    @Test
+    public void testMain() {
+        Main.main(new String[]{"local", "java", "-version"});
+    }
 }

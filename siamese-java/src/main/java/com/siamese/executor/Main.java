@@ -26,6 +26,8 @@
  */
 package com.siamese.executor;
 
+import java.util.ArrayList;
+
 /**
  * The main entry point.
  * 
@@ -39,6 +41,15 @@ public class Main {
      * @param arguments the arguments.
      */
     public static void main(String[] arguments) {
-        System.out.println("Main.main");
+        ArrayList<String> executeArguments = new ArrayList<>();
+        if (arguments.length > 0) {
+            for(int i=0; i<arguments.length; i++) {
+                if (!arguments[i].equals("local")) {
+                    executeArguments.add(arguments[i]);
+                }
+            }
+        }
+        LocalExecutor localExecutor = new LocalExecutor();
+        System.out.println(localExecutor.execute(executeArguments.toArray(new String[]{})));
     }
 }
