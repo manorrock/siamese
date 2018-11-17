@@ -38,8 +38,13 @@ import (
 )
 
 func main() {
-	e := executor.LocalExecutor{}
-	output, error := e.Execute(os.Args[1:])
+	var error error
+	var output string
+	arguments := os.Args[1:]
+	if arguments[0] == "local" {
+		executor := executor.LocalExecutor{}
+		output, error = executor.Execute(os.Args[2:])
+	}
 	if error != nil {
 	} else {
 		fmt.Printf("%s", output)
