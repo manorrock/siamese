@@ -27,29 +27,61 @@
 package com.siamese.executor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The main entry point.
- * 
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class Main {
-    
+
+    /**
+     * Execute docker.
+     *
+     * @param arguments the arguments.
+     */
+    private static void executeDocker(List<String> arguments) {
+        DockerExecutor dockerExecutor = new DockerExecutor();
+        System.out.println(dockerExecutor.execute(arguments.toArray(new String[]{})));
+    }
+
+    /**
+     * Execute local.
+     *
+     * @param arguments the arguments.
+     */
+    private static void executeLocal(List<String> arguments) {
+        LocalExecutor localExecutor = new LocalExecutor();
+        System.out.println(localExecutor.execute(arguments.toArray(new String[]{})));
+    }
+
     /**
      * Main method.
-     * 
+     *
      * @param arguments the arguments.
      */
     public static void main(String[] arguments) {
         ArrayList<String> executeArguments = new ArrayList<>();
+        String action = "";
         if (arguments.length > 0) {
-            for(int i=0; i<arguments.length; i++) {
-                if (!arguments[i].equals("local")) {
+            for (int i = 0; i < arguments.length; i++) {
+                if (arguments[i].equals("local")) {
+                    action = arguments[i];
+                } else if (arguments[i].equals("docker")) {
+                    action = arguments[i];
+                } else {
                     executeArguments.add(arguments[i]);
                 }
             }
         }
-        LocalExecutor localExecutor = new LocalExecutor();
-        System.out.println(localExecutor.execute(executeArguments.toArray(new String[]{})));
+        switch (action) {
+            case "docker":
+                executeDocker(executeArguments);
+                break;
+            case "local":
+                executeLocal(executeArguments);
+                break;
+        }
     }
 }

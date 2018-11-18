@@ -26,6 +26,7 @@
  */
 package com.siamese.executor;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -41,5 +42,14 @@ public class MainTest {
     @Test
     public void testMain() {
         Main.main(new String[]{"local", "java", "-version"});
+    }
+    
+    /**
+     * Test main method.
+     */
+    @Test
+    @Ignore
+    public void testMain2() {
+        Main.main(new String[]{"docker", "echo", "12345"});
     }
 }
