@@ -27,6 +27,7 @@
 package com.siamese.executor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class Main {
         DockerExecutor dockerExecutor = new DockerExecutor();
         System.out.println(dockerExecutor.execute(arguments.toArray(new String[]{})));
     }
-
+            
     /**
      * Execute local.
      *
@@ -53,7 +54,14 @@ public class Main {
      */
     private static void executeLocal(List<String> arguments) {
         LocalExecutor localExecutor = new LocalExecutor();
-        System.out.println(localExecutor.execute(arguments.toArray(new String[]{})));
+        ArrayList<String> commandArguments = new ArrayList<>();
+        for(int i=0; i<arguments.size(); i++) {
+            if (arguments.get(i).equals("--arguments")) {
+                commandArguments.addAll(Arrays.asList(arguments.get(i+1).split(" ")));
+            }
+            
+        }
+        System.out.println(localExecutor.execute(commandArguments.toArray(new String[]{})));
     }
 
     /**

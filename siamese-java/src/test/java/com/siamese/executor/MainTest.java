@@ -41,7 +41,7 @@ public class MainTest {
      */
     @Test
     public void testMain() {
-        Main.main(new String[]{"local", "java", "-version"});
+        Main.main(new String[]{"local", "--arguments", "java -version"});
     }
     
     /**
