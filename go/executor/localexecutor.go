@@ -32,6 +32,7 @@ package executor
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 )
 
 //
@@ -45,8 +46,17 @@ type LocalExecutor struct {
 //
 func (le *LocalExecutor) Execute(arguments []string) (string, error) {
 	var result string
-	commandExecutable := arguments[0]
-	commandArguments := arguments[1:len(arguments)]
+	var commandArguments []string
+
+	for i, argument := range arguments {
+		if argument == "--arguments" {
+			commandArguments = strings.Split(arguments[i+1], " ")
+		}
+	}
+
+	commandExecutable := commandArguments[0]
+	commandArguments = commandArguments[1:len(commandArguments)]
+
 	command := exec.Command(commandExecutable, commandArguments...)
 	output, error := command.CombinedOutput()
 
