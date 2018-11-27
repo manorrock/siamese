@@ -45,7 +45,8 @@ public class DockerExecutorTest {
     public void testExecute() {
         DockerExecutor executor = new DockerExecutor();
         executor.setImage("manorrock/openjdk");
-        String result = executor.execute(new String[]{"java", "-version"});
-        assertTrue(result.contains("Runtime Environment"));
+        executor.setArguments(new String[]{"java", "-version"});
+        executor.execute();
+        assertTrue(executor.getOutput().contains("Runtime Environment"));
     }
 }

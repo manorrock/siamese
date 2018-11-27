@@ -28,15 +28,45 @@ package com.siamese.executor;
 
 /**
  * The base executor.
- * 
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public abstract class BaseExecutor implements Executor {
+
+    /**
+     * Stores the arguments.
+     */
+    protected String[] arguments;
     
+    /**
+     * Stores the output.
+     */
+    protected String output;
+
     /**
      * Stores the timeout (in seconds).
      */
     protected int timeout;
+
+    /**
+     * Get the arguments.
+     *
+     * @return the arguments.
+     */
+    @Override
+    public String[] getArguments() {
+        return arguments;
+    }
+
+    /**
+     * Get the output.
+     * 
+     * @return the output.
+     */
+    @Override
+    public String getOutput() {
+        return output;
+    }
 
     /**
      * Get the timeout.
@@ -48,6 +78,26 @@ public abstract class BaseExecutor implements Executor {
         return timeout;
     }
 
+    /**
+     * Set the arguments.
+     * 
+     * @param arguments the arguments.
+     */
+    @Override
+    public void setArguments(String[] arguments) {
+        this.arguments = arguments;
+    }
+
+    /**
+     * Set the output.
+     * 
+     * @param output the output.
+     */
+    @Override
+    public void setOutput(String output) {
+        this.output = output;
+    }
+    
     /**
      * Set the timeout.
      *

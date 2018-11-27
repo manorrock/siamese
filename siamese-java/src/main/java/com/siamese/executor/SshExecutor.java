@@ -39,7 +39,7 @@ import java.util.Properties;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class SshExecutor extends BaseExecutor {
+public class SshExecutor extends BaseExecutor implements Executor {
     
     /**
      * Stores the hostname.
@@ -58,13 +58,9 @@ public class SshExecutor extends BaseExecutor {
 
     /**
      * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
      */
     @Override
-    public String execute(String[] arguments) {
-        String output;
+    public void execute() {
         StringBuilder builder = new StringBuilder();
         JSch jsch = new JSch();
         try {
@@ -107,7 +103,6 @@ public class SshExecutor extends BaseExecutor {
         } catch (JSchException | IOException e) {
             output = e.getMessage();
         }
-        return output;
     }
     
     /**

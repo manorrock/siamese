@@ -31,42 +31,13 @@ package com.siamese.executor;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class KubernetesExecutor implements Executor {
-    
-    /**
-     * Stores the timeout (in seconds).
-     */
-    private int timeout;
-
+public class KubernetesExecutor extends BaseExecutor implements Executor {
+   
     /**
      * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
      */
     @Override
-    public String execute(String[] arguments) {
+    public void execute() {
         // TODO add Kubernetes execution.
-        return null;
-    }
-
-    /**
-     * Get the timeout.
-     * 
-     * @return the timeout.
-     */
-    @Override
-    public int getTimeout() {
-        return timeout;
-    }
-
-    /**
-     * Set the timeout.
-     * 
-     * @param timeout the timeout.
-     */
-    @Override
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
     }
 }

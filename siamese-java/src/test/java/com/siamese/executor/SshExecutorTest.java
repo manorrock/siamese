@@ -47,7 +47,8 @@ public class SshExecutorTest {
         executor.setHostname("YOUR_HOSTNAME");
         executor.setUsername("YOUR_USERNAME");
         executor.setPassword("YOUR_PASSWORD");
-        String result = executor.execute(new String[] {"echo", "'123'"});
-        assertTrue(result.contains("123"));
+        executor.setArguments(new String[] {"echo", "'123'"});
+        executor.execute();
+        assertTrue(executor.getOutput().contains("123"));
     }
 }

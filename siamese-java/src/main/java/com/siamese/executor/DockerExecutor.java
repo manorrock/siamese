@@ -36,37 +36,28 @@ import java.util.stream.Collectors;
 
 /**
  * The Docker Java executor.
- * 
+ *
  * <p>
- *  Note this executor assumes you have the docker binary in your PATH.
+ * Note this executor assumes you have the docker binary in your PATH.
  * </p>
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DockerExecutor implements Executor {
-    
+public class DockerExecutor extends BaseExecutor implements Executor {
+
     /**
      * Stores the image.
      */
     private String image;
-    
-    /**
-     * Stores the timeout (in seconds).
-     */
-    private int timeout;
 
     /**
      * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
      */
     @Override
-    public String execute(String[] arguments) {
+    public void execute() {
         if (image == null || image.trim().equals("")) {
             image = "manorrock/debian";
         }
-        String output = null;
         Process process;
         ArrayList<String> dockerArguments = new ArrayList<>();
         dockerArguments.add("docker");
@@ -90,37 +81,25 @@ public class DockerExecutor implements Executor {
                 output = reader.lines().collect(Collectors.joining("\n"));
             }
         } catch (IOException ioe) {
-            throw new RuntimeException("An I/O error occurred", ioe);
+            output = ioe.getMessage();
         }
-        return output;
     }
 
     /**
-     * Get the timeout.
+     * Get the image.
      * 
-     * @return the timeout.
+     * @return the image.
      */
-    @Override
-    public int getTimeout() {
-        return timeout;
+    public String getImage() {
+        return image;
     }
 
     /**
      * Set the image.
-     * 
-     * @param image the image. 
+     *
+     * @param image the image.
      */
     public void setImage(String image) {
         this.image = image;
-    }
-    
-    /**
-     * Set the timeout.
-     * 
-     * @param timeout the timeout.
-     */
-    @Override
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
     }
 }

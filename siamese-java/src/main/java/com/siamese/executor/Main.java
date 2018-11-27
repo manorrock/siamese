@@ -44,7 +44,8 @@ public class Main {
      */
     private static void executeDocker(List<String> arguments) {
         DockerExecutor dockerExecutor = new DockerExecutor();
-        System.out.println(dockerExecutor.execute(arguments.toArray(new String[]{})));
+        dockerExecutor.setArguments(arguments.toArray(new String[]{}));
+        dockerExecutor.execute();
     }
             
     /**
@@ -61,7 +62,8 @@ public class Main {
             }
             
         }
-        System.out.println(localExecutor.execute(commandArguments.toArray(new String[]{})));
+        localExecutor.setArguments(commandArguments.toArray(new String[]{}));
+        localExecutor.execute();
     }
 
     /**

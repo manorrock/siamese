@@ -41,13 +41,9 @@ public class LocalExecutor extends BaseExecutor {
 
     /**
      * Execute.
-     *
-     * @param arguments the arguments.
-     * @return the output.
      */
     @Override
-    public String execute(String[] arguments) {
-        String output = null;
+    public void execute() {
         Process process;
         try {
             ProcessBuilder processBuilder = new ProcessBuilder();
@@ -64,18 +60,7 @@ public class LocalExecutor extends BaseExecutor {
                 output = reader.lines().collect(Collectors.joining("\n"));
             }
         } catch (IOException ioe) {
-            throw new RuntimeException("An I/O error occurred", ioe);
+            output = ioe.getMessage();
         }
-        return output;
-    }
-
-    /**
-     * Maim method.
-     * 
-     * @param arguments the arguments.
-     */
-    public static void main(String[] arguments) {
-        LocalExecutor executor = new LocalExecutor();
-        System.out.println(executor.execute(arguments));
     }
 }

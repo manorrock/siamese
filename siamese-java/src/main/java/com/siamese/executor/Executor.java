@@ -34,6 +34,20 @@ package com.siamese.executor;
 public interface Executor {
     
     /**
+     * Get the arguments.
+     * 
+     * @return the arguments.
+     */
+    public String[] getArguments();
+    
+    /**
+     * Get the output.
+     * 
+     * @return the output.
+     */
+    public String getOutput();
+    
+    /**
      * Get the timeout (in seconds).
      * 
      * @return the timeout.
@@ -42,11 +56,22 @@ public interface Executor {
     
     /**
      * Execute.
+     */
+    public void execute();
+    
+    /**
+     * Set the arguments.
      * 
      * @param arguments the arguments.
-     * @return the result.
      */
-    public String execute(String[] arguments);
+    public void setArguments(String[] arguments);
+    
+    /**
+     * Set the output.
+     * 
+     * @param output the output.
+     */
+    public void setOutput(String output);
     
     /**
      * Set the execution timeout (in seconds).
