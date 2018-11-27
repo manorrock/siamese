@@ -33,20 +33,34 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/manorrock/siamese/go/executor"
 )
 
 func main() {
-	var error error
-	var output string
 	arguments := os.Args[1:]
 	if arguments[0] == "local" {
 		executor := executor.LocalExecutor{}
-		output, error = executor.Execute(os.Args[2:])
+		for i, argument := range arguments {
+			if argument == "--arguments" {
+				executor.Arguments = strings.Split(arguments[i+1], " ")
+			}
+		}
+		executor.Execute()
+		fmt.Printf("%s", executor.Output)
 	}
-	if error != nil {
-	} else {
-		fmt.Printf("%s", output)
+	if arguments[0] == "docker" {
+		executor := executor.DockerExecutor{}
+		for i, argument := range arguments {
+			if argument == "--arguments" {
+				executor.Arguments = strings.Split(arguments[i+1], " ")
+			}
+			if argument == "--image" {
+				executor.Image = argument[i+1]
+			}
+		}
+		executor.Execute()
+		fmt.Printf("%s", executor.Output)
 	}
 }

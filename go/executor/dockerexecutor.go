@@ -29,31 +29,17 @@
 //
 package executor
 
-import (
-	"fmt"
-	"os/exec"
-)
-
 //
-// LocalExecutor - a local executor
+// DockerExecutor - a Docker executor
 //
-type LocalExecutor struct {
+type DockerExecutor struct {
 	Arguments []string
+	Image     string
 	Output    string
 }
 
 //
 // Execute - perform the execution
 //
-func (executor *LocalExecutor) Execute() {
-	commandExecutable := executor.Arguments[0]
-	commandArguments := executor.Arguments[1:len(executor.Arguments)]
-	command := exec.Command(commandExecutable, commandArguments...)
-	commandOutput, commandError := command.CombinedOutput()
-
-	if commandError != nil {
-		executor.Output = fmt.Sprintf("%s", commandError)
-	} else {
-		executor.Output = fmt.Sprintf("%s", commandOutput)
-	}
+func (executor *DockerExecutor) Execute() {
 }
