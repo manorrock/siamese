@@ -29,6 +29,13 @@
 //
 package executor
 
+import (
+	"fmt"
+	"os/exec"
+)
+
+// "strings"
+
 //
 // DockerExecutor - a Docker executor
 //
@@ -42,4 +49,24 @@ type DockerExecutor struct {
 // Execute - perform the execution
 //
 func (executor *DockerExecutor) Execute() {
+	if executor.Image == "" {
+		executor.Image = "manorrock/debian"
+	}
+	var commandArguments = make([]string, 0)
+	commandArguments = append(commandArguments, "run")
+	commandArguments = append(commandArguments, "--rm")
+	commandArguments = append(commandArguments, "-i")
+	commandArguments = append(commandArguments, executor.Image)
+	if executor.Arguments != nil {
+		commandArguments = append(commandArguments, executor.Arguments...)
+	}
+
+	command := exec.Command("docker", commandArguments...)
+	commandOutput, commandError := command.CombinedOutput()
+
+	if commandError != nil {
+		executor.Output = fmt.Sprintf("%s", commandError)
+	} else {
+		executor.Output = fmt.Sprintf("%s", commandOutput)
+	}
 }

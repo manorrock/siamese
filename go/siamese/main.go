@@ -57,10 +57,10 @@ func main() {
 				executor.Arguments = strings.Split(arguments[i+1], " ")
 			}
 			if argument == "--image" {
-				executor.Image = argument[i+1]
+				executor.Image = arguments[i+1]
 			}
 		}
 		executor.Execute()
-		fmt.Printf("%s", executor.Output)
+		fmt.Printf("%s\n", executor.Output)
 	}
 }
