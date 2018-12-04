@@ -126,7 +126,6 @@
         </developer>
     </developers>
     <modules>
-        <module>siamese</module>
         <module>siamese-java</module>
     </modules>
     <profiles>
