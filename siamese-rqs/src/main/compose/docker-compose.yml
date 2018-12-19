@@ -1,0 +1,8 @@
+version: '3'
+services:
+  calico:
+    image: manorrock/siamese-rqs
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./data/siamese:/mnt
