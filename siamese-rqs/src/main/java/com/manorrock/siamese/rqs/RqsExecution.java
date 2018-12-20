@@ -31,4 +31,28 @@ package com.manorrock.siamese.rqs;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class RqsExecution {
+
+    /**
+     * Stores the id.
+     */
+    private String id;
+    
+    /**
+     * Get the id.
+     * 
+     * @return the id.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the id.
+     * 
+     * @param id the id.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+    
 }

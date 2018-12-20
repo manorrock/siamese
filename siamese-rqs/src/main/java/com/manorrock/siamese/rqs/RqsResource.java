@@ -30,8 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  * A repo resource
@@ -84,12 +87,24 @@ public class RqsResource {
 
     /**
      * Get all the executions.
-     * 
+     *
      * @return the list of executions.
      */
     @GET
-    @Path("")
     public List<RqsExecution> getAll() {
         return new ArrayList<>();
+    }
+
+    /**
+     * Create an executions.
+     *
+     * @param execution the execution to create.
+     * @return the execution.
+     */
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public RqsExecution create(RqsExecution execution) {
+        return execution;
     }
 }
