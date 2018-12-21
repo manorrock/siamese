@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -106,5 +107,15 @@ public class RqsResource {
     @Produces("application/json")
     public RqsExecution create(RqsExecution execution) {
         return execution;
+    }
+    
+    /**
+     * Delete an executions.
+     *
+     * @param execution the execution to delete.
+     */
+    @DELETE
+    @Consumes("application/json")
+    public void delete(RqsExecution execution) {
     }
 }
