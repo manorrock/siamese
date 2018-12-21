@@ -9,11 +9,11 @@
         <groupId>com.manorrock.siamese</groupId>
         <version>1.3.0-SNAPSHOT</version>
     </parent>
-    <artifactId>siamese-rqs</artifactId>
+    <artifactId>siamese-queue</artifactId>
     <packaging>war</packaging>
-    <name>Manorrock Siamese - Remote Queue Service</name>
+    <name>Manorrock Siamese - Queue</name>
     <build>
-        <finalName>siamese-rqs</finalName>
+        <finalName>siamese-queue</finalName>
     </build>
     <dependencies>
         <dependency>

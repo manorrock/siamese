@@ -127,7 +127,7 @@
         </developer>
     </developers>
     <modules>
-        <module>siamese-rqs</module>
+        <module>siamese-queue</module>
     </modules>
     <profiles>
         <profile>

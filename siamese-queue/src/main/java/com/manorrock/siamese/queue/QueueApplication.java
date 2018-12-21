@@ -23,36 +23,16 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.rqs;
+package com.manorrock.siamese.queue;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
- * The RQS Execution class.
- * 
+ * The Queue application.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class RqsExecution {
-
-    /**
-     * Stores the id.
-     */
-    private String id;
-    
-    /**
-     * Get the id.
-     * 
-     * @return the id.
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Set the id.
-     * 
-     * @param id the id.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-    
+@ApplicationPath("api")
+public class QueueApplication extends Application {
 }

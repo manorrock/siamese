@@ -23,7 +23,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.rqs;
+package com.manorrock.siamese.queue;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,17 +38,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 /**
- * A repo resource
+ * The Queue JAX-RS resource.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 @Path("")
-public class RqsResource {
+public class QueueResource {
 
     /**
      * Stores the logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(RqsResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(QueueResource.class.getName());
 
     /**
      * Stores the root directory.
@@ -63,7 +63,7 @@ public class RqsResource {
     /**
      * Constructor.
      */
-    public RqsResource() {
+    public QueueResource() {
     }
 
     /**
@@ -77,7 +77,7 @@ public class RqsResource {
 
         if (rootDirectoryFilename == null || "".equals(rootDirectoryFilename.trim())) {
             rootDirectoryFilename = System.getProperty("ROOT_DIRECTORY",
-                    System.getProperty("user.home") + "/.siamese/rqs");
+                    System.getProperty("user.home") + "/.siamese/queue");
         }
 
         rootDirectory = new File(rootDirectoryFilename);
@@ -92,7 +92,7 @@ public class RqsResource {
      * @return the list of executions.
      */
     @GET
-    public List<RqsExecution> getAll() {
+    public List<QueueExecution> getAll() {
         return new ArrayList<>();
     }
 
@@ -105,7 +105,7 @@ public class RqsResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public RqsExecution create(RqsExecution execution) {
+    public QueueExecution create(QueueExecution execution) {
         return execution;
     }
     
@@ -116,6 +116,6 @@ public class RqsResource {
      */
     @DELETE
     @Consumes("application/json")
-    public void delete(RqsExecution execution) {
+    public void delete(QueueExecution execution) {
     }
 }
