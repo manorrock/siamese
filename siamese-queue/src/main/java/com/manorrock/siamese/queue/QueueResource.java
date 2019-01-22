@@ -27,7 +27,9 @@ package com.manorrock.siamese.queue;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
@@ -49,6 +51,11 @@ public class QueueResource {
      * Stores the logger.
      */
     private static final Logger LOGGER = Logger.getLogger(QueueResource.class.getName());
+
+    /**
+     * Stores the executions.
+     */
+    private HashMap<String, QueueExecution> executions = new HashMap<>();
 
     /**
      * Stores the root directory.
@@ -106,9 +113,13 @@ public class QueueResource {
     @Consumes("application/json")
     @Produces("application/json")
     public QueueExecution create(QueueExecution execution) {
+        while (executions.containsKey(execution.getId())) {
+            execution.setId(UUID.randomUUID().toString());
+        }
+        executions.put(execution.getId(), execution);
         return execution;
     }
-    
+
     /**
      * Delete an executions.
      *
