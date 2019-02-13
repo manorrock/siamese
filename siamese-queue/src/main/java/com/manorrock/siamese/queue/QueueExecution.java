@@ -25,12 +25,14 @@
  */
 package com.manorrock.siamese.queue;
 
+import java.io.Serializable;
+
 /**
  * The Queue Execution class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class QueueExecution {
+public class QueueExecution implements Serializable {
 
     /**
      * Stores the id.
