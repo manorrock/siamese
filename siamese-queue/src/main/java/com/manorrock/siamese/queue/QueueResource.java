@@ -117,6 +117,7 @@ public class QueueResource {
     @Consumes("application/json")
     @Produces("application/json")
     public QueueExecution create(QueueExecution execution) {
+        execution.setId(UUID.randomUUID().toString());
         while (executions.containsKey(execution.getId())) {
             execution.setId(UUID.randomUUID().toString());
         }
