@@ -29,13 +29,12 @@
  */
 package com.manorrock.siamese.queue;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -49,6 +48,7 @@ import javax.ws.rs.Produces;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 @Path("")
+@Singleton
 public class QueueResource {
 
     /**
@@ -59,43 +59,7 @@ public class QueueResource {
     /**
      * Stores the executions.
      */
-    private HashMap<String, QueueExecution> executions = new HashMap<>();
-
-    /**
-     * Stores the root directory.
-     */
-    private File rootDirectory;
-
-    /**
-     * Stores the root directory filename.
-     */
-    private String rootDirectoryFilename;
-
-    /**
-     * Constructor.
-     */
-    public QueueResource() {
-    }
-
-    /**
-     * Initialize the bean.
-     */
-    @PostConstruct
-    public void initialize() {
-        if (rootDirectoryFilename == null || "".equals(rootDirectoryFilename.trim())) {
-            rootDirectoryFilename = System.getenv("ROOT_DIRECTORY");
-        }
-
-        if (rootDirectoryFilename == null || "".equals(rootDirectoryFilename.trim())) {
-            rootDirectoryFilename = System.getProperty("ROOT_DIRECTORY",
-                    System.getProperty("user.home") + "/.siamese/queue");
-        }
-
-        rootDirectory = new File(rootDirectoryFilename);
-        if (!rootDirectory.exists()) {
-            rootDirectory.mkdirs();
-        }
-    }
+    private final HashMap<String, QueueExecution> executions = new HashMap<>();
 
     /**
      * Get all the executions.
@@ -103,8 +67,9 @@ public class QueueResource {
      * @return the list of executions.
      */
     @GET
-    public List<QueueExecution> getAll() {
-        return new ArrayList<>();
+    public Collection<QueueExecution> getAll() {
+        LOGGER.log(Level.FINEST, "Get all: {0}", executions.values());
+        return executions.values();
     }
 
     /**
@@ -117,21 +82,25 @@ public class QueueResource {
     @Consumes("application/json")
     @Produces("application/json")
     public QueueExecution create(QueueExecution execution) {
+        LOGGER.log(Level.FINEST, "Create queue execution: {0}", execution);
         execution.setId(UUID.randomUUID().toString());
         while (executions.containsKey(execution.getId())) {
             execution.setId(UUID.randomUUID().toString());
         }
         executions.put(execution.getId(), execution);
+        LOGGER.log(Level.FINEST, "Create queue execution with id: {0}", execution.getId());
         return execution;
     }
 
     /**
-     * Delete an executions.
+     * Delete an execution.
      *
      * @param execution the execution to delete.
      */
     @DELETE
     @Consumes("application/json")
     public void delete(QueueExecution execution) {
+        LOGGER.log(Level.FINEST, "Delete execution: {0}", execution);
+        executions.remove(execution.getId());
     }
 }
