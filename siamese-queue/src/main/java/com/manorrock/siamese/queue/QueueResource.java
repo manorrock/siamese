@@ -95,12 +95,12 @@ public class QueueResource {
     /**
      * Delete an execution.
      *
-     * @param execution the execution to delete.
+     * @param executionId the id of the execution to delete.
      */
     @DELETE
     @Consumes("application/json")
-    public void delete(QueueExecution execution) {
-        LOGGER.log(Level.FINEST, "Delete execution: {0}", execution);
-        executions.remove(execution.getId());
+    public void delete(String executionId) {
+        LOGGER.log(Level.FINEST, "Delete execution with id: {0}", executionId);
+        executions.remove(executionId);
     }
 }
