@@ -97,7 +97,7 @@ public class QueueExecutionTest {
      */
     @RunAsClient
     @Test
-    public void testCreatingQueueExecution() throws Exception {
+    public void testCreate() throws Exception {
         WebTarget target = client.target(baseUrl.toURI());
         QueueExecution execution = new QueueExecution();
         target.path("api").request("application/json").post(Entity.json(execution));
@@ -110,7 +110,7 @@ public class QueueExecutionTest {
      */
     @RunAsClient
     @Test
-    public void testListingQueueExecutions() throws Exception {
+    public void testGetAll() throws Exception {
         WebTarget target = client.target(baseUrl.toURI());
         QueueExecution execution = new QueueExecution();
         target.path("api").request("application/json").post(Entity.json(execution));
@@ -118,5 +118,24 @@ public class QueueExecutionTest {
         List<QueueExecution> executions = target.path("api").request().
                 get(new GenericType<List<QueueExecution>>(){});
         assertFalse(executions.isEmpty());
+    }
+
+    /**
+     * Test deleting an execution..
+     *
+     * @throws Exception when a serious error occurs.
+     */
+    @RunAsClient
+    @Test
+    public void testDelete() throws Exception {
+        WebTarget target = client.target(baseUrl.toURI());
+        QueueExecution execution = new QueueExecution();
+        target.path("api").request("application/json").post(Entity.json(execution));
+        target = client.target(baseUrl.toURI());
+        List<QueueExecution> executions = target.path("api").request().
+                get(new GenericType<List<QueueExecution>>(){});
+        assertFalse(executions.isEmpty());
+        execution = executions.get(0);
+        target.path("api").path(execution.getId()).request("application/json").delete();
     }
 }
