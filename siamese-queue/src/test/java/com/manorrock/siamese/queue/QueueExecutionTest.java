@@ -40,6 +40,7 @@ import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -100,7 +101,9 @@ public class QueueExecutionTest {
     public void testCreate() throws Exception {
         WebTarget target = client.target(baseUrl.toURI());
         QueueExecution execution = new QueueExecution();
-        target.path("api").request("application/json").post(Entity.json(execution));
+        execution = target.path("api").request().post(Entity.json(execution), QueueExecution.class);
+        assertNotNull(execution);
+        target.path("api").path(execution.getId()).request().delete();
     }
 
     /**
@@ -113,11 +116,15 @@ public class QueueExecutionTest {
     public void testGetAll() throws Exception {
         WebTarget target = client.target(baseUrl.toURI());
         QueueExecution execution = new QueueExecution();
-        target.path("api").request("application/json").post(Entity.json(execution));
+        target.path("api").request().post(Entity.json(execution));
         target = client.target(baseUrl.toURI());
         List<QueueExecution> executions = target.path("api").request().
-                get(new GenericType<List<QueueExecution>>(){});
+                get(new GenericType<List<QueueExecution>>() {
+                });
         assertFalse(executions.isEmpty());
+        for (QueueExecution item : executions) {
+            target.path("api").path(item.getId()).request().delete();
+        }
     }
 
     /**
@@ -130,12 +137,28 @@ public class QueueExecutionTest {
     public void testDelete() throws Exception {
         WebTarget target = client.target(baseUrl.toURI());
         QueueExecution execution = new QueueExecution();
-        target.path("api").request("application/json").post(Entity.json(execution));
+        target.path("api").request().post(Entity.json(execution));
         target = client.target(baseUrl.toURI());
         List<QueueExecution> executions = target.path("api").request().
-                get(new GenericType<List<QueueExecution>>(){});
+                get(new GenericType<List<QueueExecution>>() {
+                });
         assertFalse(executions.isEmpty());
         execution = executions.get(0);
-        target.path("api").path(execution.getId()).request("application/json").delete();
+        target.path("api").path(execution.getId()).request().delete();
+    }
+
+    /**
+     * Test getting a queue execution.
+     *
+     * @throws Exception when a serious error occurs.
+     */
+    @RunAsClient
+    @Test
+    public void testGet() throws Exception {
+        WebTarget target = client.target(baseUrl.toURI());
+        QueueExecution execution = new QueueExecution();
+        execution = target.path("api").request("application/json").post(Entity.json(execution), QueueExecution.class);
+        execution = target.path("api").path(execution.getId()).request().get(QueueExecution.class);
+        assertNotNull(execution);
     }
 }
