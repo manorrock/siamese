@@ -40,6 +40,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -67,6 +68,7 @@ public class QueueResource {
      * @return the list of executions.
      */
     @GET
+    @Produces("application/json")
     public Collection<QueueExecution> getAll() {
         LOGGER.log(Level.FINEST, "Get all: {0}", executions.values());
         return executions.values();
@@ -95,12 +97,30 @@ public class QueueResource {
     /**
      * Delete an execution.
      *
-     * @param executionId the id of the execution to delete.
+     * @param id the id of the execution to delete.
      */
     @DELETE
+    @Path("{id}")
     @Consumes("application/json")
-    public void delete(String executionId) {
-        LOGGER.log(Level.FINEST, "Delete execution with id: {0}", executionId);
-        executions.remove(executionId);
+    public void delete(@PathParam("id") String id) {
+        LOGGER.log(Level.FINEST, "Delete execution with id: {0}", id);
+        executions.remove(id);
+    }
+    
+    
+    /**
+     * Get an execution.
+     *
+     * @param id the id of the execution.
+     * @return the execution.
+     */
+    @GET
+    @Produces("application/json")
+    @Path("{id}")
+    public QueueExecution get(@PathParam("id") String id) {
+        LOGGER.log(Level.FINEST, "Get queue execution: {0}", id);
+        QueueExecution execution = executions.get(id);
+        LOGGER.log(Level.FINEST, "Got queue execution: {0}", execution);
+        return execution;
     }
 }
