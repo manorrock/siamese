@@ -44,12 +44,26 @@ public class QueueExecution implements Serializable {
     private String id;
     
     /**
+     * Stores the status.
+     */
+    private String status;
+    
+    /**
      * Get the id.
      * 
      * @return the id.
      */
     public String getId() {
         return id;
+    }
+    
+    /**
+     * Get the status.
+     * 
+     * @return the status.
+     */
+    public String getStatus() {
+        return status;
     }
 
     /**
@@ -59,5 +73,14 @@ public class QueueExecution implements Serializable {
      */
     public void setId(String id) {
         this.id = id;
+    }
+    
+    /**
+     * Set the status.
+     * 
+     * @param status the status.
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
