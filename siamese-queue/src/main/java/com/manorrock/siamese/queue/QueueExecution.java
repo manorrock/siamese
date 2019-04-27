@@ -30,6 +30,7 @@
 package com.manorrock.siamese.queue;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * The Queue Execution class.
@@ -47,6 +48,11 @@ public class QueueExecution implements Serializable {
      * Stores the status.
      */
     private String status;
+    
+    /**
+     * Stores the updated date.
+     */
+    private String updatedDate;
     
     /**
      * Get the id.
@@ -67,6 +73,15 @@ public class QueueExecution implements Serializable {
     }
 
     /**
+     * Get the updated date.
+     * 
+     * @return the updated date.
+     */
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    /**
      * Set the id.
      * 
      * @param id the id.
@@ -82,5 +97,14 @@ public class QueueExecution implements Serializable {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * Set the updated date.
+     * 
+     * @param updatedDate the updated date.
+     */
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }
