@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{.JobName}}
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      containers:
+      - name: siamese
+        image: {{.Image}}
+        command: [{{.Command}}]
+      restartPolicy: Never
+  backoffLimit: 0
