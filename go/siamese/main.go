@@ -34,7 +34,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/manorrock/siamese-go/executor"
+	"github.com/manorrock/siamese/go/executor"
 )
 
 func main() {
