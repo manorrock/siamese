@@ -1,7 +1,7 @@
-# Manorrock Siamese Go
+# Manorrock Siamese CLI
 
-Manorrock Siamese Go delivers you with a Go binary that can be used to perform
-executions, either local or remote.
+Manorrock Siamese CLI delivers you with a command line binary that can be used to
+perform executions, either local or remote.
 
 ## Using the Local executor
 
@@ -46,14 +46,3 @@ present you with the result.
 ```
   siamese kubernetes --arguments 'echo 1234'
 ```
-
-## Our code of Conduct
-
-See [Code of Conduct](CODE_OF_CONDUCT.md)
-
-## Important notice
-
-Note if you file issues or answer questions on the issue tracker and/or issue 
-pull requests you agree that those contributions will be owned by Manorrock.com
-and that Manorrock.com can use those contributions in any manner Manorrock.com
-so desires.
