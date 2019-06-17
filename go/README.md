@@ -1,7 +1,7 @@
-# Manorrock Siamese Go
+# Manorrock Siamese CLI
 
-Manorrock Siamese Go delivers you with a Go binary that can be used to perform
-executions, either local or remote.
+Manorrock Siamese CLI delivers you with a command line binary that can be used to
+perform executions, either local or remote.
 
 ## Using the Local executor
 

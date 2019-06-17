@@ -15,6 +15,10 @@ the following command line:
 This will expose the queue on http://localhost:8080/api and you can then use 
 the client to interact with the queue.
 
+## Using the Manorrock Siamese CLI
+
+See the [Manorrock Siamese CLI](go/README.md)
+
 ## How do I contribute?
 
 See [Contributing](CONTRIBUTING.md)
