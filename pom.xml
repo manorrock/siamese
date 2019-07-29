@@ -138,6 +138,7 @@
     </developers>
     <modules>
         <module>siamese-queue</module>
+        <module>siamese-client</module>
     </modules>
     <profiles>
         <profile>
