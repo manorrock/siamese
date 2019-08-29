@@ -30,25 +30,30 @@
 package com.manorrock.siamese.cli;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * The 'local' executor.
+ * The 'docker' executor.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class LocalExecutor implements Executor {
+public class DockerExecutor implements Executor {
 
     /**
      * Stores our arguments.
      */
     private List<String> arguments;
+    
+    /**
+     * Stores our image.
+     */
+    private String image;
 
     /**
      * Stores the working directory.
@@ -61,27 +66,42 @@ public class LocalExecutor implements Executor {
      * @param arguments the arguments.
      * @return the output.
      */
+    @Override
     public String execute(List<String> arguments) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < arguments.size(); i++) {
             if (arguments.get(i).equals("--arguments")) {
                 this.arguments = Arrays.asList(arguments.get(i + 1).split(" "));
             }
+            if (arguments.get(i).equals("--image")) {
+                image = arguments.get(i + 1);
+            }
             if (arguments.get(i).equals("--workingDirectory")) {
                 workingDirectory = arguments.get(i + 1);
             }
         }
-        ProcessBuilder processBuilder = new ProcessBuilder(this.arguments);
-        if (workingDirectory != null) {
-            processBuilder.directory(new File(workingDirectory));
+        if (image == null) {
+            image = "manorrock/debian";
         }
+        List<String> commandArguments = new ArrayList<>();
+        commandArguments.add("docker");
+        commandArguments.add("run");
+        commandArguments.add("--rm");
+        commandArguments.add("-i");
+        if (workingDirectory != null) {
+            commandArguments.add("-w");
+            commandArguments.add(workingDirectory);
+	}
+        commandArguments.add(image);
+        commandArguments.addAll(this.arguments);
+        ProcessBuilder processBuilder = new ProcessBuilder(commandArguments);
         try {
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    result.append(line).append("\n");
+                    result.append(line);
                 }
             }
         } catch (IOException ioe) {

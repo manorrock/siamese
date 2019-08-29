@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
 public class LocalExecutorTest {
     
     /**
-     * Test of execute method, of class LocalExecutor.
+     * Test execute method.
      */
     @Test
     public void testExecute() {
@@ -51,6 +51,6 @@ public class LocalExecutorTest {
         arguments.add("echo 1234");
         LocalExecutor executor = new LocalExecutor();
         String result = executor.execute(arguments);
-        assertEquals("1234", result);
+        assertEquals("1234\n", result);
     }
 }

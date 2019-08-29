@@ -23,6 +23,7 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
+                            <buildArgs>--no-fallback</buildArgs>
                             <imageName>siamese</imageName>
                             <mainClass>com.manorrock.siamese.cli.SiameseCli</mainClass>
                         </configuration>
@@ -32,6 +33,11 @@
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

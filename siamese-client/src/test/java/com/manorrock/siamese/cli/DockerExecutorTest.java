@@ -29,37 +29,27 @@
  */
 package com.manorrock.siamese.cli;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
- * The Siamese CLI.
+ * The JUnit tests for the DockerExecutor.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class SiameseCli {
+public class DockerExecutorTest {
 
     /**
-     * Main method.
-     *
-     * @param arguments the arguments.
+     * Test execute method.
      */
-    public static void main(String[] arguments) {
-        String output = "";
-        if (arguments.length > 0) {
-            Executor executor = null;
-            switch(arguments[0]) {
-                case "docker": executor = new DockerExecutor(); break;
-                case "local" : executor = new LocalExecutor(); break;
-                case "ssh" : executor = new SshExecutor(); break;
-            }
-            if (executor != null) {
-                List<String> executorArguments = new ArrayList(Arrays.asList(arguments));
-                executorArguments.remove(0);
-                output = executor.execute(executorArguments);
-            }
-        }
-        System.out.printf("%s\n", output);
+    @Test
+    public void testExecute() {
+        /*
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        DockerExecutor executor = new DockerExecutor();
+        String result = executor.execute(arguments);
+        assertEquals("1234\n", result);
+        */
     }
 }

@@ -29,37 +29,20 @@
  */
 package com.manorrock.siamese.cli;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * The Siamese CLI.
- *
+ * The Executor API.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class SiameseCli {
+public interface Executor {
 
     /**
-     * Main method.
+     * Execute the executor.
      *
      * @param arguments the arguments.
+     * @return the output.
      */
-    public static void main(String[] arguments) {
-        String output = "";
-        if (arguments.length > 0) {
-            Executor executor = null;
-            switch(arguments[0]) {
-                case "docker": executor = new DockerExecutor(); break;
-                case "local" : executor = new LocalExecutor(); break;
-                case "ssh" : executor = new SshExecutor(); break;
-            }
-            if (executor != null) {
-                List<String> executorArguments = new ArrayList(Arrays.asList(arguments));
-                executorArguments.remove(0);
-                output = executor.execute(executorArguments);
-            }
-        }
-        System.out.printf("%s\n", output);
-    }
+    public String execute(List<String> arguments);
 }
