@@ -1,17 +1,6 @@
 # Manorrock Siamese
 
-```
-This project has been deprecated. If you are looking for CI/CD you should pick
-one of the solutions mentioned below:
-
-    * Azure Pipelines
-    * GitHub Actions
-    * Jenkins
-
-Note this repository has been deprecated and will be removed August 1st, 2020.
-```
-
-Manorrock Siamese is a continous CI/CD delivery platform that is capable of
+Manorrock Siamese is a continuous execution platform that is capable of
 scaling effortlessly. Give it a try!
 
 ## Using Manorrock Siamese Queue
