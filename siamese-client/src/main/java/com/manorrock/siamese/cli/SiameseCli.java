@@ -55,7 +55,7 @@ public class SiameseCli {
                 case "ssh" : executor = new SshExecutor(); break;
             }
             if (executor != null) {
-                List<String> executorArguments = new ArrayList(Arrays.asList(arguments));
+                List<String> executorArguments = new ArrayList<>(Arrays.asList(arguments));
                 executorArguments.remove(0);
                 output = executor.execute(executorArguments);
             }
