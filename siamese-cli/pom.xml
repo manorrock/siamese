@@ -7,8 +7,8 @@
         <artifactId>project</artifactId>
         <version>1.8.0-SNAPSHOT</version>
     </parent>
-    <artifactId>siamese-client</artifactId>
-    <name>Manorrock Siamese - Client</name>
+    <artifactId>siamese-cli</artifactId>
+    <name>Manorrock Siamese - Cli</name>
     <packaging>jar</packaging>
     <build>
         <plugins>
