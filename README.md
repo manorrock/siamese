@@ -17,7 +17,7 @@ the client to interact with the queue.
 
 ## Using the Manorrock Siamese CLI
 
-See the [Manorrock Siamese CLI](go/README.md)
+See the [Manorrock Siamese CLI](siamese-cli/README.md)
 
 ## How do I contribute?
 
