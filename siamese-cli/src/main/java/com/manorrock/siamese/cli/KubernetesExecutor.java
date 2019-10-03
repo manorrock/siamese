@@ -29,10 +29,12 @@
  */
 package com.manorrock.siamese.cli;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * The Kubernetes executor.
@@ -98,7 +100,13 @@ public class KubernetesExecutor implements Executor {
                 command = "\"\"";
             }
         }
-        // use property resource bundle to fill in job definition
+
+        ResourceBundle bundle = ResourceBundle.getBundle(KubernetesExecutor.class.getName());
+        String jobDefinition = bundle.getString("jobDefinition");
+        String jobString = MessageFormat.format(jobDefinition, jobName, image, command);
+
+        System.out.println(jobString);
+
         // write job definition to a file
         // execute the job use the job definition
         // wait for the job to complete

@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings
+.vscode/
 nb-configuration.xml
 nbactions.xml
 nbproject/
