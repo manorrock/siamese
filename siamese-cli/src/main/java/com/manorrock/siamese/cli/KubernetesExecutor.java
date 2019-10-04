@@ -29,6 +29,9 @@
  */
 package com.manorrock.siamese.cli;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,17 +50,17 @@ public class KubernetesExecutor implements Executor {
      * Stores our arguments.
      */
     private List<String> arguments;
-    
+
     /**
      * Stores the command.
      */
     private String command;
-    
+
     /**
      * Stores our image.
      */
     private String image;
-    
+
     /**
      * Stores the job name.
      */
@@ -90,7 +93,7 @@ public class KubernetesExecutor implements Executor {
             if (this.arguments.size() > 0) {
                 Iterator<String> iterator = this.arguments.iterator();
                 command = "";
-                while(iterator.hasNext()) {
+                while (iterator.hasNext()) {
                     command += "\"" + iterator.next() + "\"";
                     if (iterator.hasNext()) {
                         command += ",";
@@ -105,9 +108,18 @@ public class KubernetesExecutor implements Executor {
         String jobDefinition = bundle.getString("jobDefinition");
         String jobString = MessageFormat.format(jobDefinition, jobName, image, command);
 
-        System.out.println(jobString);
+        File jobFile;
+        try {
+            jobFile = File.createTempFile("siamese", "tmp");
+            PrintStream printStream = new PrintStream(jobFile);
+            printStream.println(jobString);
+            printStream.flush();
+            printStream.close();
+            jobFile.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // write job definition to a file
         // execute the job use the job definition
         // wait for the job to complete
         // get the logs for the job
