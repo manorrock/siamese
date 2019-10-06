@@ -108,25 +108,30 @@ public class KubernetesExecutor implements Executor {
         String jobDefinition = bundle.getString("jobDefinition");
         String jobString = MessageFormat.format(jobDefinition, jobName, image, command);
 
-        File jobFile;
+        File jobFile = null;
         try {
             jobFile = File.createTempFile("siamese", "tmp");
-            PrintStream printStream = new PrintStream(jobFile);
-            printStream.println(jobString);
-            printStream.flush();
-            printStream.close();
+            try (PrintStream printStream = new PrintStream(jobFile)) {
+                printStream.println(jobString);
+                printStream.flush();
+            }
             jobFile.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // execute the job use the job definition
+        LocalExecutor localExecutor = new LocalExecutor();
+        ArrayList<String> localArguments = new ArrayList<>();
+        localArguments.add("--arguments");
+        localArguments.add("kubectl apply -f" + jobFile.getAbsolutePath());
+        localExecutor.execute(localArguments);
+        
         // wait for the job to complete
         // get the logs for the job
         
         String filename = "filename";
-        LocalExecutor localExecutor = new LocalExecutor();
-        ArrayList<String> localArguments = new ArrayList<>();
+        localExecutor = new LocalExecutor();
+        localArguments = new ArrayList<>();
         localArguments.add("--arguments");
         localArguments.add("kubectl delete -f " + filename);
         localExecutor.execute(localArguments);
