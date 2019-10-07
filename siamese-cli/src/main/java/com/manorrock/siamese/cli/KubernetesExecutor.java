@@ -126,7 +126,12 @@ public class KubernetesExecutor implements Executor {
         localArguments.add("kubectl apply -f" + jobFile.getAbsolutePath());
         localExecutor.execute(localArguments);
         
-        // wait for the job to complete
+        localExecutor = new LocalExecutor();
+        localArguments = new ArrayList<>();
+        localArguments.add("--arguments");
+        localArguments.add("kubectl wait --for=condition=complete --timeout=300s jobs/" + jobName);
+        localExecutor.execute(arguments);
+        
         // get the logs for the job
         
         String filename = "filename";
