@@ -130,15 +130,18 @@ public class KubernetesExecutor implements Executor {
         localArguments = new ArrayList<>();
         localArguments.add("--arguments");
         localArguments.add("kubectl wait --for=condition=complete --timeout=300s jobs/" + jobName);
-        localExecutor.execute(arguments);
+        localExecutor.execute(localArguments);
         
-        // get the logs for the job
-        
-        String filename = "filename";
         localExecutor = new LocalExecutor();
         localArguments = new ArrayList<>();
         localArguments.add("--arguments");
-        localArguments.add("kubectl delete -f " + filename);
+        localArguments.add("kubectl logs jobs/" + jobName);
+        result.append(localExecutor.execute(localArguments));
+        
+        localExecutor = new LocalExecutor();
+        localArguments = new ArrayList<>();
+        localArguments.add("--arguments");
+        localArguments.add("kubectl delete -f " + jobFile.getAbsolutePath());
         localExecutor.execute(localArguments);
         
         return result.toString();
