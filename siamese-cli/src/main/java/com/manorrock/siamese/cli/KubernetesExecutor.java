@@ -86,11 +86,13 @@ public class KubernetesExecutor implements Executor {
         if (image == null) {
             image = "manorrock/debian";
         }
-        if (jobName == null || jobName.trim().equals("")) {
+        if (jobName == null || (jobName != null && jobName.trim().equals(""))) {
             jobName = "siamese-" + System.currentTimeMillis();
         }
-        if (command == null || command.trim().equals("")) {
-            if (this.arguments.size() > 0) {
+        if (command == null || (command != null && command.trim().equals(""))) {
+            if (this.arguments == null) {
+                command = "\"\"";
+            } else if (this.arguments.size() > 0) {
                 Iterator<String> iterator = this.arguments.iterator();
                 command = "";
                 while (iterator.hasNext()) {

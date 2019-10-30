@@ -46,9 +46,14 @@ import java.util.List;
 public class LocalExecutor implements Executor {
 
     /**
-     * Stores our arguments.
+     * Stores our process arguments.
      */
-    private List<String> arguments;
+    private List<String> processArguments;
+    
+    /**
+     * Stores the verbose flag.
+     */
+    private boolean verbose = false;
 
     /**
      * Stores the working directory.
@@ -61,21 +66,28 @@ public class LocalExecutor implements Executor {
      * @param arguments the arguments.
      * @return the output.
      */
+    @Override
     public String execute(List<String> arguments) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < arguments.size(); i++) {
             if (arguments.get(i).equals("--arguments")) {
-                this.arguments = Arrays.asList(arguments.get(i + 1).split(" "));
+                processArguments = Arrays.asList(arguments.get(i + 1).split(" "));
+            }
+            if (arguments.get(i).equals("--verbose")) {
+                verbose = true;
             }
             if (arguments.get(i).equals("--workingDirectory")) {
                 workingDirectory = arguments.get(i + 1);
             }
         }
-        ProcessBuilder processBuilder = new ProcessBuilder(this.arguments);
+        ProcessBuilder processBuilder = new ProcessBuilder(processArguments);
         if (workingDirectory != null) {
             processBuilder.directory(new File(workingDirectory));
         }
         try {
+            if (verbose) {
+                result.append("Executing - ").append(String.join(" ", processArguments)).append("\n");
+            }
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
@@ -84,10 +96,16 @@ public class LocalExecutor implements Executor {
                     result.append(line).append("\n");
                 }
             }
+            if (verbose) {
+                result.append("Executed - ").append(String.join(" ", processArguments)).append("\n");
+            }
         } catch (IOException ioe) {
             StringWriter ioeWriter = new StringWriter();
             ioe.printStackTrace(new PrintWriter(ioeWriter));
             result.append(ioeWriter.toString());
+            if (verbose) {
+                result.append("Error executing - ").append(String.join(" ", processArguments)).append("\n");
+            }
         }
         return result.toString();
     }
