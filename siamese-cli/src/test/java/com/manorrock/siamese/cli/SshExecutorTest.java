@@ -29,7 +29,7 @@
  */
 package com.manorrock.siamese.cli;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * The JUnit tests for the SshExecutor.
