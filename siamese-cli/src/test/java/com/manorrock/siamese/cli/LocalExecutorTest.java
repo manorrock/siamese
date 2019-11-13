@@ -51,6 +51,6 @@ public class LocalExecutorTest {
         arguments.add("echo 1234");
         LocalExecutor executor = new LocalExecutor();
         String result = executor.execute(arguments);
-        assertEquals("1234\n", result);
+        assertEquals("1234", result);
     }
 }

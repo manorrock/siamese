@@ -91,9 +91,13 @@ public class LocalExecutor implements Executor {
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line).append("\n");
+                String line = reader.readLine();
+                while (line != null) {
+                    result.append(line);
+                    line = reader.readLine();
+                    if (line != null) {
+                        result.append("\n");
+                    }
                 }
             }
             if (verbose) {
