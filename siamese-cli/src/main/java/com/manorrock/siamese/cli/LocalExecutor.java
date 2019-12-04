@@ -86,7 +86,11 @@ public class LocalExecutor implements Executor {
         }
         try {
             if (verbose) {
-                result.append("Executing - ").append(String.join(" ", processArguments)).append("\n");
+                result.append("Executing - ").append(String.join(" ", processArguments));
+                if (workingDirectory != null) {
+                    result.append(" in directory: ").append(workingDirectory);
+                }
+                result.append("\n");
             }
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(

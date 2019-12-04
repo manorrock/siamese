@@ -32,15 +32,16 @@ package com.manorrock.siamese.cli;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
  * The JUnit tests for the LocalExecutor.
- * 
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public class LocalExecutorTest {
-    
+
     /**
      * Test execute method.
      */
@@ -52,5 +53,48 @@ public class LocalExecutorTest {
         LocalExecutor executor = new LocalExecutor();
         String result = executor.execute(arguments);
         assertEquals("1234", result);
+    }
+
+    /**
+     * Test execute method.
+     */
+    @Test
+    public void testExecute2() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--verbose");
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        LocalExecutor executor = new LocalExecutor();
+        String result = executor.execute(arguments);
+        assertTrue(result.contains("1234"));
+    }
+
+    /**
+     * Test execute method.
+     */
+    @Test
+    public void testExecute3() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--workingDirectory");
+        arguments.add("..");
+        arguments.add("--verbose");
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        LocalExecutor executor = new LocalExecutor();
+        String result = executor.execute(arguments);
+        assertTrue(result.contains("in directory"));
+    }
+
+    /**
+     * Test execute method.
+     */
+    @Test
+    public void testExecute4() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--arguments");
+        arguments.add("echo 1234\n");
+        LocalExecutor executor = new LocalExecutor();
+        String result = executor.execute(arguments);
+        assertTrue(result.contains("\n"));
     }
 }
