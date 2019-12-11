@@ -29,6 +29,10 @@
  */
 package com.manorrock.siamese.cli;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -43,13 +47,42 @@ public class DockerExecutorTest {
      */
     @Test
     public void testExecute() {
-        /*
         List<String> arguments = new ArrayList<>();
         arguments.add("--arguments");
         arguments.add("echo 1234");
         DockerExecutor executor = new DockerExecutor();
         String result = executor.execute(arguments);
-        assertEquals("1234\n", result);
-        */
+        assertEquals("1234", result);
+    }
+
+    /**
+     * Test execute method.
+     */
+    @Test
+    public void testExecute2() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--image");
+        arguments.add("manorrock/debian");
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        DockerExecutor executor = new DockerExecutor();
+        String result = executor.execute(arguments);
+        assertEquals("1234", result);
+    }
+    
+
+    /**
+     * Test execute method.
+     */
+    @Test
+    public void testExecute3() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--workingDirectory");
+        arguments.add(new File("").getAbsolutePath());
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        DockerExecutor executor = new DockerExecutor();
+        String result = executor.execute(arguments);
+        assertEquals("1234", result);
     }
 }

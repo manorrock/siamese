@@ -84,7 +84,7 @@ public class DockerExecutor implements Executor {
             image = "manorrock/debian";
         }
         List<String> commandArguments = new ArrayList<>();
-        commandArguments.add("docker");
+        commandArguments.add("/usr/local/bin/docker");
         commandArguments.add("run");
         commandArguments.add("--rm");
         commandArguments.add("-i");
