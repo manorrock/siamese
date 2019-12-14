@@ -29,6 +29,10 @@
  */
 package com.manorrock.siamese.cli;
 
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,6 +40,7 @@ import org.junit.Test;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
+@Ignore
 public class SshExecutorTest {
 
     /**
@@ -43,7 +48,6 @@ public class SshExecutorTest {
      */
     @Test
     public void testExecute() {
-        /*
         List<String> arguments = new ArrayList<>();
         arguments.add("--arguments");
         arguments.add("echo 1234");
@@ -56,6 +60,5 @@ public class SshExecutorTest {
         SshExecutor executor = new SshExecutor();
         String result = executor.execute(arguments);
         assertEquals("1234\n", result);
-        */
     }
 }

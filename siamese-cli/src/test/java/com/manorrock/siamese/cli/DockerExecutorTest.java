@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -40,6 +41,7 @@ import org.junit.Test;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
+@Ignore
 public class DockerExecutorTest {
 
     /**
