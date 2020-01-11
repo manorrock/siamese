@@ -136,9 +136,6 @@
             <organization>Manorrock.com</organization>
         </developer>
     </developers>
-    <modules>
-        <module>siamese-cli</module>
-    </modules>
     <profiles>
         <profile>
             <id>release</id>
