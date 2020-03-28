@@ -140,6 +140,7 @@
     </developers>
     <modules>
         <module>buildlogs</module>
+        <module>cli</module>
     </modules>
     <profiles>
         <profile>
