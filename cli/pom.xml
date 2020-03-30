@@ -9,4 +9,12 @@
     <artifactId>siamese-cli</artifactId>
     <packaging>jar</packaging>
     <name>Manorrock Siamese - CLI</name>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
