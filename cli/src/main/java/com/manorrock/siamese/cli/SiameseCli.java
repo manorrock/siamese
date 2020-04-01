@@ -50,10 +50,10 @@ public class SiameseCli {
         if (arguments.length > 0) {
             Executor executor = null;
             switch(arguments[0]) {
-//                case "docker": executor = new DockerExecutor(); break;
+                case "docker": executor = new DockerExecutor(); break;
 //                case "kubernetes": executor = new KubernetesExecutor(); break;
                 case "local" : executor = new LocalExecutor(); break;
-//                case "ssh" : executor = new SshExecutor(); break;
+                case "ssh" : executor = new SSHExecutor(); break;
             }
             if (executor != null) {
                 List<String> executorArguments = new ArrayList<>(Arrays.asList(arguments));
