@@ -6,3 +6,4 @@ nb-configuration.xml
 nbactions.xml
 nbproject/
 target/
+/webapp/src/main/webapp/META-INF/
