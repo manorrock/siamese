@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.manorrock.siamese</groupId>
         <artifactId>project</artifactId>
-        <version>20.0.4-SNAPSHOT</version>
+        <version>20.4.0</version>
     </parent>
     <artifactId>siamese-cli</artifactId>
     <packaging>jar</packaging>
