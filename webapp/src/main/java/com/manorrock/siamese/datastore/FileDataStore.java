@@ -52,7 +52,8 @@ public class FileDataStore implements DataStore {
     /**
      * Stores the logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(FileDataStore.class.getPackageName());
+    private static final Logger LOGGER
+            = Logger.getLogger(FileDataStore.class.getPackage().getName());
 
     /**
      * Stores the base directory.
