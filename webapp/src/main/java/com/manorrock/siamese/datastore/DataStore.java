@@ -38,6 +38,13 @@ import java.util.List;
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public interface DataStore {
+    
+    /**
+     * Delete a job.
+     * 
+     * @param id the id.
+     */
+    void deleteJob(String id);
 
     /**
      * Load a job.

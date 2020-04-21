@@ -37,6 +37,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
 
 /**
@@ -70,6 +71,21 @@ public class IndexBean {
         jobs = new ArrayList<>();
         DataStore dataStore = DataStoreFactory.create();
         jobs = dataStore.loadAllJobs();
+    }
+    
+    /**
+     * Delete a job.
+     *
+     * @param request the HTTP servlet request.
+     * @return the index page.
+     */
+    @ActionMapping("/job/delete/*")
+    public String delete(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        dataStore.deleteJob(id);
+        jobs = dataStore.loadAllJobs();
+        return "/WEB-INF/ui/index.xhtml";
     }
 
     /**

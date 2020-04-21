@@ -34,7 +34,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import static java.util.logging.Level.WARNING;
@@ -67,6 +69,29 @@ public class FileDataStore implements DataStore {
      */
     public FileDataStore(File baseDirectory) {
         this.baseDirectory = baseDirectory;
+    }
+
+    /**
+     * Delete a job.
+     *
+     * @param id the id.
+     */
+    @Override
+    public void deleteJob(String id) {
+        File configFile = new File(baseDirectory, id + File.separator + "config.json");
+        if (configFile.exists()) {
+            try {
+                Path path = configFile.getParentFile().toPath();
+                Files.walk(path)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            } catch (IOException ioe) {
+                if (LOGGER.isLoggable(WARNING)) {
+                    LOGGER.log(WARNING, "An error occurred while deleting the job", ioe);
+                }
+            }
+        }
     }
 
     /**
