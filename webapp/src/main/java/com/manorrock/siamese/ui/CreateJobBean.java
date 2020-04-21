@@ -32,53 +32,36 @@ package com.manorrock.siamese.ui;
 import com.manorrock.siamese.datastore.DataStore;
 import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The bean behind the index page.
+ * The bean for creating a job.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("indexBean")
+@Named("createJobBean")
 @RequestScoped
-public class IndexBean {
-
-    /**
-     * Stores the jobs.
-     */
-    private List<Job> jobs;
-
-    /**
-     * Get the jobs.
-     *
-     * @return the jobs.
-     */
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    /**
-     * Initialize the bean.
-     */
-    @PostConstruct
-    public void initialize() {
-        jobs = new ArrayList<>();
-        DataStore dataStore = DataStoreFactory.create();
-        jobs = dataStore.loadAllJobs();
-    }
+public class CreateJobBean {
 
     /**
      * Show the index page.
      * 
+     * @param request the HTTP servlet request.
      * @return the index page.
      */
-    @ActionMapping("/")
-    public String index() {
-        return "/WEB-INF/ui/index.xhtml";
+    @ActionMapping("/create")
+    public String create(HttpServletRequest request) {
+        String result = "/WEB-INF/ui/create.xhtml";
+        if (request.getParameter("name") != null) {
+            Job job = new Job();
+            job.setName(request.getParameter("name"));
+            DataStore dataStore = DataStoreFactory.create();
+            dataStore.saveJob(job);
+            result = "/WEB-INF/ui/index.xhtml";
+        }
+        return result;
     }
 }

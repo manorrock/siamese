@@ -37,9 +37,23 @@ package com.manorrock.siamese.model;
 public class Job {
     
     /**
+     * Stores the id.
+     */
+    private String id;
+    
+    /**
      * Stores the name.
      */
     private String name;
+    
+    /**
+     * Get the id.
+     * 
+     * @return the id.
+     */
+    public String getId() {
+        return id;
+    }
     
     /**
      * Get the name.
@@ -48,6 +62,15 @@ public class Job {
      */
     public String getName() {
         return name;
+    }
+    
+    /**
+     * Set the id.
+     * 
+     * @param id the id.
+     */
+    public void setId(String id) {
+        this.id = id;
     }
     
     /**

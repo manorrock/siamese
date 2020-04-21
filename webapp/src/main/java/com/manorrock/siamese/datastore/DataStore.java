@@ -27,58 +27,29 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
+package com.manorrock.siamese.datastore;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The bean behind the index page.
- *
+ * A data store.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("indexBean")
-@RequestScoped
-public class IndexBean {
+public interface DataStore {
 
     /**
-     * Stores the jobs.
-     */
-    private List<Job> jobs;
-
-    /**
-     * Get the jobs.
-     *
-     * @return the jobs.
-     */
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    /**
-     * Initialize the bean.
-     */
-    @PostConstruct
-    public void initialize() {
-        jobs = new ArrayList<>();
-        DataStore dataStore = DataStoreFactory.create();
-        jobs = dataStore.loadAllJobs();
-    }
-
-    /**
-     * Show the index page.
+     * Load all the jobs.
      * 
-     * @return the index page.
+     * @return the list of jobs.
      */
-    @ActionMapping("/")
-    public String index() {
-        return "/WEB-INF/ui/index.xhtml";
-    }
+    public List<Job> loadAllJobs();
+    
+    /**
+     * Save the job.
+     * 
+     * @param job the job.
+     */
+    public void saveJob(Job job);
 }
