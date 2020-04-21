@@ -27,37 +27,51 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.datastore;
+package com.manorrock.siamese.ui;
 
+import com.manorrock.siamese.datastore.DataStore;
+import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * A data store.
- * 
+ * The bean for viewing a job.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface DataStore {
-
-    /**
-     * Load a job.
-     * 
-     * @param id the id.
-     * @return the job, or null if not found.
-     */
-    Job loadJob(String id);
-
-    /**
-     * Load all the jobs.
-     * 
-     * @return the list of jobs.
-     */
-    List<Job> loadAllJobs();
+@Named("viewJobBean")
+@RequestScoped
+public class ViewJobBean {
     
     /**
-     * Save the job.
-     * 
-     * @param job the job.
+     * Stores the job.
      */
-    void saveJob(Job job);
+    private Job job;
+    
+    /**
+     * Get the job.
+     * 
+     * @return the job.
+     */
+    public Job getJob() {
+        return job;
+    }
+    
+    /**
+     * Show the index page.
+     * 
+     * @param request the HTTP servlet request.
+     * @return the index page.
+     */
+    @ActionMapping("/job/view/*")
+    public String view(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(id);
+        String result = "/WEB-INF/ui/job/view.xhtml";
+        return result;
+    }
 }

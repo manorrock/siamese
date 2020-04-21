@@ -13,7 +13,7 @@
         <a href="#{request.contextPath}/ui/create">Create job</a>
         <h:dataTable var="job" value="#{indexBean.jobs}">
             <h:column>
-                <h:outputText value="#{job.name}"/>
+                <a href="#{request.contextPath}/ui/job/view/#{job.id}"><h:outputText value="#{job.name}"/></a>
             </h:column>
         </h:dataTable>
     </h:body>

@@ -99,6 +99,30 @@ public class FileDataStore implements DataStore {
     }
 
     /**
+     * Load the job.
+     *
+     * @param id the id.
+     * @return the job, or null if not found.
+     */
+    @Override
+    public Job loadJob(String id) {
+        Job result = null;
+        File configFile = new File(baseDirectory, id + File.separator + "config.json");
+        if (configFile.exists()) {
+            try {
+                Jsonb jsonb = JsonbBuilder.create();
+                String json = new String(Files.readAllBytes(configFile.toPath()));
+                result = jsonb.fromJson(json, Job.class);
+            } catch (IOException ioe) {
+                if (LOGGER.isLoggable(WARNING)) {
+                    LOGGER.log(WARNING, "Unable to load job", ioe);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Save the job.
      *
      * @param job the job.
