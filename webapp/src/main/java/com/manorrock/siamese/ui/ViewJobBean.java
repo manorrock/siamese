@@ -45,24 +45,39 @@ import org.omnifaces.oyena.action.ActionMapping;
 @Named("viewJobBean")
 @RequestScoped
 public class ViewJobBean {
-    
+
     /**
      * Stores the job.
      */
     private Job job;
-    
+
     /**
      * Get the job.
-     * 
+     *
      * @return the job.
      */
     public Job getJob() {
         return job;
     }
-    
+
+    /**
+     * Trigger a manual job execution.
+     *
+     * @param request the HTTP servlet request.
+     * @return the index page.
+     */
+    @ActionMapping("/job/execute/*")
+    public String execute(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(id);
+        String result = "/WEB-INF/ui/job/view.xhtml";
+        return result;
+    }
+
     /**
      * Show the index page.
-     * 
+     *
      * @param request the HTTP servlet request.
      * @return the index page.
      */
