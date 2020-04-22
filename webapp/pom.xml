@@ -25,33 +25,12 @@
             <version>2.2.5</version>
             <scope>compile</scope>
         </dependency>
-        <!-- JSON-B API -->
-        <dependency>
-            <groupId>jakarta.json.bind</groupId>
-            <artifactId>jakarta.json.bind-api</artifactId>
-            <version>1.0.1</version>
-            <scope>compile</scope>
-        </dependency>
         <!-- Eclipse Mojarra -->
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.faces</artifactId>
-            <version>2.3.9</version>
+            <artifactId>jakarta.faces</artifactId>
+            <version>2.3.14</version>
             <scope>compile</scope>
-        </dependency>
-        <!-- Yasson (JSON-B implementation) -->
-        <dependency>
-            <groupId>org.eclipse</groupId>
-            <artifactId>yasson</artifactId>
-            <version>1.0.3</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- JSON-P -->
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
-            <version>1.1.5</version>
-            <scope>runtime</scope>
         </dependency>
         <!-- Jersey -->
         <dependency>
@@ -72,14 +51,34 @@
             <version>2.30.1</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Weld -->
+        <!-- JSON-B API -->
         <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet-shaded</artifactId>
-            <version>3.1.3.Final</version>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
+            <version>1.0.1</version>
             <scope>compile</scope>
         </dependency>
-        <!-- Oyena -->
+        <!-- JSON-P -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.json</artifactId>
+            <version>1.1.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- OmniFaces -->
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>3.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- OmniFaces Oyena -->
         <dependency>
             <groupId>org.omnifaces.oyena</groupId>
             <artifactId>oyena-action</artifactId>
@@ -93,11 +92,19 @@
             <version>4.0.3</version>
             <scope>provided</scope>
         </dependency>
-        <!-- JUnit -->
+        <!-- Yasson  -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.eclipse</groupId>
+            <artifactId>yasson</artifactId>
+            <version>1.0.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Weld -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>3.1.3.Final</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>

@@ -27,64 +27,94 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.shared;
+package com.manorrock.siamese.ui;
 
 import com.manorrock.siamese.datastore.DataStore;
 import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
-import com.manorrock.siamese.model.JobOutput;
-import com.manorrock.siamese.model.JobStatus;
-import java.util.Date;
-import static java.util.logging.Level.INFO;
-import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import org.omnifaces.cdi.Eager;
+import com.manorrock.siamese.shared.ApplicationBean;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The one and only application (bean).
+ * The bean for editing a job.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@ApplicationScoped
-@Eager
-public class ApplicationBean {
-    
+@Named("editJobBean")
+@RequestScoped
+public class EditJobBean {
+
     /**
-     * Stores the logger.
+     * Stores the application.
      */
-    private static final Logger LOGGER = 
-            Logger.getLogger(ApplicationBean.class.getPackage().getName());
-    
+    @Inject
+    private ApplicationBean application;
+
     /**
-     * Constructor.
+     * Stores the job.
      */
-    public ApplicationBean() {
-        if (LOGGER.isLoggable(INFO)) {
-            LOGGER.log(INFO, "Starting application");
+    private Job job;
+
+    /**
+     * Stores the job id.
+     */
+    private String jobId;
+
+    /**
+     * Edit the job.
+     *
+     * @param request the HTTP servlet request.
+     * @return the job edit page.
+     */
+    @ActionMapping("/edit/*")
+    public String edit(HttpServletRequest request) {
+        String result = "/WEB-INF/ui/edit.xhtml";
+        jobId = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(jobId);
+        if (request.getParameter("submit") != null) {
+            result = "/WEB-INF/ui/view.xhtml";
         }
+        return result;
+    }
+    
+    /**
+     * Get the job.
+     *
+     * @return the job.
+     */
+    public Job getJob() {
+        return job;
+    }
+    
+    /**
+     * Get the job id.
+     * 
+     * @return the job id.
+     */
+    public String getJobId() {
+        return jobId;
     }
 
     /**
-     * Execute a job.
-     *
-     * @param jobId the job id.
-     * @return the job output, or null if the job was not found.
+     * Set the job.
+     * 
+     * @param job the job.
      */
-    public JobOutput executeJob(String jobId) {
-        JobOutput jobOutput = null;
-        DataStore dataStore = DataStoreFactory.create();
-        Job job = dataStore.loadJob(jobId);
-        if (job != null) {
-            jobOutput = new JobOutput();
-            jobOutput.setJobId(jobId);
-            jobOutput.setStartDate(new Date());
-            jobOutput.setStatus(JobStatus.PENDING);
-            dataStore.saveJobOutput(jobOutput);
-            if (LOGGER.isLoggable(INFO)) {
-                LOGGER.log(INFO, "Starting new execution of job ''{0}''", job.getName());
-            }
-
-        }
-        return jobOutput;
+    public void setJob(Job job) {
+        this.job = job;
+    }
+    
+    /**
+     * Set the job id.
+     * 
+     * @param jobId the job id.
+     */
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
     }
 }

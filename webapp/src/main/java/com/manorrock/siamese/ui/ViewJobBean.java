@@ -100,8 +100,7 @@ public class ViewJobBean {
         job = dataStore.loadJob(jobId);
         dataStore.deleteJobOutput(jobId, outputId);
         startDates = dataStore.loadAllJobStartDates(jobId);
-        String result = "/WEB-INF/ui/view.xhtml";
-        return result;
+        return "/WEB-INF/ui/view.xhtml";
     }
 
     /**
@@ -119,8 +118,7 @@ public class ViewJobBean {
         if (jobOutput != null) {
             startDates = dataStore.loadAllJobStartDates(id);
         }
-        String result = "/WEB-INF/ui/view.xhtml";
-        return result;
+        return "/WEB-INF/ui/view.xhtml";
     }
 
     /**
@@ -135,7 +133,6 @@ public class ViewJobBean {
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(id);
         startDates = dataStore.loadAllJobStartDates(id);
-        String result = "/WEB-INF/ui/view.xhtml";
-        return result;
+        return "/WEB-INF/ui/view.xhtml";
     }
 }

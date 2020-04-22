@@ -89,7 +89,6 @@ public class ViewJobOutputBean {
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(jobId);
         jobOutput = dataStore.loadJobOutput(jobId, outputId);
-        String result = "/WEB-INF/ui/output/view.xhtml";
-        return result;
+        return "/WEB-INF/ui/output/view.xhtml";
     }
 }
