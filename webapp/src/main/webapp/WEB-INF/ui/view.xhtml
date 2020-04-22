@@ -18,6 +18,9 @@
                 <a href="#{request.contextPath}/ui/output/view/#{startDate.time}?jobId=#{viewJobBean.job.id}">
                     <h:outputText value="#{startDate}"/>
                 </a>
+                <a href="#{request.contextPath}/ui/output/delete/#{startDate.time}?jobId=#{viewJobBean.job.id}">
+                    Delete
+                </a>
             </h:column>
         </h:dataTable>
         <br/>

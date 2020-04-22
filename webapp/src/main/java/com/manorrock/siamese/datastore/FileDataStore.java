@@ -97,6 +97,21 @@ public class FileDataStore implements DataStore {
     }
 
     /**
+     * Delete a job output.
+     *
+     * @param jobId the job id.
+     * @param outputId the output id.
+     */
+    @Override
+    public void deleteJobOutput(String jobId, String outputId) {
+        File jobOutputFile = new File(baseDirectory, jobId + File.separator +
+                outputId + "-output.json");
+        if (jobOutputFile.exists()) {
+            jobOutputFile.delete();
+        }
+    }
+
+    /**
      * Load all the job start dates.
      *
      * @param id the id.
@@ -177,7 +192,7 @@ public class FileDataStore implements DataStore {
 
     /**
      * Load the job output.
-     * 
+     *
      * @param jobId the job id.
      * @param outputId the output id.
      * @return the job output.

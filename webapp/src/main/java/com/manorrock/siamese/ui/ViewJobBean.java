@@ -68,10 +68,10 @@ public class ViewJobBean {
     public Job getJob() {
         return job;
     }
-    
+
     /**
      * Get the start dates.
-     * 
+     *
      * @return the start dates.
      */
     public List<Date> getStartDates() {
@@ -79,10 +79,29 @@ public class ViewJobBean {
     }
 
     /**
+     * Delete a job output.
+     *
+     * @param request the HTTP servlet request.
+     * @return the job view page.
+     */
+    @ActionMapping("/output/delete/*")
+    public String deleteJobOutput(HttpServletRequest request) {
+        String outputId = request.getRequestURI().substring(
+                request.getRequestURI().lastIndexOf("/") + 1);
+        String jobId = request.getParameter("jobId");
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(jobId);
+        dataStore.deleteJobOutput(jobId, outputId);
+        startDates = dataStore.loadAllJobStartDates(jobId);
+        String result = "/WEB-INF/ui/view.xhtml";
+        return result;
+    }
+
+    /**
      * Trigger a manual job execution.
      *
      * @param request the HTTP servlet request.
-     * @return the index page.
+     * @return the job view page.
      */
     @ActionMapping("/execute/*")
     public String execute(HttpServletRequest request) {
@@ -100,10 +119,10 @@ public class ViewJobBean {
     }
 
     /**
-     * Show the index page.
+     * Show the job.
      *
      * @param request the HTTP servlet request.
-     * @return the index page.
+     * @return the job view page.
      */
     @ActionMapping("/view/*")
     public String view(HttpServletRequest request) {

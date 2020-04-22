@@ -49,6 +49,14 @@ public interface DataStore {
     void deleteJob(String id);
 
     /**
+     * Delete a job output.
+     * 
+     * @param jobId the job id.
+     * @param outputId the output id.
+     */
+    void deleteJobOutput(String jobId, String outputId);
+
+    /**
      * Load all the job start dates.
      *
      * @param id the job id.
