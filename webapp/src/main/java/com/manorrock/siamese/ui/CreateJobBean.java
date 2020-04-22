@@ -58,6 +58,10 @@ public class CreateJobBean {
         if (request.getParameter("name") != null) {
             Job job = new Job();
             job.setName(request.getParameter("name"));
+            String schedule = request.getParameter("schedule");
+            if (schedule != null && !schedule.trim().equals("")) {
+                job.setSchedule(schedule);
+            }
             DataStore dataStore = DataStoreFactory.create();
             dataStore.saveJob(job);
             result = "/WEB-INF/ui/index.xhtml";
