@@ -27,74 +27,93 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
+package com.manorrock.siamese.model;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import org.omnifaces.oyena.action.ActionMapping;
+import java.util.Date;
 
 /**
- * The bean behind the index page.
- *
+ * The output of a job.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("indexBean")
-@RequestScoped
-public class IndexBean {
-
+public class JobOutput {
+    
     /**
-     * Stores the jobs.
+     * Stores the end date.
      */
-    private List<Job> jobs;
-
+    private String endDate;
+    
     /**
-     * Get the jobs.
-     *
-     * @return the jobs.
+     * Stores the job id.
      */
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
+    private String jobId;
+    
     /**
-     * Initialize the bean.
+     * Stores the output.
      */
-    @PostConstruct
-    public void initialize() {
-        jobs = new ArrayList<>();
-        DataStore dataStore = DataStoreFactory.create();
-        jobs = dataStore.loadAllJobs();
+    private String output;
+    
+    /**
+     * Stores the start timestamp.
+     */
+    private Date startDate;
+    
+    /**
+     * Stores the status.
+     */
+    private JobStatus status;
+    
+    /**
+     * Get the job id.
+     * 
+     * @return the job id.
+     */
+    public String getJobId() {
+        return jobId;
     }
     
     /**
-     * Delete a job.
-     *
-     * @param request the HTTP servlet request.
-     * @return the index page.
+     * Get the start date.
+     * 
+     * @return the start date.
      */
-    @ActionMapping("/delete/*")
-    public String delete(HttpServletRequest request) {
-        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        DataStore dataStore = DataStoreFactory.create();
-        dataStore.deleteJob(id);
-        jobs = dataStore.loadAllJobs();
-        return "/WEB-INF/ui/index.xhtml";
+    public Date getStartDate() {
+        return startDate;
+    }
+    
+    /**
+     * Get the status.
+     * 
+     * @return the status.
+     */
+    public JobStatus getStatus() {
+        return status;
     }
 
     /**
-     * Show the index page.
+     * Set the job id.
      * 
-     * @return the index page.
+     * @param jobId the job id.
      */
-    @ActionMapping("/")
-    public String index() {
-        return "/WEB-INF/ui/index.xhtml";
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+    
+    /**
+     * Set the start date.
+     * 
+     * @param startDate the start dates.
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * Set the status.
+     * 
+     * @param status the status. 
+     */
+    public void setStatus(JobStatus status) {
+        this.status = status;
     }
 }

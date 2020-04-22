@@ -32,6 +32,10 @@ package com.manorrock.siamese.ui;
 import com.manorrock.siamese.datastore.DataStore;
 import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
+import com.manorrock.siamese.model.JobOutput;
+import com.manorrock.siamese.model.JobStatus;
+import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -52,12 +56,26 @@ public class ViewJobBean {
     private Job job;
 
     /**
+     * Stores the job start dates.
+     */
+    private List<Date> startDates;
+
+    /**
      * Get the job.
      *
      * @return the job.
      */
     public Job getJob() {
         return job;
+    }
+    
+    /**
+     * Get the start dates.
+     * 
+     * @return the start dates.
+     */
+    public List<Date> getStartDates() {
+        return startDates;
     }
 
     /**
@@ -66,12 +84,18 @@ public class ViewJobBean {
      * @param request the HTTP servlet request.
      * @return the index page.
      */
-    @ActionMapping("/job/execute/*")
+    @ActionMapping("/execute/*")
     public String execute(HttpServletRequest request) {
         String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(id);
-        String result = "/WEB-INF/ui/job/view.xhtml";
+        JobOutput jobOutput = new JobOutput();
+        jobOutput.setJobId(id);
+        jobOutput.setStartDate(new Date());
+        jobOutput.setStatus(JobStatus.PENDING);
+        dataStore.saveJobOutput(jobOutput);
+        startDates = dataStore.loadAllJobStartDates(id);
+        String result = "/WEB-INF/ui/view.xhtml";
         return result;
     }
 
@@ -81,12 +105,13 @@ public class ViewJobBean {
      * @param request the HTTP servlet request.
      * @return the index page.
      */
-    @ActionMapping("/job/view/*")
+    @ActionMapping("/view/*")
     public String view(HttpServletRequest request) {
         String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(id);
-        String result = "/WEB-INF/ui/job/view.xhtml";
+        startDates = dataStore.loadAllJobStartDates(id);
+        String result = "/WEB-INF/ui/view.xhtml";
         return result;
     }
 }

@@ -30,6 +30,7 @@
 package com.manorrock.siamese.datastore;
 
 import com.manorrock.siamese.model.Job;
+import com.manorrock.siamese.model.JobOutput;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import static java.util.logging.Level.WARNING;
@@ -95,6 +97,31 @@ public class FileDataStore implements DataStore {
     }
 
     /**
+     * Load all the job start dates.
+     *
+     * @param id the id.
+     * @return the list of job start dates.
+     */
+    @Override
+    public List<Date> loadAllJobStartDates(String id) {
+        ArrayList<Date> result = new ArrayList<>();
+        File configFile = new File(baseDirectory, id + File.separator + "config.json");
+        if (configFile.exists()) {
+            File[] outputFiles = configFile.getParentFile().listFiles(
+                    (File directory, String name) -> {
+                        return name.endsWith("-output.json");
+                    });
+            if (outputFiles != null && outputFiles.length > 0) {
+                for (File outputFile : outputFiles) {
+                    result.add(new Date(Long.parseLong(outputFile.getName().
+                            substring(0, outputFile.getName().indexOf("-")))));
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Load all the jobs.
      *
      * @return the jobs.
@@ -103,7 +130,7 @@ public class FileDataStore implements DataStore {
     public List<Job> loadAllJobs() {
         ArrayList<Job> result = new ArrayList<>();
         File[] files = baseDirectory.listFiles();
-        if (files.length > 0) {
+        if (files != null && files.length > 0) {
             for (File file : files) {
                 if (file.isDirectory()) {
                     File configFile = new File(file, "config.json");
@@ -177,6 +204,27 @@ public class FileDataStore implements DataStore {
         } catch (IOException ioe) {
             if (LOGGER.isLoggable(WARNING)) {
                 LOGGER.log(WARNING, "Unable to save job", ioe);
+            }
+        }
+    }
+
+    /**
+     * Save the job output.
+     *
+     * @param jobOutput the job output.
+     */
+    @Override
+    public void saveJobOutput(JobOutput jobOutput) {
+        File outputFile = new File(baseDirectory, jobOutput.getJobId()
+                + File.separator + jobOutput.getStartDate().getTime() + "-output.json");
+        Jsonb jsonb = JsonbBuilder.create();
+        String json = jsonb.toJson(jobOutput);
+        try (FileOutputStream fileOutput = new FileOutputStream(outputFile)) {
+            fileOutput.write(json.getBytes("UTF-8"));
+            fileOutput.flush();
+        } catch (IOException ioe) {
+            if (LOGGER.isLoggable(WARNING)) {
+                LOGGER.log(WARNING, "Unable to save job output", ioe);
             }
         }
     }

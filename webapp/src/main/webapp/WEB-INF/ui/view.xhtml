@@ -13,7 +13,15 @@
         <h2><h:outputText value="#{viewJobBean.job.name}"/></h2>
         <a href="#{request.contextPath}/ui/job/execute/#{viewJobBean.job.id}">Execute</a>
         <br/>
-        <a href="#{request.contextPath}/ui/job/delete/#{viewJobBean.job.id}">Delete</a>
+        <h:dataTable var="startDate" value="#{viewJobBean.startDates}">
+            <h:column>
+                <a href="#{request.contextPath}/ui/output/view/#{startDate.time}?jobId=#{viewJobBean.job.id}">
+                    <h:outputText value="#{startDate}"/>
+                </a>
+            </h:column>
+        </h:dataTable>
+        <br/>
+        <a href="#{request.contextPath}/ui/delete/#{viewJobBean.job.id}">Delete</a>
         <br/>
         <a href="#{request.contextPath}/ui/">Back</a>
     </h:body>

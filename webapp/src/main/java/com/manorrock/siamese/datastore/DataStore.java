@@ -30,41 +30,58 @@
 package com.manorrock.siamese.datastore;
 
 import com.manorrock.siamese.model.Job;
+import com.manorrock.siamese.model.JobOutput;
+import java.util.Date;
 import java.util.List;
 
 /**
  * A data store.
- * 
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
 public interface DataStore {
-    
+
     /**
      * Delete a job.
-     * 
+     *
      * @param id the id.
      */
     void deleteJob(String id);
 
     /**
+     * Load all the job start dates.
+     *
+     * @param id the job id.
+     * @return the list of start date.
+     */
+    List<Date> loadAllJobStartDates(String id);
+
+    /**
+     * Load all the jobs.
+     *
+     * @return the list of jobs.
+     */
+    List<Job> loadAllJobs();
+
+    /**
      * Load a job.
-     * 
+     *
      * @param id the id.
      * @return the job, or null if not found.
      */
     Job loadJob(String id);
 
     /**
-     * Load all the jobs.
-     * 
-     * @return the list of jobs.
-     */
-    List<Job> loadAllJobs();
-    
-    /**
      * Save the job.
-     * 
+     *
      * @param job the job.
      */
     void saveJob(Job job);
+
+    /**
+     * Save the job run.
+     * 
+     * @param jobRun the job run.
+     */
+    void saveJobOutput(JobOutput jobRun);
 }

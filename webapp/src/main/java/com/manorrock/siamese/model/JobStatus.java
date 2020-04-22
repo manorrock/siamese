@@ -27,74 +27,17 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
-
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import org.omnifaces.oyena.action.ActionMapping;
+package com.manorrock.siamese.model;
 
 /**
- * The bean behind the index page.
- *
- * @author Manfred Riem (mriem@manorrock.com)
+ * The status of a job.
+ * 
+ * @author Manfred Riem (mriem@manrrock.com)
  */
-@Named("indexBean")
-@RequestScoped
-public class IndexBean {
-
-    /**
-     * Stores the jobs.
-     */
-    private List<Job> jobs;
-
-    /**
-     * Get the jobs.
-     *
-     * @return the jobs.
-     */
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    /**
-     * Initialize the bean.
-     */
-    @PostConstruct
-    public void initialize() {
-        jobs = new ArrayList<>();
-        DataStore dataStore = DataStoreFactory.create();
-        jobs = dataStore.loadAllJobs();
-    }
+public enum JobStatus {
     
     /**
-     * Delete a job.
-     *
-     * @param request the HTTP servlet request.
-     * @return the index page.
+     * Pending (which means it is waiting to be picked up).
      */
-    @ActionMapping("/delete/*")
-    public String delete(HttpServletRequest request) {
-        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        DataStore dataStore = DataStoreFactory.create();
-        dataStore.deleteJob(id);
-        jobs = dataStore.loadAllJobs();
-        return "/WEB-INF/ui/index.xhtml";
-    }
-
-    /**
-     * Show the index page.
-     * 
-     * @return the index page.
-     */
-    @ActionMapping("/")
-    public String index() {
-        return "/WEB-INF/ui/index.xhtml";
-    }
+    PENDING,
 }
