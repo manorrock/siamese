@@ -27,81 +27,30 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.model;
+package com.manorrock.siamese.api;
+
+import java.util.HashSet;
+import java.util.Set;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
- * A job.
- * 
+ * The REST application.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class Job {
-    
+@ApplicationPath("api")
+public class SiameseApplication extends Application {
+
     /**
-     * Stores the id.
+     * Get the classes.
+     *
+     * @return the classes.
      */
-    private String id;
-    
-    /**
-     * Stores the name.
-     */
-    private String name;
-    
-    /**
-     * Stores the schedule (in cron syntax).
-     */
-    private String schedule;
-    
-    /**
-     * Get the id.
-     * 
-     * @return the id.
-     */
-    public String getId() {
-        return id;
-    }
-    
-    /**
-     * Get the name.
-     * 
-     * @return the name.
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
-     * Get the schedule.
-     * 
-     * @return the schedule.
-     */
-    public String getSchedule() {
-        return schedule;
-    }
-    
-    /**
-     * Set the id.
-     * 
-     * @param id the id.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * Set the name.
-     * 
-     * @param name the name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * Set the schedule.
-     * 
-     * @param schedule the schedule.
-     */
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> classes = new HashSet<>();
+        classes.add(JobResource.class);
+        return classes;
     }
 }

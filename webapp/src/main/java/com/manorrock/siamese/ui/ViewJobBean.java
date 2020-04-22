@@ -33,10 +33,11 @@ import com.manorrock.siamese.datastore.DataStore;
 import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
 import com.manorrock.siamese.model.JobOutput;
-import com.manorrock.siamese.model.JobStatus;
+import com.manorrock.siamese.shared.ApplicationBean;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
@@ -49,6 +50,12 @@ import org.omnifaces.oyena.action.ActionMapping;
 @Named("viewJobBean")
 @RequestScoped
 public class ViewJobBean {
+
+    /**
+     * Stores the application.
+     */
+    @Inject
+    private ApplicationBean application;
 
     /**
      * Stores the job.
@@ -108,12 +115,10 @@ public class ViewJobBean {
         String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(id);
-        JobOutput jobOutput = new JobOutput();
-        jobOutput.setJobId(id);
-        jobOutput.setStartDate(new Date());
-        jobOutput.setStatus(JobStatus.PENDING);
-        dataStore.saveJobOutput(jobOutput);
-        startDates = dataStore.loadAllJobStartDates(id);
+        JobOutput jobOutput = application.executeJob(id);
+        if (jobOutput != null) {
+            startDates = dataStore.loadAllJobStartDates(id);
+        }
         String result = "/WEB-INF/ui/view.xhtml";
         return result;
     }

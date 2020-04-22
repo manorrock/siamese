@@ -27,81 +27,53 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.model;
+package com.manorrock.siamese.shared;
+
+import com.manorrock.siamese.datastore.DataStore;
+import com.manorrock.siamese.datastore.DataStoreFactory;
+import com.manorrock.siamese.model.Job;
+import com.manorrock.siamese.model.JobOutput;
+import com.manorrock.siamese.model.JobStatus;
+import java.util.Date;
+import static java.util.logging.Level.INFO;
+import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
- * A job.
- * 
+ * The one and only application (bean).
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class Job {
+@ApplicationScoped
+public class ApplicationBean {
     
     /**
-     * Stores the id.
+     * Stores the logger.
      */
-    private String id;
-    
+    private static final Logger LOGGER = 
+            Logger.getLogger(ApplicationBean.class.getPackage().getName());
+
     /**
-     * Stores the name.
+     * Execute a job.
+     *
+     * @param jobId the job id.
+     * @return the job output, or null if the job was not found.
      */
-    private String name;
-    
-    /**
-     * Stores the schedule (in cron syntax).
-     */
-    private String schedule;
-    
-    /**
-     * Get the id.
-     * 
-     * @return the id.
-     */
-    public String getId() {
-        return id;
-    }
-    
-    /**
-     * Get the name.
-     * 
-     * @return the name.
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
-     * Get the schedule.
-     * 
-     * @return the schedule.
-     */
-    public String getSchedule() {
-        return schedule;
-    }
-    
-    /**
-     * Set the id.
-     * 
-     * @param id the id.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * Set the name.
-     * 
-     * @param name the name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * Set the schedule.
-     * 
-     * @param schedule the schedule.
-     */
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public JobOutput executeJob(String jobId) {
+        JobOutput jobOutput = null;
+        DataStore dataStore = DataStoreFactory.create();
+        Job job = dataStore.loadJob(jobId);
+        if (job != null) {
+            jobOutput = new JobOutput();
+            jobOutput.setJobId(jobId);
+            jobOutput.setStartDate(new Date());
+            jobOutput.setStatus(JobStatus.PENDING);
+            dataStore.saveJobOutput(jobOutput);
+            if (LOGGER.isLoggable(INFO)) {
+                LOGGER.log(INFO, "Starting new execution of job ''{0}''", job.getName());
+            }
+
+        }
+        return jobOutput;
     }
 }
