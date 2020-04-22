@@ -73,6 +73,15 @@ public class JobOutput {
     }
     
     /**
+     * Get the output.
+     * 
+     * @return the output.
+     */
+    public String getOutput() {
+        return output;
+    }
+    
+    /**
      * Get the start date.
      * 
      * @return the start date.
@@ -97,6 +106,15 @@ public class JobOutput {
      */
     public void setJobId(String jobId) {
         this.jobId = jobId;
+    }
+    
+    /**
+     * Set the output.
+     * 
+     * @param output the output.
+     */
+    public void setOutput(String output) {
+        this.output = output;
     }
     
     /**

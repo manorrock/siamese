@@ -11,7 +11,7 @@
     <h:body>
         <h1>View job</h1>
         <h2><h:outputText value="#{viewJobBean.job.name}"/></h2>
-        <a href="#{request.contextPath}/ui/job/execute/#{viewJobBean.job.id}">Execute</a>
+        <a href="#{request.contextPath}/ui/execute/#{viewJobBean.job.id}">Execute</a>
         <br/>
         <h:dataTable var="startDate" value="#{viewJobBean.startDates}">
             <h:column>

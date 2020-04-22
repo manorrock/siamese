@@ -27,70 +27,72 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.datastore;
+package com.manorrock.siamese.ui;
 
+import com.manorrock.siamese.datastore.DataStore;
+import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
 import com.manorrock.siamese.model.JobOutput;
+import com.manorrock.siamese.model.JobStatus;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * A data store.
+ * The bean for viewing a job output.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public interface DataStore {
+@Named("viewJobOutputBean")
+@RequestScoped
+public class ViewJobOutputBean {
 
     /**
-     * Delete a job.
-     *
-     * @param id the id.
+     * Stores the job.
      */
-    void deleteJob(String id);
+    private Job job;
 
     /**
-     * Load all the job start dates.
-     *
-     * @param id the job id.
-     * @return the list of start date.
+     * Stores the job output.
      */
-    List<Date> loadAllJobStartDates(String id);
+    private JobOutput jobOutput;
 
     /**
-     * Load all the jobs.
+     * Get the job.
      *
-     * @return the list of jobs.
+     * @return the job.
      */
-    List<Job> loadAllJobs();
-
+    public Job getJob() {
+        return job;
+    }
+    
     /**
-     * Load a job.
-     *
-     * @param id the id.
-     * @return the job, or null if not found.
-     */
-    Job loadJob(String id);
-
-    /**
-     * Load the job output.
+     * Get the job output.
      * 
-     * @param jobId the job id.
-     * @param outputId the output id.
      * @return the job output.
      */
-    JobOutput loadJobOutput(String jobId, String outputId);
+    public JobOutput getJobOutput() {
+        return jobOutput;
+    }
 
     /**
-     * Save the job.
+     * View the job output.
      *
-     * @param job the job.
+     * @param request the HTTP servlet request.
+     * @return the index page.
      */
-    void saveJob(Job job);
-
-    /**
-     * Save the job run.
-     * 
-     * @param jobRun the job run.
-     */
-    void saveJobOutput(JobOutput jobRun);
+    @ActionMapping("/output/view/*")
+    public String viewJobOutput(HttpServletRequest request) {
+        String outputId = request.getRequestURI().substring(
+                request.getRequestURI().lastIndexOf("/") + 1);
+        String jobId = request.getParameter("jobId");
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(jobId);
+        jobOutput = dataStore.loadJobOutput(jobId, outputId);
+        String result = "/WEB-INF/ui/output/view.xhtml";
+        return result;
+    }
 }

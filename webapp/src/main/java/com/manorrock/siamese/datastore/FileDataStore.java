@@ -176,6 +176,31 @@ public class FileDataStore implements DataStore {
     }
 
     /**
+     * Load the job output.
+     * 
+     * @param jobId the job id.
+     * @param outputId the output id.
+     * @return the job output.
+     */
+    @Override
+    public JobOutput loadJobOutput(String jobId, String outputId) {
+        JobOutput result = null;
+        File jobOutputFile = new File(baseDirectory, jobId + File.separator + outputId + "-output.json");
+        if (jobOutputFile.exists()) {
+            try {
+                Jsonb jsonb = JsonbBuilder.create();
+                String json = new String(Files.readAllBytes(jobOutputFile.toPath()));
+                result = jsonb.fromJson(json, JobOutput.class);
+            } catch (IOException ioe) {
+                if (LOGGER.isLoggable(WARNING)) {
+                    LOGGER.log(WARNING, "Unable to load job output", ioe);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Save the job.
      *
      * @param job the job.

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>View job output</title>
+    </h:head>
+    <h:body>
+        <h1>View job output</h1>
+        <h2><h:outputText value="#{viewJobOutputBean.job.name}"/></h2>
+        <table>
+            <tr>
+                <td>Start Date:</td>
+                <td><h:outputText value="#{viewJobOutputBean.jobOutput.startDate}"/></td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td><h:outputText value="#{viewJobOutputBean.jobOutput.status}"/></td>
+            </tr>
+            <tr>
+                <td>Output:</td>
+                <td>
+                    <pre>
+
+<h:outputText value="#{viewJobOutputBean.jobOutput.output}"/>
+                    </pre>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <a href="#{request.contextPath}/ui/view/#{viewJobOutputBean.job.id}">Back</a>
+    </h:body>
+</html>
