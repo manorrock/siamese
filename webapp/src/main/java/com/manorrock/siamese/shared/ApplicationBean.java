@@ -34,9 +34,16 @@ import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
 import com.manorrock.siamese.model.JobOutput;
 import com.manorrock.siamese.model.JobStatus;
+import it.sauronsoftware.cron4j.SchedulingPattern;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.logging.Level.INFO;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import org.omnifaces.cdi.Eager;
 
@@ -48,20 +55,56 @@ import org.omnifaces.cdi.Eager;
 @ApplicationScoped
 @Eager
 public class ApplicationBean {
-    
+
     /**
      * Stores the logger.
      */
-    private static final Logger LOGGER = 
-            Logger.getLogger(ApplicationBean.class.getPackage().getName());
-    
+    private static final Logger LOGGER
+            = Logger.getLogger(ApplicationBean.class.getPackage().getName());
+
     /**
-     * Constructor.
+     * Stores the executor.
      */
-    public ApplicationBean() {
+    private ExecutorService executor;
+
+    /**
+     * Stores the scheduler.
+     */
+    private ScheduledExecutorService scheduler;
+
+    /**
+     * Initialize the bean
+     */
+    @PostConstruct
+    public void initialize() {
         if (LOGGER.isLoggable(INFO)) {
-            LOGGER.log(INFO, "Starting application");
+            LOGGER.log(INFO, "Starting the scheduler");
         }
+        scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(() -> {
+            if (LOGGER.isLoggable(INFO)) {
+                LOGGER.log(INFO, "Determining which scheduled jobs should be executed");
+            }
+            DataStore dataStore = DataStoreFactory.create();
+            List<Job> jobs = dataStore.loadAllJobs();
+            long currentTime = System.currentTimeMillis();
+            jobs.forEach(job -> {
+                String schedule = job.getSchedule();
+                if (schedule != null && !schedule.trim().equals("")) {
+                    SchedulingPattern pattern = new SchedulingPattern(schedule);
+                    if (pattern.match(currentTime)) {
+                        executeJob(job.getId());
+                    }
+                }
+            });
+        }, 1, 1, MINUTES);
+    }
+
+    /**
+     * Execute any scheduled jobs.
+     */
+    public void executeScheduledJobs() {
+
     }
 
     /**
@@ -83,7 +126,6 @@ public class ApplicationBean {
             if (LOGGER.isLoggable(INFO)) {
                 LOGGER.log(INFO, "Starting new execution of job ''{0}''", job.getName());
             }
-
         }
         return jobOutput;
     }

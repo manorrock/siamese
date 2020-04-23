@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2002-2020, Manorrock.com. All Rights Reserved.
+ *  Copyright (c) 2002-2019, Manorrock.com. All Rights Reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
@@ -30,38 +30,26 @@
 package com.manorrock.siamese.cli;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
- * The Siamese CLI.
- *
+ * The JUnit tests for the URLExecutor.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class SiameseCli {
+public class URLExecutorTest {
 
     /**
-     * Main method.
-     *
-     * @param arguments the arguments.
+     * Test execute method.
      */
-    public static void main(String[] arguments) {
-        String output = "";
-        if (arguments.length > 0) {
-            Executor executor = null;
-            switch(arguments[0]) {
-                case "docker": executor = new DockerExecutor(); break;
-                case "kubernetes": executor = new KubernetesExecutor(); break;
-                case "local" : executor = new LocalExecutor(); break;
-                case "ssh" : executor = new SSHExecutor(); break;
-                case "url" : executor = new URLExecutor(); break;
-            }
-            if (executor != null) {
-                List<String> executorArguments = new ArrayList<>(Arrays.asList(arguments));
-                executorArguments.remove(0);
-                output = executor.execute(executorArguments);
-            }
-        }
-        System.out.printf("%s\n", output);
+    @Test
+    public void testExecute() {
+        URLExecutor executor = new URLExecutor();
+        ArrayList<String> arguments = new ArrayList<>();
+        arguments.add("--url");
+        arguments.add("http://www.manorrock.com");
+        String result = executor.execute(arguments);
+        assertNotNull(result);
     }
 }
