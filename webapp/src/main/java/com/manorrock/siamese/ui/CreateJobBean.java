@@ -65,6 +65,7 @@ public class CreateJobBean {
         jobTypes.add(new SelectItem("kubernetes", "Kubernetes"));
         jobTypes.add(new SelectItem("local", "Local"));
         jobTypes.add(new SelectItem("ssh", "SSH"));
+        jobTypes.add(new SelectItem("url", "URL"));
     }
 
     /**
