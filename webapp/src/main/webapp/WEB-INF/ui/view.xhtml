@@ -11,6 +11,7 @@
     <h:body>
         <h1>View job</h1>
         <h2><h:outputText value="#{viewJobBean.job.name}"/></h2>
+        Type: <h:outputText value="#{viewJobBean.job.type}"/> <br/>
         Schedule: <h:outputText value="#{viewJobBean.job.schedule}"/>
         <a href="#{request.contextPath}/ui/execute/#{viewJobBean.job.id}">Execute</a>
         <br/>

@@ -32,7 +32,11 @@ package com.manorrock.siamese.ui;
 import com.manorrock.siamese.datastore.DataStore;
 import com.manorrock.siamese.datastore.DataStoreFactory;
 import com.manorrock.siamese.model.Job;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
@@ -47,8 +51,25 @@ import org.omnifaces.oyena.action.ActionMapping;
 public class CreateJobBean {
 
     /**
+     * Stores the job types.
+     */
+    private List<SelectItem> jobTypes;
+    
+    /**
+     * Initialize bean.
+     */
+    @PostConstruct
+    public void initialize() {
+        jobTypes = new ArrayList<>();
+        jobTypes.add(new SelectItem("docker", "Docker"));
+        jobTypes.add(new SelectItem("kubernetes", "Kubernetes"));
+        jobTypes.add(new SelectItem("local", "Local"));
+        jobTypes.add(new SelectItem("ssh", "SSH"));
+    }
+
+    /**
      * Show the index page.
-     * 
+     *
      * @param request the HTTP servlet request.
      * @return the index page.
      */
@@ -62,10 +83,20 @@ public class CreateJobBean {
             if (schedule != null && !schedule.trim().equals("")) {
                 job.setSchedule(schedule);
             }
+            job.setType(request.getParameter("type"));
             DataStore dataStore = DataStoreFactory.create();
             dataStore.saveJob(job);
             result = "/WEB-INF/ui/index.xhtml";
         }
         return result;
+    }
+
+    /**
+     * Get the job types.
+     *
+     * @return the job types.
+     */
+    public List<SelectItem> getJobTypes() {
+        return jobTypes;
     }
 }

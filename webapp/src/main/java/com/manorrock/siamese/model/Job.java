@@ -52,6 +52,11 @@ public class Job {
     private String schedule;
     
     /**
+     * Stores the type.
+     */
+    private String type;
+    
+    /**
      * Get the id.
      * 
      * @return the id.
@@ -79,6 +84,15 @@ public class Job {
     }
     
     /**
+     * Get the type.
+     * 
+     * @return the type.
+     */
+    public String getType() {
+        return type;
+    }
+    
+    /**
      * Set the id.
      * 
      * @param id the id.
@@ -103,5 +117,14 @@ public class Job {
      */
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    /**
+     * Set the job type.
+     * 
+     * @param type the job type. 
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 }

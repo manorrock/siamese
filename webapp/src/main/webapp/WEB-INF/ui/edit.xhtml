@@ -12,6 +12,7 @@
         <h1>Edit a job</h1>
         <form action="#{request.contextPath}/ui/edit/#{editJobBean.job.id}" method="post">
             Name: <input name="name" value="#{editJobBean.job.name}"/> <br/>
+            Type: <h:outputText value="#{editJobBean.job.type}"/> <br/>
             Cron Schedule: <input name="schedule" value="#{editJobBean.job.schedule}"/> <br/>
             <input name="submit" type="submit" value="Save"/>
             <input name="id" type="hidden" value="#{editJobBean.job.id}"/>
