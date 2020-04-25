@@ -24,6 +24,14 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.2</version>
                 <executions>
@@ -44,13 +52,13 @@
                     </execution>
                 </executions>
             </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <forkMode>none</forkMode>
-                    </configuration>
-                </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkMode>none</forkMode>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -71,12 +79,12 @@
             <build>
                 <plugins>
                     <!-- 
-                      
-                        recompute reflection.json using:
-                      
-                        -agentlib:native-image-agent=config-output-dir=./output
-                      
-                      -->
+                    
+                      recompute reflection.json using:
+                    
+                      -agentlib:native-image-agent=config-output-dir=./output
+                    
+                    -->
                     <plugin>
                         <groupId>org.graalvm.nativeimage</groupId>
                         <artifactId>native-image-maven-plugin</artifactId>
