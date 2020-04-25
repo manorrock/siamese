@@ -65,14 +65,14 @@ public class JobResource {
     private ApplicationBean application;
 
     /**
-     * Execute the job.
+     * Submit a job.
      * 
      * @param id the id.
      * @return the response.
      */
-    private Response executeJob(String id) {
+    private Response submitJob(String id) {
         Response response = Response.status(404).build();
-        JobOutput jobOutput = application.executeJob(id);
+        JobOutput jobOutput = application.submitJob(id);
         if (jobOutput != null) {
             try {
                 URI uri = new URI("job/" + id + "/output/" + jobOutput.getStartDate().getTime());
@@ -87,26 +87,26 @@ public class JobResource {
     }
 
     /**
-     * Execute the job.
+     * Submit a job.
      *
      * @param id the id.
      * @return 201 if created, 404 if not found.
      */
     @GET
-    @Path("{id}/execute")
-    public Response executeJobAsGet(@PathParam("id") String id) {
-        return executeJob(id);
+    @Path("{id}/submit")
+    public Response submitJobAsGet(@PathParam("id") String id) {
+        return submitJob(id);
     }
 
     /**
-     * Execute the job.
+     * Submit a job.
      *
      * @param id the id.
      * @return 201 if created, 404 if not found.
      */
     @POST
-    @Path("{id}/execute")
-    public Response executeJobAsPost(@PathParam("id") String id) {
-        return executeJob(id);
+    @Path("{id}/submit")
+    public Response submitJobAsPost(@PathParam("id") String id) {
+        return submitJob(id);
     }
 }

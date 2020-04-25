@@ -39,5 +39,13 @@ public enum JobStatus {
     /**
      * Pending (which means it is waiting to be picked up).
      */
-    PENDING,
+    PENDING, 
+    /**
+     * Aborted (which means the server started it, but it never got the results).
+     */
+    ABORTED,
+    /**
+     * Completed (which means the execution completed).
+     */
+    COMPLETED,
 }

@@ -37,6 +37,11 @@ package com.manorrock.siamese.model;
 public class Job {
     
     /**
+     * Stores the arguments.
+     */
+    private String arguments;
+    
+    /**
      * Stores the id.
      */
     private String id;
@@ -55,6 +60,15 @@ public class Job {
      * Stores the type.
      */
     private String type;
+
+    /**
+     * Get the arguments.
+     * 
+     * @return the arguments.
+     */
+    public String getArguments() {
+        return arguments;
+    }
     
     /**
      * Get the id.
@@ -90,6 +104,15 @@ public class Job {
      */
     public String getType() {
         return type;
+    }
+    
+    /**
+     * Set the arguments.
+     * 
+     * @param arguments the arguments.
+     */
+    public void setArguments(String arguments) {
+        this.arguments = arguments;
     }
     
     /**

@@ -104,17 +104,17 @@ public class ViewJobBean {
     }
 
     /**
-     * Trigger a manual job execution.
+     * Manually submit a job.
      *
      * @param request the HTTP servlet request.
      * @return the job view page.
      */
-    @ActionMapping("/execute/*")
-    public String execute(HttpServletRequest request) {
+    @ActionMapping("/submit/*")
+    public String submit(HttpServletRequest request) {
         String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         DataStore dataStore = DataStoreFactory.create();
         job = dataStore.loadJob(id);
-        JobOutput jobOutput = application.executeJob(id);
+        JobOutput jobOutput = application.submitJob(id);
         if (jobOutput != null) {
             startDates = dataStore.loadAllJobStartDates(id);
         }

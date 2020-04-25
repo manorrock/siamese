@@ -49,6 +49,11 @@ import org.omnifaces.oyena.action.ActionMapping;
 @Named("createJobBean")
 @RequestScoped
 public class CreateJobBean {
+    
+    /**
+     * Stores the job.
+     */
+    private Job job;
 
     /**
      * Stores the job types.
@@ -60,6 +65,9 @@ public class CreateJobBean {
      */
     @PostConstruct
     public void initialize() {
+        job = new Job();
+        job.setArguments("Please enter your arguments");
+        job.setType("local");
         jobTypes = new ArrayList<>();
         jobTypes.add(new SelectItem("docker", "Docker"));
         jobTypes.add(new SelectItem("kubernetes", "Kubernetes"));
@@ -77,8 +85,7 @@ public class CreateJobBean {
     @ActionMapping("/create")
     public String create(HttpServletRequest request) {
         String result = "/WEB-INF/ui/create.xhtml";
-        if (request.getParameter("name") != null) {
-            Job job = new Job();
+        if (request.getParameter("create") != null) {
             job.setName(request.getParameter("name"));
             String schedule = request.getParameter("schedule");
             if (schedule != null && !schedule.trim().equals("")) {
@@ -88,8 +95,21 @@ public class CreateJobBean {
             DataStore dataStore = DataStoreFactory.create();
             dataStore.saveJob(job);
             result = "/WEB-INF/ui/index.xhtml";
+        } else {
+            job.setName(request.getParameter("name"));
+            job.setArguments(request.getParameter("arguments"));
+            job.setType(request.getParameter("type"));
         }
         return result;
+    }
+    
+    /**
+     * Get the job.
+     * 
+     * @return the job.
+     */
+    public Job getJob() {
+        return job;
     }
 
     /**
