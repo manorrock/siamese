@@ -27,7 +27,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.model;
+package com.manorrock.siamese;
 
 /**
  * The status of a job.

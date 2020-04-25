@@ -27,16 +27,13 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.shared;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import com.manorrock.siamese.model.JobOutput;
-import com.manorrock.siamese.model.JobStatus;
-import static com.manorrock.siamese.model.JobStatus.COMPLETED;
+import static com.manorrock.siamese.JobStatus.COMPLETED;
 import it.sauronsoftware.cron4j.SchedulingPattern;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -48,10 +45,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.WARNING;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import org.omnifaces.cdi.Eager;
 
 /**
@@ -68,6 +68,11 @@ public class ApplicationBean {
      */
     private static final Logger LOGGER
             = Logger.getLogger(ApplicationBean.class.getPackage().getName());
+
+    /**
+     * Stores the application configuration.
+     */
+    private ApplicationConfig config;
 
     /**
      * Stores the executor.
@@ -94,19 +99,38 @@ public class ApplicationBean {
         }
         ProcessBuilder builder = new ProcessBuilder();
         ArrayList<String> arguments = new ArrayList<>();
-        arguments.add("echo");
+        arguments.add(config.getCli());
         arguments.add(job.getType());
+        if (job.getHostname() != null && !job.getHostname().trim().equals("")) {
+            arguments.add("--hostname");
+            arguments.add(job.getHostname());
+        }
+        if (job.getImage() != null && !job.getImage().trim().equals("")) {
+            arguments.add("--image");
+            arguments.add(job.getImage());
+        }
+        if (job.getPassword() != null && !job.getPassword().trim().equals("")) {
+            arguments.add("--password");
+            arguments.add(job.getPassword());
+        }
+        if (job.getUsername() != null && !job.getUsername().trim().equals("")) {
+            arguments.add("--username");
+            arguments.add(job.getUsername());
+        }
         arguments.add("--arguments");
         arguments.add(job.getArguments());
         Process process = null;
         try {
+            if (config.getPath() != null && !config.getPath().trim().equals("")) {
+                builder.environment().put("PATH", config.getPath());
+            }
             process = builder.command(arguments).start();
             if (process.waitFor(2, HOURS)) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                     jobOutput.setOutput(reader.lines().collect(Collectors.joining("\n")));
                 }
             }
-        } catch(InterruptedException | IOException ie) {
+        } catch (InterruptedException | IOException ie) {
             jobOutput.setOutput(ie.getMessage());
         } finally {
             if (process != null && process.isAlive()) {
@@ -116,7 +140,7 @@ public class ApplicationBean {
         jobOutput.setStatus(COMPLETED);
         dataStore.saveJobOutput(jobOutput);
         if (LOGGER.isLoggable(INFO)) {
-            LOGGER.log(INFO, "Finished with job ''{0}''", job.getName());
+            LOGGER.log(INFO, "Finished job ''{0}''", job.getName());
         }
     }
 
@@ -147,6 +171,16 @@ public class ApplicationBean {
             });
         }, 1, 1, MINUTES);
         executor = Executors.newFixedThreadPool(10);
+        try {
+            Jsonb jsonb = JsonbBuilder.create();
+            config = jsonb.fromJson(new FileInputStream(new File(
+                    System.getProperty("user.home")
+                    + "/.manorrock/siamese/config.json")), ApplicationConfig.class);
+        } catch (IOException ioe) {
+            if (LOGGER.isLoggable(WARNING)) {
+                LOGGER.log(WARNING, "Unable to load configuration", ioe);
+            }
+        }
     }
 
     /**

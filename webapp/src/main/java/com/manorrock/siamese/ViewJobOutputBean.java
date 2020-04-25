@@ -27,24 +27,64 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.datastore;
+package com.manorrock.siamese;
 
-import java.io.File;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The data store factory.
+ * The bean for viewing a job output.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class DataStoreFactory {
+@Named("viewJobOutputBean")
+@RequestScoped
+public class ViewJobOutputBean {
 
     /**
-     * Create a data store.
-     *
-     * @return a data store.
+     * Stores the job.
      */
-    public static DataStore create() {
-        return new FileDataStore(new File(System.getProperty("user.home")
-                + "/.manorrock/siamese"));
+    private Job job;
+
+    /**
+     * Stores the job output.
+     */
+    private JobOutput jobOutput;
+
+    /**
+     * Get the job.
+     *
+     * @return the job.
+     */
+    public Job getJob() {
+        return job;
+    }
+    
+    /**
+     * Get the job output.
+     * 
+     * @return the job output.
+     */
+    public JobOutput getJobOutput() {
+        return jobOutput;
+    }
+
+    /**
+     * View the job output.
+     *
+     * @param request the HTTP servlet request.
+     * @return the index page.
+     */
+    @ActionMapping("/output/view/*")
+    public String viewJobOutput(HttpServletRequest request) {
+        String outputId = request.getRequestURI().substring(
+                request.getRequestURI().lastIndexOf("/") + 1);
+        String jobId = request.getParameter("jobId");
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(jobId);
+        jobOutput = dataStore.loadJobOutput(jobId, outputId);
+        return "/WEB-INF/ui/output/view.xhtml";
     }
 }

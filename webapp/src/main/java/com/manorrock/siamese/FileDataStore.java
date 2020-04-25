@@ -27,10 +27,8 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.datastore;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.model.Job;
-import com.manorrock.siamese.model.JobOutput;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import static java.util.logging.Level.WARNING;
 import java.util.logging.Logger;
 import javax.json.bind.Jsonb;
@@ -224,13 +221,13 @@ public class FileDataStore implements DataStore {
     public void saveJob(Job job) {
         File jobFile;
         if (job.getId() == null) {
-            String id = UUID.randomUUID().toString();
-            jobFile = new File(baseDirectory, id);
+            Long id = 1L;
+            jobFile = new File(baseDirectory, id.toString());
             while (jobFile.exists()) {
-                id = UUID.randomUUID().toString();
-                jobFile = new File(baseDirectory, id);
+                id++;
+                jobFile = new File(baseDirectory, id.toString());
             }
-            job.setId(id);
+            job.setId(id.toString());
         }
         jobFile = new File(baseDirectory, job.getId() + File.separator + "config.json");
         if (!jobFile.getParentFile().exists()) {

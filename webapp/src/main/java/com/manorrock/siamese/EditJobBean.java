@@ -27,97 +27,90 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The bean for creating a job.
+ * The bean for editing a job.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("createJobBean")
+@Named("editJobBean")
 @RequestScoped
-public class CreateJobBean {
-    
+public class EditJobBean {
+
+    /**
+     * Stores the application.
+     */
+    @Inject
+    private ApplicationBean application;
+
     /**
      * Stores the job.
      */
     private Job job;
 
     /**
-     * Stores the job types.
+     * Stores the job id.
      */
-    private List<SelectItem> jobTypes;
-    
-    /**
-     * Initialize bean.
-     */
-    @PostConstruct
-    public void initialize() {
-        job = new Job();
-        job.setArguments("Please enter your arguments");
-        job.setType("local");
-        jobTypes = new ArrayList<>();
-        jobTypes.add(new SelectItem("docker", "Docker"));
-        jobTypes.add(new SelectItem("kubernetes", "Kubernetes"));
-        jobTypes.add(new SelectItem("local", "Local"));
-        jobTypes.add(new SelectItem("ssh", "SSH"));
-        jobTypes.add(new SelectItem("url", "URL"));
-    }
+    private String jobId;
 
     /**
-     * Show the index page.
+     * Edit the job.
      *
      * @param request the HTTP servlet request.
-     * @return the index page.
+     * @return the job edit page.
      */
-    @ActionMapping("/create")
-    public String create(HttpServletRequest request) {
-        String result = "/WEB-INF/ui/create.xhtml";
-        if (request.getParameter("create") != null) {
-            job.setName(request.getParameter("name"));
-            String schedule = request.getParameter("schedule");
-            if (schedule != null && !schedule.trim().equals("")) {
-                job.setSchedule(schedule);
-            }
-            job.setType(request.getParameter("type"));
-            DataStore dataStore = DataStoreFactory.create();
-            dataStore.saveJob(job);
-            result = "/WEB-INF/ui/index.xhtml";
-        } else {
-            job.setName(request.getParameter("name"));
-            job.setArguments(request.getParameter("arguments"));
-            job.setType(request.getParameter("type"));
+    @ActionMapping("/edit/*")
+    public String edit(HttpServletRequest request) {
+        String result = "/WEB-INF/ui/edit.xhtml";
+        jobId = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(jobId);
+        if (request.getParameter("submit") != null) {
+            result = "/WEB-INF/ui/view.xhtml";
         }
         return result;
     }
     
     /**
      * Get the job.
-     * 
+     *
      * @return the job.
      */
     public Job getJob() {
         return job;
     }
+    
+    /**
+     * Get the job id.
+     * 
+     * @return the job id.
+     */
+    public String getJobId() {
+        return jobId;
+    }
 
     /**
-     * Get the job types.
-     *
-     * @return the job types.
+     * Set the job.
+     * 
+     * @param job the job.
      */
-    public List<SelectItem> getJobTypes() {
-        return jobTypes;
+    public void setJob(Job job) {
+        this.job = job;
+    }
+    
+    /**
+     * Set the job id.
+     * 
+     * @param jobId the job id.
+     */
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
     }
 }

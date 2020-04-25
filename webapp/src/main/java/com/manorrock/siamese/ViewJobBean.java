@@ -27,74 +27,107 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The bean behind the index page.
+ * The bean for viewing a job.
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("indexBean")
+@Named("viewJobBean")
 @RequestScoped
-public class IndexBean {
+public class ViewJobBean {
 
     /**
-     * Stores the jobs.
+     * Stores the application.
      */
-    private List<Job> jobs;
+    @Inject
+    private ApplicationBean application;
 
     /**
-     * Get the jobs.
+     * Stores the job.
+     */
+    private Job job;
+
+    /**
+     * Stores the job start dates.
+     */
+    private List<Date> startDates;
+
+    /**
+     * Get the job.
      *
-     * @return the jobs.
+     * @return the job.
      */
-    public List<Job> getJobs() {
-        return jobs;
+    public Job getJob() {
+        return job;
     }
 
     /**
-     * Initialize the bean.
+     * Get the start dates.
+     *
+     * @return the start dates.
      */
-    @PostConstruct
-    public void initialize() {
-        jobs = new ArrayList<>();
-        DataStore dataStore = DataStoreFactory.create();
-        jobs = dataStore.loadAllJobs();
+    public List<Date> getStartDates() {
+        return startDates;
     }
-    
+
     /**
-     * Delete a job.
+     * Delete a job output.
      *
      * @param request the HTTP servlet request.
-     * @return the index page.
+     * @return the job view page.
      */
-    @ActionMapping("/delete/*")
-    public String delete(HttpServletRequest request) {
-        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+    @ActionMapping("/output/delete/*")
+    public String deleteJobOutput(HttpServletRequest request) {
+        String outputId = request.getRequestURI().substring(
+                request.getRequestURI().lastIndexOf("/") + 1);
+        String jobId = request.getParameter("jobId");
         DataStore dataStore = DataStoreFactory.create();
-        dataStore.deleteJob(id);
-        jobs = dataStore.loadAllJobs();
-        return "/WEB-INF/ui/index.xhtml";
+        job = dataStore.loadJob(jobId);
+        dataStore.deleteJobOutput(jobId, outputId);
+        startDates = dataStore.loadAllJobStartDates(jobId);
+        return "/WEB-INF/ui/view.xhtml";
     }
 
     /**
-     * Show the index page.
-     * 
-     * @return the index page.
+     * Manually submit a job.
+     *
+     * @param request the HTTP servlet request.
+     * @return the job view page.
      */
-    @ActionMapping("/")
-    public String index() {
-        return "/WEB-INF/ui/index.xhtml";
+    @ActionMapping("/submit/*")
+    public String submit(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(id);
+        JobOutput jobOutput = application.submitJob(id);
+        if (jobOutput != null) {
+            startDates = dataStore.loadAllJobStartDates(id);
+        }
+        return "/WEB-INF/ui/view.xhtml";
+    }
+
+    /**
+     * Show the job.
+     *
+     * @param request the HTTP servlet request.
+     * @return the job view page.
+     */
+    @ActionMapping("/view/*")
+    public String view(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        job = dataStore.loadJob(id);
+        startDates = dataStore.loadAllJobStartDates(id);
+        return "/WEB-INF/ui/view.xhtml";
     }
 }

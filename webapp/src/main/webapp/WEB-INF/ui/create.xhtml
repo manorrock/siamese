@@ -7,6 +7,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <f:view transient="true"/>
         <title>Create a job</title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/default.css"/>
@@ -67,7 +68,7 @@
                 </div>
                 <div class="table_clear"></div>
             </div>
+            <input name="create" type="submit" value="Create"/>
         </form>
-        <input name="create" type="submit" value="Create"/>
     </h:body>
 </html>

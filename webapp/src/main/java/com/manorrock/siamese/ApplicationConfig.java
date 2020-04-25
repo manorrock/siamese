@@ -27,127 +27,65 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.model;
+package com.manorrock.siamese;
 
 /**
- * A job.
+ * The application configuration.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class Job {
+public class ApplicationConfig {
     
     /**
-     * Stores the arguments.
+     * Stores the CLI.
      */
-    private String arguments;
+    private String cli;
     
     /**
-     * Stores the id.
+     * Stores the (search) path.
      */
-    private String id;
+    private String path;
     
     /**
-     * Stores the name.
+     * Constructor.
      */
-    private String name;
-    
-    /**
-     * Stores the schedule (in cron syntax).
-     */
-    private String schedule;
-    
-    /**
-     * Stores the type.
-     */
-    private String type;
-
-    /**
-     * Get the arguments.
-     * 
-     * @return the arguments.
-     */
-    public String getArguments() {
-        return arguments;
+    public ApplicationConfig() {
+        this.cli = "si";
     }
     
     /**
-     * Get the id.
+     * Get the CLI.
      * 
-     * @return the id.
+     * @return the cli.
      */
-    public String getId() {
-        return id;
-    }
-    
-    /**
-     * Get the name.
-     * 
-     * @return the name.
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
-     * Get the schedule.
-     * 
-     * @return the schedule.
-     */
-    public String getSchedule() {
-        return schedule;
-    }
-    
-    /**
-     * Get the type.
-     * 
-     * @return the type.
-     */
-    public String getType() {
-        return type;
-    }
-    
-    /**
-     * Set the arguments.
-     * 
-     * @param arguments the arguments.
-     */
-    public void setArguments(String arguments) {
-        this.arguments = arguments;
-    }
-    
-    /**
-     * Set the id.
-     * 
-     * @param id the id.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * Set the name.
-     * 
-     * @param name the name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * Set the schedule.
-     * 
-     * @param schedule the schedule.
-     */
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public String getCli() {
+        return cli;
     }
 
     /**
-     * Set the job type.
+     * Get the (search) path.
      * 
-     * @param type the job type. 
+     * @return the (search) path.
      */
-    public void setType(String type) {
-        this.type = type;
+    public String getPath() {
+        return path;
+    }
+    
+    /**
+     * Set the CLI.
+     * 
+     * @param cli the cli.
+     */
+    public void setCli(String cli) {
+        this.cli = cli;
+    }
+    
+    /**
+     * Set the (search) path.
+     * 
+     * @param path the (search) path.
+     */
+    public void setPath(String path) {
+        this.path = path;
     }
 }

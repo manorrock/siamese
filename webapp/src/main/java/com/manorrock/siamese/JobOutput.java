@@ -27,69 +27,41 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.ui;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.datastore.DataStore;
-import com.manorrock.siamese.datastore.DataStoreFactory;
-import com.manorrock.siamese.model.Job;
-import com.manorrock.siamese.shared.ApplicationBean;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import org.omnifaces.oyena.action.ActionMapping;
+import java.util.Date;
 
 /**
- * The bean for editing a job.
- *
+ * The output of a job.
+ * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Named("editJobBean")
-@RequestScoped
-public class EditJobBean {
-
+public class JobOutput {
+    
     /**
-     * Stores the application.
+     * Stores the end date.
      */
-    @Inject
-    private ApplicationBean application;
-
-    /**
-     * Stores the job.
-     */
-    private Job job;
-
+    private String endDate;
+    
     /**
      * Stores the job id.
      */
     private String jobId;
-
-    /**
-     * Edit the job.
-     *
-     * @param request the HTTP servlet request.
-     * @return the job edit page.
-     */
-    @ActionMapping("/edit/*")
-    public String edit(HttpServletRequest request) {
-        String result = "/WEB-INF/ui/edit.xhtml";
-        jobId = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        DataStore dataStore = DataStoreFactory.create();
-        job = dataStore.loadJob(jobId);
-        if (request.getParameter("submit") != null) {
-            result = "/WEB-INF/ui/view.xhtml";
-        }
-        return result;
-    }
     
     /**
-     * Get the job.
-     *
-     * @return the job.
+     * Stores the output.
      */
-    public Job getJob() {
-        return job;
-    }
+    private String output;
+    
+    /**
+     * Stores the start timestamp.
+     */
+    private Date startDate;
+    
+    /**
+     * Stores the status.
+     */
+    private JobStatus status;
     
     /**
      * Get the job id.
@@ -99,16 +71,34 @@ public class EditJobBean {
     public String getJobId() {
         return jobId;
     }
-
+    
     /**
-     * Set the job.
+     * Get the output.
      * 
-     * @param job the job.
+     * @return the output.
      */
-    public void setJob(Job job) {
-        this.job = job;
+    public String getOutput() {
+        return output;
     }
     
+    /**
+     * Get the start date.
+     * 
+     * @return the start date.
+     */
+    public Date getStartDate() {
+        return startDate;
+    }
+    
+    /**
+     * Get the status.
+     * 
+     * @return the status.
+     */
+    public JobStatus getStatus() {
+        return status;
+    }
+
     /**
      * Set the job id.
      * 
@@ -116,5 +106,32 @@ public class EditJobBean {
      */
     public void setJobId(String jobId) {
         this.jobId = jobId;
+    }
+    
+    /**
+     * Set the output.
+     * 
+     * @param output the output.
+     */
+    public void setOutput(String output) {
+        this.output = output;
+    }
+    
+    /**
+     * Set the start date.
+     * 
+     * @param startDate the start dates.
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * Set the status.
+     * 
+     * @param status the status. 
+     */
+    public void setStatus(JobStatus status) {
+        this.status = status;
     }
 }

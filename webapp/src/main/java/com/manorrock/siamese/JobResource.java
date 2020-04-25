@@ -27,10 +27,8 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.api;
+package com.manorrock.siamese;
 
-import com.manorrock.siamese.model.JobOutput;
-import com.manorrock.siamese.shared.ApplicationBean;
 import java.net.URI;
 import java.net.URISyntaxException;
 import static java.util.logging.Level.WARNING;

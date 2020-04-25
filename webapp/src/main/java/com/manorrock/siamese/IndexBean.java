@@ -27,111 +27,71 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
-package com.manorrock.siamese.model;
+package com.manorrock.siamese;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.oyena.action.ActionMapping;
 
 /**
- * The output of a job.
- * 
+ * The bean behind the index page.
+ *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class JobOutput {
-    
+@Named("indexBean")
+@RequestScoped
+public class IndexBean {
+
     /**
-     * Stores the end date.
+     * Stores the jobs.
      */
-    private String endDate;
-    
+    private List<Job> jobs;
+
     /**
-     * Stores the job id.
+     * Get the jobs.
+     *
+     * @return the jobs.
      */
-    private String jobId;
-    
-    /**
-     * Stores the output.
-     */
-    private String output;
-    
-    /**
-     * Stores the start timestamp.
-     */
-    private Date startDate;
-    
-    /**
-     * Stores the status.
-     */
-    private JobStatus status;
-    
-    /**
-     * Get the job id.
-     * 
-     * @return the job id.
-     */
-    public String getJobId() {
-        return jobId;
-    }
-    
-    /**
-     * Get the output.
-     * 
-     * @return the output.
-     */
-    public String getOutput() {
-        return output;
-    }
-    
-    /**
-     * Get the start date.
-     * 
-     * @return the start date.
-     */
-    public Date getStartDate() {
-        return startDate;
-    }
-    
-    /**
-     * Get the status.
-     * 
-     * @return the status.
-     */
-    public JobStatus getStatus() {
-        return status;
+    public List<Job> getJobs() {
+        return jobs;
     }
 
     /**
-     * Set the job id.
-     * 
-     * @param jobId the job id.
+     * Initialize the bean.
      */
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
+    @PostConstruct
+    public void initialize() {
+        jobs = new ArrayList<>();
+        DataStore dataStore = DataStoreFactory.create();
+        jobs = dataStore.loadAllJobs();
     }
     
     /**
-     * Set the output.
-     * 
-     * @param output the output.
+     * Delete a job.
+     *
+     * @param request the HTTP servlet request.
+     * @return the index page.
      */
-    public void setOutput(String output) {
-        this.output = output;
-    }
-    
-    /**
-     * Set the start date.
-     * 
-     * @param startDate the start dates.
-     */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    @ActionMapping("/delete/*")
+    public String delete(HttpServletRequest request) {
+        String id = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        DataStore dataStore = DataStoreFactory.create();
+        dataStore.deleteJob(id);
+        jobs = dataStore.loadAllJobs();
+        return "/WEB-INF/ui/index.xhtml";
     }
 
     /**
-     * Set the status.
+     * Show the index page.
      * 
-     * @param status the status. 
+     * @return the index page.
      */
-    public void setStatus(JobStatus status) {
-        this.status = status;
+    @ActionMapping("/")
+    public String index() {
+        return "/WEB-INF/ui/index.xhtml";
     }
 }
