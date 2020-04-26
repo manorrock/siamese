@@ -14,9 +14,9 @@ jobs:
       run: mvn -B site:site site:stage
     - name: Move site to root directory
       run: |        
-        mv target/site .site
-        rm -rf *
-        mv .site/* .
+        mv -v target/site .site
+        rm -rfv *
+        mv -v .site/* .
         rmdir .site
     - name: Checkout gh-pages branch
       uses: actions/checkout@v1

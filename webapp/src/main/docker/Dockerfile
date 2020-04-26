@@ -43,6 +43,23 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     rm -rf /var/lib/apt/lists/*
 
 #
+# Install kubectl.
+#
+RUN apt-get update && \ 
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && \
+    apt-get install -y kubectl && \
+    rm -rf /var/lib/apt/lists/*
+
+#
+# Install Manorrock Siamese CLI.
+#
+RUN curl -L -O https://github.com/manorrock/siamese/releases/download/v20.2.0/siamese_linux_amd64 && \
+    chmod +x siamese_linux_amd64 && \
+    mv siamese_linux_amd64 /usr/local/bin/si
+
+#
 # Setup PATH
 #
 ENV PATH=$PATH:/usr/local/jdk/bin
