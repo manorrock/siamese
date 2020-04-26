@@ -1,5 +1,6 @@
 name: docker-snapshot
 on:
+  push:
   schedule:
   - cron: "0 12 * * *"
 jobs:
@@ -22,10 +23,24 @@ jobs:
     - name: Build amd64 image
       run: | 
         cd webapp
-        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:snapshot .
-        docker push manorrock/siamese:snapshot
+        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:amd64-snapshot .
+        docker push manorrock/siamese:amd64-snapshot
     - name: Build ARM32v6 image
       run: | 
         cd webapp
         docker build -f src/main/docker/Dockerfile.ARM32v6 -t manorrock/siamese:arm32v6-snapshot .
         docker push manorrock/siamese:arm32v6-snapshot
+    - name: Create multi-arch manifest
+      run: | 
+        cd webapp
+        docker manifest create manorrock/siamese:snapshot \
+          manorrock/siamese:amd64-snapshot \
+          manorrock/siamese:arm32v6-snapshot
+        docker manifest annotate manorrock/siamese:and64-snapshot \
+          manorrock/siamese:amd64-snapshot --os linux --arch amd64
+        docker manifest annotate manorrock/siamese:snapshot \
+          manorrock/siamese:arm32v6-snapshot --os linux --arch arm
+        docker manifest push manorrock/siamese:snapshot
+        cd webapp
+        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:snapshot .
+        docker push manorrock/siamese:snapshot
