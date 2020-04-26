@@ -37,7 +37,7 @@ jobs:
         docker manifest create manorrock/siamese:snapshot \
           manorrock/siamese:amd64-snapshot \
           manorrock/siamese:arm32v6-snapshot
-        docker manifest annotate manorrock/siamese:amd64-snapshot \
+        docker manifest annotate manorrock/siamese:snapshot \
           manorrock/siamese:amd64-snapshot --os linux --arch amd64
         docker manifest annotate manorrock/siamese:snapshot \
           manorrock/siamese:arm32v6-snapshot --os linux --arch arm
