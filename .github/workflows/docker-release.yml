@@ -26,8 +26,8 @@ jobs:
         TAG=${GITHUB_REF}
         INDEX=${TAG%v*}
         VERSION=${TAG:${#INDEX}}
-        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:$VERSION .
-        docker push manorrock/siamese:$VERSION
+        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:amd64-$VERSION .
+        docker push manorrock/siamese:amd64-$VERSION
     - name: Build ARM32v6 image
       run: |
         cd webapp
@@ -36,3 +36,15 @@ jobs:
         VERSION=${TAG:${#INDEX}}
         docker build -f src/main/docker/Dockerfile.ARM32v6 -t manorrock/siamese:arm32v6-$VERSION .
         docker push manorrock/siamese:arm32v6-$VERSION
+    - name: Create multi-arch manifest
+      run: | 
+        cd webapp
+        export DOCKER_CLI_EXPERIMENTAL=enabled
+        docker manifest create manorrock/siamese:$VERSION \
+          manorrock/siamese:amd64-$VERSION \
+          manorrock/siamese:arm32v6-$VERSION
+        docker manifest annotate manorrock/siamese:$VERSION \
+          manorrock/siamese:amd64-$VERSION --os linux --arch amd64
+        docker manifest annotate manorrock/siamese:$VERSION \
+          manorrock/siamese:arm32v6-$VERSION --os linux --arch arm
+        docker manifest push manorrock/siamese:$VERSION
