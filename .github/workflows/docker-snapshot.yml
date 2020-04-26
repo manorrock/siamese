@@ -42,6 +42,3 @@ jobs:
         docker manifest annotate manorrock/siamese:snapshot \
           manorrock/siamese:arm32v6-snapshot --os linux --arch arm
         docker manifest push manorrock/siamese:snapshot
-        cd webapp
-        docker build -f src/main/docker/Dockerfile -t manorrock/siamese:snapshot .
-        docker push manorrock/siamese:snapshot
