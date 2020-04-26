@@ -33,6 +33,7 @@ jobs:
     - name: Create multi-arch manifest
       run: | 
         cd webapp
+        export DOCKER_CLI_EXPERIMENTAL=enabled
         docker manifest create manorrock/siamese:snapshot \
           manorrock/siamese:amd64-snapshot \
           manorrock/siamese:arm32v6-snapshot
