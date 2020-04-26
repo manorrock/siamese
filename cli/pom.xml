@@ -9,7 +9,10 @@
     </parent>
     <artifactId>siamese-cli</artifactId>
     <packaging>jar</packaging>
-    <name>Manorrock Siamese - CLI</name>
+    <name>CLI</name>
+    <description>
+        The CLI for Manorrock Siamese
+    </description>
     <build>
         <finalName>si</finalName>
         <plugins>
