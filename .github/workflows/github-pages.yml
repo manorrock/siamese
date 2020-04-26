@@ -1,5 +1,7 @@
 name: github-pages
-on: [push]
+on: 
+  schedule:
+  - cron: "0 11 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,5 +33,5 @@ jobs:
         git config --global user.email "noreply@manorrock.com"
         git config --global user.name "Automated job"
         git add .
-        git commit -a -m "Publishing to GitHub pages"
+        git commit -a -m "Publishing to GitHub pages" --allow-empty
         git push https://${PUBLISH_USERNAME}:${PUBLISH_PASSWORD}@github.com/manorrock/siamese.git
