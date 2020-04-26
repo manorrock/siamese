@@ -45,6 +45,15 @@ RUN curl -sSL https://get.docker.com | sh && \
     rm -rf /var/lib/apt/lists/*
 
 #
+# Install kubectl.
+#
+RUN curl -L -O https://github.com/rancher/k3s/releases/download/v1.17.4%2Bk3s1/k3s-armhf && \
+    chmod +x k3s-armhf && \
+    ./k3s-armhf kubectl --help && \
+    mv k3s-armhf /usr/local/bin/k3s && \
+    ln -s /usr/local/bin/k3s /usr/local/bin/kubectl
+
+#
 # Setup PATH
 #
 ENV PATH=$PATH:/usr/local/jdk/bin

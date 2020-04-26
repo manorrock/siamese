@@ -11,7 +11,7 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B site:site site:stage
+      run: mvn -B site site:stage
     - name: Move site to root directory
       run: |        
         mv -v target/staging .site
