@@ -180,6 +180,12 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+    <distributionManagement>
+        <site>
+            <id>Manorrock Siamese</id>
+            <url>https://manorrock.github.io/siamese</url>
+        </site>
+    </distributionManagement>
     <scm>
         <connection>scm:git:git://github.com/manorrock/siamese.git</connection>
         <developerConnection>scm:git:git@github.com:manorrock/siamese.git</developerConnection>
