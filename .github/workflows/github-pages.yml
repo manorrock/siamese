@@ -32,4 +32,4 @@ jobs:
         git config --global user.name "Automated job"
         git add .
         git commit -a -m "Publishing to GitHub pages"
-        git push https://${PUBLISH_USERNAME}:${PUBLISH_PASSWORD}@github.com/manorock/siamese.git
+        git push https://${PUBLISH_USERNAME}:${PUBLISH_PASSWORD}@github.com/manorrock/siamese.git
