@@ -29,7 +29,7 @@ RUN cd /usr/local && \
 #
 # Install Tomcat 9.
 #
-RUN curl --insecure -L -O http://apache.mirrors.hoobly.com/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
+RUN curl --insecure -L -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
     tar xfvz apache-tomcat-9.0.34.tar.gz && \
     mv apache-tomcat-9.0.34 tomcat && \
     rm apache-tomcat-9.0.34.tar.gz && \
@@ -43,15 +43,14 @@ RUN curl --insecure -L -O http://apache.mirrors.hoobly.com/tomcat/tomcat-9/v9.0.
 #
 RUN curl -sSL https://get.docker.com | sh && \
     rm -rf /var/lib/apt/lists/*
-
+    
 #
 # Install kubectl.
 #
-RUN curl -L -O https://github.com/rancher/k3s/releases/download/v1.17.4%2Bk3s1/k3s-armhf && \
-    chmod +x k3s-armhf && \
-    ./k3s-armhf kubectl --help && \
-    mv k3s-armhf /usr/local/bin/k3s && \
-    ln -s /usr/local/bin/k3s /usr/local/bin/kubectl
+RUN curl -L -O http://http.us.debian.org/debian/pool/main/k/kubernetes/kubernetes-client_1.18.0-1_armhf.deb && \
+    dpkg -i kubernetes-client_1.18.0-1_armhf.deb && \
+    rm kubernetes-client_1.18.0-1_armhf.deb && \
+    rm -rf /var/lib/apt/lists/*
 
 #
 # Setup PATH
