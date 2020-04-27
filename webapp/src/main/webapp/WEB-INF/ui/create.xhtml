@@ -55,6 +55,10 @@
                         <div class="table_label">Password:</div>
                         <div class="table_item"><input name="password" value=""/></div>
                     </h:panelGroup>
+                    <h:panelGroup styleClass="table_row" layout="block" rendered="#{createJobBean.job.type eq 'ssh'}">
+                        <div class="table_label">Known Hosts:</div>
+                        <div class="table_item"><input name="knownHosts" value=""/></div>
+                    </h:panelGroup>
                     <h:panelGroup styleClass="table_row" layout="block" rendered="#{createJobBean.job.type eq 'url'}">
                         <div class="table_label">URL:</div> 
                         <input name="url" value=""/> <br/>

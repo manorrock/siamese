@@ -109,6 +109,10 @@ public class ApplicationBean {
             arguments.add("--image");
             arguments.add(job.getImage());
         }
+        if (job.getKnownHosts() != null && !job.getKnownHosts().trim().equals("")) {
+            arguments.add("--knownHosts");
+            arguments.add(job.getKnownHosts());
+        }
         if (job.getPassword() != null && !job.getPassword().trim().equals("")) {
             arguments.add("--password");
             arguments.add(job.getPassword());

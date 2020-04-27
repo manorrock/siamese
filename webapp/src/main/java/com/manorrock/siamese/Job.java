@@ -55,6 +55,11 @@ public class Job {
      * Stores the image name (Docker/Kubernetes only).
      */
     private String image;
+    
+    /**
+     * Stores the knownHosts file.
+     */
+    private String knownHosts;
 
     /**
      * Stores the name.
@@ -106,6 +111,15 @@ public class Job {
      */
     public String getId() {
         return id;
+    }
+
+    /**
+     * Get the known hosts (file).
+     * 
+     * @return the known hosts (file).
+     */
+    public String getKnownHosts() {
+        return knownHosts;
     }
 
     /**
@@ -196,6 +210,15 @@ public class Job {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+
+    /**
+     * Set the known hosts (file).
+     * 
+     * @param knownHosts the known hosts.
+     */
+    public void setKnownHosts(String knownHosts) {
+        this.knownHosts = knownHosts;
     }
 
     /**

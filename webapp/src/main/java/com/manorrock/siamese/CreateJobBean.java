@@ -96,6 +96,10 @@ public class CreateJobBean {
             if (image != null && !image.trim().equals("")) {
                 job.setImage(image);
             }
+            String knownHosts = request.getParameter("knownHosts");
+            if (knownHosts != null && !knownHosts.trim().equals("")) {
+                job.setKnownHosts(knownHosts);
+            }
             String password = request.getParameter("password");
             if (password != null && !password.trim().equals("")) {
                 job.setPassword(password);
