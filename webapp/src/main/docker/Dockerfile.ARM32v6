@@ -29,7 +29,8 @@ RUN cd /usr/local && \
 #
 # Install Tomcat 9.
 #
-RUN curl --insecure -L -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
+RUN cd /usr/local && \
+    curl --insecure -L -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
     tar xfvz apache-tomcat-9.0.34.tar.gz && \
     mv apache-tomcat-9.0.34 tomcat && \
     rm apache-tomcat-9.0.34.tar.gz && \
