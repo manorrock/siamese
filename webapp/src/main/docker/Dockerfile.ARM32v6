@@ -54,6 +54,13 @@ RUN curl -L -O http://http.us.debian.org/debian/pool/main/k/kubernetes/kubernete
     rm -rf /var/lib/apt/lists/*
 
 #
+# Install Manorrock Siamese CLI.
+#
+RUN curl -L -O https://github.com/manorrock/siamese/releases/download/v20.2.0/siamese_linux_arm && \
+    chmod +x siamese_linux_arm && \
+    mv siamese_linux_arm /usr/local/bin/si
+
+#
 # Setup PATH
 #
 ENV PATH=$PATH:/usr/local/jdk/bin
