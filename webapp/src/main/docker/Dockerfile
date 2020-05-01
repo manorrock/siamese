@@ -55,9 +55,9 @@ RUN apt-get update && \
 #
 # Install Manorrock Siamese CLI.
 #
-RUN curl -L -O https://github.com/manorrock/siamese/releases/download/v20.2.0/siamese_linux_amd64 && \
-    chmod +x siamese_linux_amd64 && \
-    mv siamese_linux_amd64 /usr/local/bin/si
+COPY cli/target/*-all.jar /usr/local/bin/si.jar
+COPY cli/src/main/script/si.sh /usr/local/bin/si
+RUN chmod +x /usr/local/bin/si
 
 #
 # Setup PATH
@@ -77,4 +77,4 @@ CMD ["bin/catalina.sh", "run"]
 #
 # Copy Manorrock Siamese into Tomcat 9.
 #
-COPY target/siamese.war /usr/local/tomcat/webapps/ROOT.war
+COPY webapp/target/siamese.war /usr/local/tomcat/webapps/ROOT.war
