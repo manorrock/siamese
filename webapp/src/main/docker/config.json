@@ -1,0 +1,4 @@
+{
+    "cli": "/usr/local/bin/si",
+    "path": "/bin:/usr/bin:/usr/local/bin:/usr/local/jdk/bin"
+}

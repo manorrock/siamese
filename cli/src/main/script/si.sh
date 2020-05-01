@@ -1,2 +1,2 @@
-#!/bin/bash
-java -jar $(dirname $0)/si.jar "$@"
+#!/bin/sh
+exec java -jar $(dirname $0)/si.jar "$@"

@@ -24,7 +24,8 @@ RUN cd /usr/local && \
 #
 # Install Tomcat 9.
 #
-RUN curl --insecure -L -O http://apache.mirrors.hoobly.com/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
+RUN cd /usr/local && \
+    curl --insecure -L -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
     tar xfvz apache-tomcat-9.0.34.tar.gz && \
     mv apache-tomcat-9.0.34 tomcat && \
     rm apache-tomcat-9.0.34.tar.gz && \
@@ -57,6 +58,7 @@ RUN apt-get update && \
 #
 COPY cli/target/*-all.jar /usr/local/bin/si.jar
 COPY cli/src/main/script/si.sh /usr/local/bin/si
+COPY webapp/src/main/docker/config.json /root/.manorrock/siamese/config.json
 RUN chmod +x /usr/local/bin/si
 
 #

@@ -58,6 +58,7 @@ RUN curl -L -O http://http.us.debian.org/debian/pool/main/k/kubernetes/kubernete
 #
 COPY cli/target/*-all.jar /usr/local/bin/si.jar
 COPY cli/src/main/script/si.sh /usr/local/bin/si
+COPY webapp/src/main/docker/config.json /root/.manorrock/siamese/config.json
 RUN chmod +x /usr/local/bin/si
 
 #
