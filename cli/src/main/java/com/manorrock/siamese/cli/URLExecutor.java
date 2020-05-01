@@ -29,6 +29,16 @@
  */
 package com.manorrock.siamese.cli;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import static java.net.http.HttpClient.Redirect.ALWAYS;
+import static java.net.http.HttpClient.Version.HTTP_1_1;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -63,7 +73,7 @@ public class URLExecutor implements Executor {
      */
     @Override
     public String execute(List<String> executeArguments) {
-        String result = "";
+        String result;
         for (int i = 0; i < executeArguments.size(); i++) {
             if (executeArguments.get(i).equals("--arguments")) {
                 arguments = executeArguments.get(i + 1);
@@ -72,7 +82,6 @@ public class URLExecutor implements Executor {
                 url = executeArguments.get(i + 1);
             }
         }
-        /*
         try {
             HttpClient client = HttpClient
                     .newBuilder()
@@ -89,7 +98,6 @@ public class URLExecutor implements Executor {
         } catch (IOException | InterruptedException | URISyntaxException e) {
             result = e.getMessage();
         }
-         */
         return result;
     }
 }
