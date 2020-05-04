@@ -52,6 +52,11 @@ public class URLExecutor implements Executor {
      * Stores our arguments.
      */
     private String arguments;
+    
+    /**
+     * Stores the HTTP method.
+     */
+    private String method;
 
     /**
      * Stores our URL.
@@ -63,6 +68,7 @@ public class URLExecutor implements Executor {
      */
     public URLExecutor() {
         arguments = "";
+        method = "POST";
     }
 
     /**
@@ -78,6 +84,9 @@ public class URLExecutor implements Executor {
             if (executeArguments.get(i).equals("--arguments")) {
                 arguments = executeArguments.get(i + 1);
             }
+            if (executeArguments.get(i).equals("--method")) {
+                method = executeArguments.get(i + 1);
+            }
             if (executeArguments.get(i).equals("--url")) {
                 url = executeArguments.get(i + 1);
             }
@@ -92,7 +101,7 @@ public class URLExecutor implements Executor {
             HttpRequest request = HttpRequest
                     .newBuilder()
                     .uri(new URI(url))
-                    .POST(BodyPublishers.ofString(arguments))
+                    .method(method, BodyPublishers.ofString(arguments))
                     .build();
             result = client.send(request, BodyHandlers.ofString()).body();
         } catch (IOException | InterruptedException | URISyntaxException e) {

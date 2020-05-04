@@ -51,6 +51,11 @@ public class LocalExecutor implements Executor {
     private List<String> processArguments;
     
     /**
+     * Stores the script we are executing.
+     */
+    private String script;
+    
+    /**
      * Stores the verbose flag.
      */
     private boolean verbose = false;
@@ -73,6 +78,9 @@ public class LocalExecutor implements Executor {
             if (arguments.get(i).equals("--arguments")) {
                 processArguments = Arrays.asList(arguments.get(i + 1).split(" "));
             }
+            if (arguments.get(i).equals("--script")) {
+                script = arguments.get(i + 1);
+            }
             if (arguments.get(i).equals("--verbose")) {
                 verbose = true;
             }
@@ -80,7 +88,12 @@ public class LocalExecutor implements Executor {
                 workingDirectory = arguments.get(i + 1);
             }
         }
-        ProcessBuilder processBuilder = new ProcessBuilder(processArguments);
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (script != null) {
+            processBuilder.command("sh", "-c", script);
+        } else {
+            processBuilder.command(processArguments);
+        }
         if (workingDirectory != null) {
             processBuilder.directory(new File(workingDirectory));
         }
