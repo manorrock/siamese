@@ -92,7 +92,7 @@ public class DockerExecutor implements Executor {
             image = "debian";
         }
         List<String> commandArguments = new ArrayList<>();
-        commandArguments.add("/usr/local/bin/docker");
+        commandArguments.add("docker");
         if (dockerHost != null) {
             commandArguments.add("--host");
             commandArguments.add(dockerHost);
