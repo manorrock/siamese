@@ -41,7 +41,6 @@ import org.junit.Test;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
-@Ignore
 public class DockerExecutorTest {
 
     /**
@@ -72,7 +71,6 @@ public class DockerExecutorTest {
         assertEquals("1234", result);
     }
     
-
     /**
      * Test execute method.
      */
@@ -86,5 +84,21 @@ public class DockerExecutorTest {
         DockerExecutor executor = new DockerExecutor();
         String result = executor.execute(arguments);
         assertEquals("1234", result);
+    }
+    
+    /**
+     * Test execute method.
+     */
+    @Test
+    @Ignore
+    public void testExecute4() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--docker-host");
+        arguments.add("this_is_a_broken_host");
+        arguments.add("--arguments");
+        arguments.add("echo 1234");
+        DockerExecutor executor = new DockerExecutor();
+        String result = executor.execute(arguments);
+        assertEquals("", result);
     }
 }

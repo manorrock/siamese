@@ -49,7 +49,12 @@ public class DockerExecutor implements Executor {
      * Stores our arguments.
      */
     private List<String> arguments;
-    
+
+    /**
+     * Stores the DOCKER_HOST setting.
+     */
+    private String dockerHost;
+
     /**
      * Stores our image.
      */
@@ -73,6 +78,9 @@ public class DockerExecutor implements Executor {
             if (arguments.get(i).equals("--arguments")) {
                 this.arguments = Arrays.asList(arguments.get(i + 1).split(" "));
             }
+            if (arguments.get(i).equals("--docker-host")) {
+                this.dockerHost = arguments.get(i + 1);
+            }
             if (arguments.get(i).equals("--image")) {
                 image = arguments.get(i + 1);
             }
@@ -84,14 +92,18 @@ public class DockerExecutor implements Executor {
             image = "debian";
         }
         List<String> commandArguments = new ArrayList<>();
-        commandArguments.add("docker");
+        commandArguments.add("/usr/local/bin/docker");
+        if (dockerHost != null) {
+            commandArguments.add("--host");
+            commandArguments.add(dockerHost);
+        }
         commandArguments.add("run");
         commandArguments.add("--rm");
         commandArguments.add("-i");
         if (workingDirectory != null) {
             commandArguments.add("-w");
             commandArguments.add(workingDirectory);
-	}
+        }
         commandArguments.add(image);
         commandArguments.addAll(this.arguments);
         ProcessBuilder processBuilder = new ProcessBuilder(commandArguments);
