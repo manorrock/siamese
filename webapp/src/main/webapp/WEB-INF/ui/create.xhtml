@@ -39,6 +39,10 @@
                         <div class="table_label">Image:</div>
                         <div class="table_item"><input name="image" value=""/></div>
                     </h:panelGroup>
+                    <h:panelGroup styleClass="table_row" layout="block" rendered="#{createJobBean.job.type eq 'docker'}">
+                        <div class="table_label">Docker Host:</div>
+                        <div class="table_item"><input name="dockerHost" value=""/></div>
+                    </h:panelGroup>
                     <h:panelGroup styleClass="table_row" layout="block" rendered="#{createJobBean.job.type eq 'kubernetes'}">
                         <div class="table_label">Image:</div>
                         <div class="table_item"><input name="image" value=""/></div>

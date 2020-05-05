@@ -41,6 +41,7 @@ import org.junit.Test;
  *
  * @author Manfred Riem (mriem@manorrock.com)
  */
+@Ignore
 public class DockerExecutorTest {
 
     /**
@@ -90,7 +91,6 @@ public class DockerExecutorTest {
      * Test execute method.
      */
     @Test
-    @Ignore
     public void testExecute4() {
         List<String> arguments = new ArrayList<>();
         arguments.add("--docker-host");

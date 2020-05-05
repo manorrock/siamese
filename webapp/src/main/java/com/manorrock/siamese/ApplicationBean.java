@@ -109,6 +109,10 @@ public class ApplicationBean {
             arguments.add("--image");
             arguments.add(job.getImage());
         }
+        if (job.getDockerHost() != null && !job.getDockerHost().trim().equals("")) {
+            arguments.add("--dockerHost");
+            arguments.add(job.getDockerHost());
+        }
         if (job.getKnownHosts() != null && !job.getKnownHosts().trim().equals("")) {
             arguments.add("--knownHosts");
             arguments.add(job.getKnownHosts());

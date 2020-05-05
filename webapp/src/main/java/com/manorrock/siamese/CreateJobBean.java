@@ -96,6 +96,10 @@ public class CreateJobBean {
             if (image != null && !image.trim().equals("")) {
                 job.setImage(image);
             }
+            String dockerHost = request.getParameter("dockerHost");
+            if (dockerHost != null && !dockerHost.trim().equals("")) {
+                job.setDockerHost(dockerHost);
+            }
             String knownHosts = request.getParameter("knownHosts");
             if (knownHosts != null && !knownHosts.trim().equals("")) {
                 job.setKnownHosts(knownHosts);

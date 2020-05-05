@@ -40,6 +40,11 @@ public class Job {
      * Stores the arguments.
      */
     private String arguments;
+    
+    /**
+     * Stores the DOCKER_HOST (Docker only).
+     */
+    private String dockerHost;
 
     /**
      * Stores the id.
@@ -93,6 +98,15 @@ public class Job {
      */
     public String getArguments() {
         return arguments;
+    }
+
+    /**
+     * Get the DOCKER_HOST.
+     *
+     * @return the DOCKER_HOST.
+     */
+    public String getDockerHost() {
+        return dockerHost;
     }
 
     /**
@@ -264,5 +278,14 @@ public class Job {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Set the DOCKER_HOST.
+     * 
+     * @param dockerHost the DOCKER_HOST.
+     */
+    public void setDockerHost(String dockerHost) {
+        this.dockerHost = dockerHost;
     }
 }

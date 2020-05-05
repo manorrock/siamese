@@ -78,7 +78,7 @@ public class DockerExecutor implements Executor {
             if (arguments.get(i).equals("--arguments")) {
                 this.arguments = Arrays.asList(arguments.get(i + 1).split(" "));
             }
-            if (arguments.get(i).equals("--docker-host")) {
+            if (arguments.get(i).equals("--dockerHost")) {
                 this.dockerHost = arguments.get(i + 1);
             }
             if (arguments.get(i).equals("--image")) {
