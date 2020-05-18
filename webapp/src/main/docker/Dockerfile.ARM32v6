@@ -48,9 +48,9 @@ RUN curl -sSL https://get.docker.com | sh && \
 #
 # Install kubectl.
 #
-RUN curl -L -O http://http.us.debian.org/debian/pool/main/k/kubernetes/kubernetes-client_1.18.0-1_armhf.deb && \
-    dpkg -i kubernetes-client_1.18.0-1_armhf.deb && \
-    rm kubernetes-client_1.18.0-1_armhf.deb && \
+RUN curl -L -O http://http.us.debian.org/debian/pool/main/k/kubernetes/kubernetes-client_1.18.2-2_armhf.deb && \
+    dpkg -i kubernetes-client_1.18.2-2_armhf.deb && \
+    rm kubernetes-client_1.18.2-2_armhf.deb && \
     rm -rf /var/lib/apt/lists/*
 
 #
