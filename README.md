@@ -3,6 +3,14 @@
 Manorrock Siamese is a continuous execution platform that is capable of
 scaling effortlessly. Give it a try!
 
+## Using the Docker image to deploy Manorrock Siamese.
+
+```shell
+  docker run --rm -d -p 8080:8080 manorrock/siamese:VERSION
+```
+
+Replace VERSION with the version of Manorrock Siamese you want to run.
+
 ## Using the Local executor
 
 The Local executor allows you to perform an execution locally.
