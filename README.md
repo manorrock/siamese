@@ -11,6 +11,12 @@ scaling effortlessly. Give it a try!
 
 Replace VERSION with the version of Manorrock Siamese you want to run.
 
+## Testing SNAPSHOT versions
+
+Every night we push a SNAPSHOT version to Docker Hub. If you want to give the
+version under development a test drive use `snapshot` as the version for the
+instructions above.
+
 ## Using the Local executor
 
 The Local executor allows you to perform an execution locally.
