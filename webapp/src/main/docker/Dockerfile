@@ -25,10 +25,10 @@ RUN cd /usr/local && \
 # Install Tomcat 9.
 #
 RUN cd /usr/local && \
-    curl --insecure -L -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz && \
-    tar xfvz apache-tomcat-9.0.34.tar.gz && \
-    mv apache-tomcat-9.0.34 tomcat && \
-    rm apache-tomcat-9.0.34.tar.gz && \
+    curl --insecure -L -O https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.35/bin/apache-tomcat-9.0.35.tar.gz && \
+    tar xfvz apache-tomcat-9.0.35.tar.gz && \
+    mv apache-tomcat-9.0.35 tomcat && \
+    rm apache-tomcat-9.0.35.tar.gz && \
     rm -rf tomcat/webapps/*docs* && \
     rm -rf tomcat/webapps/*examples* && \
     rm -rf tomcat/webapps/*manager* && \
