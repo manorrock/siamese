@@ -22,26 +22,28 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build amd64 image
       run: |
+        cd webapp
         TAG=${GITHUB_REF}
         INDEX=${TAG%v*}
         VERSION=${TAG:${#INDEX}}
-        docker build -f webapp/src/main/docker/Dockerfile -t manorrock/siamese:amd64-$VERSION .
+        docker build -f src/main/docker/Dockerfile.amd64 -t manorrock/siamese:amd64-$VERSION .
         docker push manorrock/siamese:amd64-$VERSION
-    - name: Build ARM32v6 image
+    - name: Build arm image
       run: |
+        cd webapp
         TAG=${GITHUB_REF}
         INDEX=${TAG%v*}
         VERSION=${TAG:${#INDEX}}
-        docker build -f webapp/src/main/docker/Dockerfile.ARM32v6 -t manorrock/siamese:arm32v6-$VERSION .
-        docker push manorrock/siamese:arm32v6-$VERSION
+        docker build -f webapp/src/main/docker/Dockerfile.arm -t manorrock/siamese:arm-$VERSION .
+        docker push manorrock/siamese:arm-$VERSION
     - name: Create multi-arch manifest
       run: | 
         export DOCKER_CLI_EXPERIMENTAL=enabled
         docker manifest create manorrock/siamese:$VERSION \
           manorrock/siamese:amd64-$VERSION \
-          manorrock/siamese:arm32v6-$VERSION
+          manorrock/siamese:arm-$VERSION
         docker manifest annotate manorrock/siamese:$VERSION \
           manorrock/siamese:amd64-$VERSION --os linux --arch amd64
         docker manifest annotate manorrock/siamese:$VERSION \
-          manorrock/siamese:arm32v6-$VERSION --os linux --arch arm
+          manorrock/siamese:arm-$VERSION --os linux --arch arm
         docker manifest push manorrock/siamese:$VERSION
