@@ -38,6 +38,10 @@ jobs:
         docker push manorrock/siamese:arm-$VERSION
     - name: Create multi-arch manifest
       run: | 
+        cd webapp
+        TAG=${GITHUB_REF}
+        INDEX=${TAG%v*}
+        VERSION=${TAG:${#INDEX}}
         export DOCKER_CLI_EXPERIMENTAL=enabled
         docker manifest create manorrock/siamese:$VERSION \
           manorrock/siamese:amd64-$VERSION \
