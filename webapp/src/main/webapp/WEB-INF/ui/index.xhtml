@@ -9,8 +9,7 @@
     <body>
         <ui:composition template="template.xhtml">
             <ui:define name="content">
-                <h1>Jobs</h1>
-                <a class="right_action" href="#{request.contextPath}/ui/create">Create job</a>
+                <a class="right_action" href="#{request.contextPath}/ui/create">Create a job</a>
                 <div class="list">
                     <ui:repeat var="job" value="#{indexBean.jobs}">
                         <div class="list_item">
