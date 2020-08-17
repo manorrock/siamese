@@ -17,10 +17,6 @@ Every night we push a SNAPSHOT version to Docker Hub. If you want to give the
 version under development a test drive use `snapshot` as the version for the
 instructions above.
 
-## Siamese CLI
-
-See [Siamese CLI README](cli/README.md)
-
 ## How do I contribute
 
 See [Contributing](CONTRIBUTING.md)
