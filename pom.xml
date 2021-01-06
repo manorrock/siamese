@@ -154,7 +154,6 @@
         </developer>
     </developers>
     <modules>
-        <module>cli</module>
         <module>webapp</module>
     </modules>
     <profiles>
