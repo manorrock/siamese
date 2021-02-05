@@ -22,7 +22,28 @@
                 </div>
                 </h:panelGroup>
                 <h:panelGroup rendered="#{not facesContext.externalContext.remoteUser}">
-                    Login
+                    <h:form>
+                        <table>
+                            <tr>
+                                <td>Username:</td>
+                                <td><h:inputText value="#{loginBean.username}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Password:</td>
+                                <td><h:inputSecret value="#{loginBean.password}"/></td>
+                            </tr>
+                            <tr>
+                                <td align="right" colspan="2">
+                                    <h:commandButton action="#{loginBean.login}" value="Login"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:messages/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
                 </h:panelGroup>
             </ui:define>
         </ui:composition>
